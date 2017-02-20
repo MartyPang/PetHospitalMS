@@ -1,4 +1,4 @@
-package dao;
+package backend.dao;
 
 import org.apache.commons.dbutils.QueryRunner;
 
