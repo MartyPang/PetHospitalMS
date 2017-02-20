@@ -5,6 +5,25 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    <include file="struts-default.xml" />
-    <package name="pethospital" namespace="/" extends="struts-default" ></package>
+    <include file="struts-front.xml" />
+    <include file="struts-end.xml" />
+
+    <package name="default" namespace="/" extends="struts-default">
+    <!--
+    <global-results>
+        <result name="error">/WEB-INF/views/common/error.jsp</result>
+    </global-results>
+    -->
+    <interceptors>
+        <interceptor name="authority" class="interceptor.LoginInterceptor"></interceptor>
+        <interceptor-stack name="mydefault">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="authority"/>
+        </interceptor-stack>
+    </interceptors>
+    <global-results>
+        <!-- 当返回login视图名时，转入/login.jsp页面 -->
+        <result name="login">/login.jsp</result>
+    </global-results>
+    </package>
 </struts>
