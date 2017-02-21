@@ -5,7 +5,7 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    <include file="struts-end.xml" />
+    <include file="struts-user.xml" />
 
     <package name="default" namespace="/" extends="struts-default">
     <!--
