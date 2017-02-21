@@ -1,4 +1,4 @@
-package frontend.dao;
+package dao;
 
 import org.apache.commons.dbutils.QueryRunner;
 
