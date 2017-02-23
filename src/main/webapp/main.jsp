@@ -1,3 +1,4 @@
+﻿<%@ include file="taglib.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,13 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lumino - Dashboard</title>
 
-<link href="./assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="./assets/css/datepicker3.css" rel="stylesheet">
-<link href="./assets/css/styles.css" rel="stylesheet">
+<link href="${ctx}/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/assets/css/datepicker3.css" rel="stylesheet">
+<link href="${ctx}/assets/css/styles.css" rel="stylesheet">
 
 <!--[if lt IE 9]>
-<script src="./assets/js/html5shiv.js"></script>
-<script src="./assets/js/respond.min.js"></script>
+<script src="${ctx}/assets/js/html5shiv.js"></script>
+<script src="${ctx}/assets/js/respond.min.js"></script>
 <![endif]-->
 
 </head>
@@ -43,7 +44,7 @@
 
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<ul class="nav menu">
-		<li><a href="./user_management.jsp"><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
+		<li><a href="${ctx}/user_management.jsp"><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
 		<li class="parent ">
             <a href="#">
                 <span class="glyphicon glyphicon-list"></span> 基本结构与功能 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id="basic"></span>
@@ -126,13 +127,13 @@
 
 	</div>	<!--/.main-->
 
-	<script src="./assets/js/jquery-1.11.1.min.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
-    <script src="./assets/js/chart.min.js"></script>
-    <script src="./assets/js/chart-data.js"></script>
-    <script src="./assets/js/easypiechart.js"></script>
-    <script src="./assets/js/easypiechart-data.js"></script>
-    <script src="./assets/js/bootstrap-datepicker.js"></script>
+	<script src="${ctx}/assets/js/jquery-1.11.1.min.js"></script>
+    <script src="${ctx}/assets/js/bootstrap.min.js"></script>
+    <script src="${ctx}/assets/js/chart.min.js"></script>
+    <script src="${ctx}/assets/js/chart-data.js"></script>
+    <script src="${ctx}/assets/js/easypiechart.js"></script>
+    <script src="${ctx}/assets/js/easypiechart-data.js"></script>
+    <script src="${ctx}/assets/js/bootstrap-datepicker.js"></script>
 	<script>
 		$('#calendar').datepicker({
 		});

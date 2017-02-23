@@ -1,3 +1,4 @@
+<%@ include file="taglib.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,13 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Forms</title>
 
-<link href="./assets/css/bootstrap.min.css" rel="stylesheet">
-<link href="./assets/css/datepicker3.css" rel="stylesheet">
-<link href="./assets/css/styles.css" rel="stylesheet">
+<link href="${ctx}/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="${ctx}/assets/css/datepicker3.css" rel="stylesheet">
+<link href="${ctx}/assets/css/styles.css" rel="stylesheet">
 
 <!--[if lt IE 9]>
-<script src="./assets/js/html5shiv.js"></script>
-<script src="./assets/js/respond.min.js"></script>
+<script src="${ctx}/assets/js/html5shiv.js"></script>
+<script src="${ctx}/assets/js/respond.min.js"></script>
 <![endif]-->
 
 </head>
@@ -36,7 +37,7 @@
 									<input name="remember" type="checkbox" value="Remember Me">Remember Me
 								</label>
 							</div>
-							<a href="index.html" class="btn btn-primary">Login</a>
+							<a href="${ctx}/userLogin.action" class="btn btn-primary">Login</a>
 						</fieldset>
 					</form>
 				</div>
@@ -46,13 +47,13 @@
 
 
 
-	<script src="./assets/js/jquery-1.11.1.min.js"></script>
-	<script src="./assets/js/bootstrap.min.js"></script>
-	<script src="./assets/js/chart.min.js"></script>
-	<script src="./assets/js/chart-data.js"></script>
-	<script src="./assets/js/easypiechart.js"></script>
-	<script src="./assets/js/easypiechart-data.js"></script>
-	<script src="./assets/js/bootstrap-datepicker.js"></script>
+	<script src="${ctx}/assets/js/jquery-1.11.1.min.js"></script>
+	<script src="${ctx}/assets/js/bootstrap.min.js"></script>
+	<script src="${ctx}/assets/js/chart.min.js"></script>
+	<script src="${ctx}/assets/js/chart-data.js"></script>
+	<script src="${ctx}/assets/js/easypiechart.js"></script>
+	<script src="${ctx}/assets/js/easypiechart-data.js"></script>
+	<script src="${ctx}/assets/js/bootstrap-datepicker.js"></script>
 	<script>
 		!function ($) {
 			$(document).on("click","ul.nav li.parent > a > span.icon", function(){

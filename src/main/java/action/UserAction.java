@@ -3,7 +3,6 @@ package action;
  * Created by Marty Pang on 2017/2/21.
  */
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import service.UserService;
 import util.ConstCommon;
@@ -69,39 +68,44 @@ public class UserAction extends BaseAction {
      * 处理用户登录操作
      */
     public String userLogin() {
-        //logger.info("userLogin");
-        //获取ip地址
-        String ip=getIpAddress(getRequest());
-        //获取浏览器头
-        String agent= getRequest().getHeader("User-Agent");
-        if (StringUtils.isNotBlank(username)
-                && StringUtils.isNotBlank(password)) {
-            //密码MD5编码
-            //password=MD5Util.toMD5Code(password);
-            if (StringUtils.isNotEmpty(password)) {
-                userService = new UserService();
-                logger.info("userName:" + username);
-                logger.info("password:" + password);
-                Map<String, Object> userMap = userService.userLogin(username,
-                        password);
-                if (userMap == null || userMap.isEmpty()) {
-                    setRequestAttribute("tip", "用户名或密码错误");
-                    return "failed";
-                } else {
-                    userMap.put("access_ip", ip);
-                    userMap.put("user_agent", agent);
-                    //session保存用户登录信息
-                    setSessionAttribute(ConstCommon.USERCONTEXT, userMap);
-                    userService.addAccessLog(userMap);
-                    return SUCCESS;
-                }
-            } else {
-                setRequestAttribute("tip", "系统异常");
-                return "failed";
-            }
-        } else {
-            return "failed";
-        }
+        System.out.println(1111);
+//        //logger.info("userLogin");
+//        //获取ip地址
+//        String ip=getIpAddress(getRequest());
+//        //获取浏览器头
+//        String agent= getRequest().getHeader("User-Agent");
+//        if (StringUtils.isNotBlank(username)
+//                && StringUtils.isNotBlank(password)) {
+//            //密码MD5编码
+//            //password=MD5Util.toMD5Code(password);
+//            if (StringUtils.isNotEmpty(password)) {
+//                userService = new UserService();
+//                logger.info("userName:" + username);
+//                logger.info("password:" + password);
+//                Map<String, Object> userMap = userService.userLogin(username,
+//                        password);
+//                if (userMap == null || userMap.isEmpty()) {
+//                    setRequestAttribute("tip", "用户名或密码错误");
+//                    return "failed";
+//                } else {
+//                    userMap.put("access_ip", ip);
+//                    userMap.put("user_agent", agent);
+//                    //session保存用户登录信息
+//                    setSessionAttribute(ConstCommon.USERCONTEXT, userMap);
+//                    userService.addAccessLog(userMap);
+//                    return SUCCESS;
+//                }
+//            } else {
+//                setRequestAttribute("tip", "系统异常");
+//                return "failed";
+//            }
+//        } else {
+//            return "failed";
+//        }
+        Map<String, Object> userMap = new HashMap<String,Object>();
+        userMap.put("name","1");System.out.println(userMap.toString());
+        setSessionAttribute(ConstCommon.USERCONTEXT, userMap);
+        return SUCCESS;
     }
 
     /**
