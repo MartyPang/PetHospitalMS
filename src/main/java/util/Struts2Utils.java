@@ -1,4 +1,4 @@
-package util;
+﻿package util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;

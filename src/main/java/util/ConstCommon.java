@@ -1,4 +1,4 @@
-package util;
+﻿package util;
 
 public class ConstCommon {
 	// 数据库连接默认配置文件名称
