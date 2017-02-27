@@ -28,15 +28,15 @@ public class DbControl {
 	private static void init() {
 		try {
 			// 获取数据库驱动信息
-			String sDBDriver = PropertyUtil.getProperty("jdbc.driver");//"com.mysql.jdbc.Driver";
+			String sDBDriver = PropertyUtils.load("db.properties").getProperty("jdbc.driver");//"com.mysql.jdbc.Driver";
 			// 获取连接字符串信息
-			String sDBConnectString = PropertyUtil.getProperty("jdbc.url");//"jdbc:mysql://10.11.1.42:3306/ouyeeldb?useUnicode=true&characterEncoding=utf-8";
+			String sDBConnectString = PropertyUtils.load("db.properties").getProperty("jdbc.url");//"jdbc:mysql://10.11.1.42:3306/ouyeeldb?useUnicode=true&characterEncoding=utf-8";
 			// 获取数据库登陆用户名
-			String sDBUserName = PropertyUtil.getProperty("jdbc.username");//"root";
+			String sDBUserName = PropertyUtils.load("db.properties").getProperty("jdbc.username");//"root";
 			// 获取数据库登陆密码
-			String sDBPassword = PropertyUtil.getProperty("jdbc.password");//"1";
-			String DBMinPoolSize = PropertyUtil.getProperty("DBMinPoolSize");//"2";
-			String DBMaxPoolSize = PropertyUtil.getProperty("DBMaxPoolSize");//"200";
+			String sDBPassword = PropertyUtils.load("db.properties").getProperty("jdbc.password");//"1";
+			String DBMinPoolSize = PropertyUtils.load("db.properties").getProperty("DBMinPoolSize");//"2";
+			String DBMaxPoolSize = PropertyUtils.load("db.properties").getProperty("DBMaxPoolSize");//"200";
 
 			ds = new ComboPooledDataSource();
 			// 设置JDBC的Driver类

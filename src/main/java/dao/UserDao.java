@@ -1,20 +1,19 @@
 package dao;
 
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
-
 import util.BasicRowProcessorFix;
 import util.DateUtils;
 import util.DbControl;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户数据库操作类
@@ -34,19 +33,19 @@ public class UserDao extends BaseDao {
 		String sql = "";
 		boolean result = false;
 		try {
-			String manager_id = user.get("id").toString();
-			String name = user.get("name").toString();
+			String admin_id = user.get("id").toString();
+			String admin_name = user.get("name").toString();
 			String access_time = DateUtils.getCurrentDateTime();
 			String access_ip = user.get("access_ip").toString();
 			String user_agent = user.get("user_agent").toString();
 			
 			conn = DbControl.getConnection();
-			sql = "insert into sc_accesslog(manager_id,name,access_time,access_ip,user_agent) values(?,?,?,?,?)";
-			result = getQueryRunner().update(conn, sql, manager_id,name,access_time,access_ip,user_agent)>0?true:false;
+			sql = "insert into ph_accesslog(admin_id,admin_name,access_time,access_ip,user_agent) values(?,?,?,?,?)";
+			result = getQueryRunner().update(conn, sql, admin_id,admin_name,access_time,access_ip,user_agent)>0?true:false;
 			
 			//更新管理员最后访问时间
-			sql = "update sc_admin set last_access_time=? where id=? and enable = 1";
-			getQueryRunner().update(conn, sql,access_time,manager_id);
+			sql = "update ph_admin set last_access_time=? where id=? and enable = 1";
+			getQueryRunner().update(conn, sql,access_time,admin_id);
 			
 			DbUtils.closeQuietly(conn);
 			
@@ -105,7 +104,7 @@ public class UserDao extends BaseDao {
 		Connection conn = null;
 		try {
 			conn = DbControl.getConnection();
-			String sql = "select * from sc_admin where name=? and password=? and enable = 1 ;";
+			String sql = "select * from ph_admin where name=? and password=? and enable = 1 ;";
 			userMap = getQueryRunner().query(conn, sql,
 					new MapHandler(new BasicRowProcessorFix()), username,
 					password);
@@ -159,7 +158,7 @@ public class UserDao extends BaseDao {
 	 * @Description: 超级管理员删除权限为1或者2的管理员
 	 * @author: Martin Pang 
 	 * @CreateTime: 2016-7-29 下午1:21:41
-	 * @param admin
+	 * @param id
 	 * @return
 	 */
 	public boolean deleteAdmin(Integer id){

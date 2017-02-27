@@ -14,7 +14,6 @@
 <script src="${ctx}/assets/js/html5shiv.js"></script>
 <script src="${ctx}/assets/js/respond.min.js"></script>
 <![endif]-->
-
 </head>
 
 <body>
@@ -24,20 +23,20 @@
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">Log in</div>
 				<div class="panel-body">
-					<form role="form">
+					<form role="form" action="${ctx}/user/userLogin.action" method="post">
 						<fieldset>
 							<div class="form-group">
-								<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
+								<input class="form-control" placeholder="User name" id="username" name="username" autofocus="">
 							</div>
 							<div class="form-group">
-								<input class="form-control" placeholder="Password" name="password" type="password" value="">
+								<input class="form-control" placeholder="Password" id="password" name="password" type="password" value="">
 							</div>
 							<div class="checkbox">
 								<label>
 									<input name="remember" type="checkbox" value="Remember Me">Remember Me
 								</label>
 							</div>
-							<a href="${ctx}/userLogin.action" class="btn btn-primary">Login</a>
+							<button type="submit"  class="btn btn-primary">Login</button>
 						</fieldset>
 					</form>
 				</div>
