@@ -43,40 +43,58 @@
 
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<ul class="nav menu">
-		<li><a href="./user_management.jsp"><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
-        <li class="parent ">
-            <a href="#">
-                <span class="glyphicon glyphicon-list"></span> 基本结构与功能 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id="basic"></span>
-            </a>
-            <ul class="children " id="sub-item-1">
-                <li>
-                    <a class="" href="#">
-                        <span class="glyphicon glyphicon-share-alt"></span> 科室管理
-                    </a>
-                </li>
-                <li>
-                    <a class="" href="employee_management.jsp">
-                        <span class="glyphicon glyphicon-share-alt"></span> 人员管理
-                    </a>
-                </li>
-                <li>
-                    <a class="" href="#">
-                        <span class="glyphicon glyphicon-share-alt"></span> 药品管理
-                    </a>
-                </li>
-                <li>
-                    <a class="" href="#">
-                        <span class="glyphicon glyphicon-share-alt"></span> 收费管理
-                    </a>
-                </li>
-                <li>
-                    <a class="" href="#">
-                        <span class="glyphicon glyphicon-share-alt"></span> 住院管理
-                    </a>
-                </li>
+            <li class="parent ">
+                <a href="#">
+                    <span class="glyphicon glyphicon-list"></span> 用户管理 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
+                </a>
+                <ul class="children " id="sub-item-1">
+                    <li>
+                        <a class="" href="user_management.jsp">
+                            <span class="glyphicon glyphicon-share-alt"></span> 管理员管理
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="front_user_management.jsp">
+                            <span class="glyphicon glyphicon-share-alt"></span> 前端用户管理
+                        </a>
+                    </li>
 
-            </ul>
-        </li>
+
+                </ul>
+            </li>
+            <li class="parent ">
+                <a href="#">
+                    <span class="glyphicon glyphicon-list"></span> 基本结构与功能 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id="basic"></span>
+                </a>
+                <ul class="children " id="sub-item-1">
+                    <li>
+                        <a class="" href="#">
+                            <span class="glyphicon glyphicon-share-alt"></span> 科室管理
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="employee_management.jsp">
+                            <span class="glyphicon glyphicon-share-alt"></span> 人员管理
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <span class="glyphicon glyphicon-share-alt"></span> 药品管理
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <span class="glyphicon glyphicon-share-alt"></span> 收费管理
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <span class="glyphicon glyphicon-share-alt"></span> 住院管理
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
 
         <li class="parent ">
             <a href="#">

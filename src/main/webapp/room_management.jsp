@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>用户管理</title>
+<title>科室管理</title>
 
 <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="./assets/css/datepicker3.css" rel="stylesheet">
@@ -44,31 +44,31 @@
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<ul class="nav menu">
 		<a href="#">
-                <li class="parent">
-                                <span class="glyphicon glyphicon-list"></span> 用户管理 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
+        <li class="parent">
+                        <span class="glyphicon glyphicon-list"></span> 用户管理 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
+                    </a>
+                    <ul class="children " id="sub-item-1">
+                        <li>
+                            <a class="" href="user_management.jsp">
+                                <span class="glyphicon glyphicon-share-alt"></span> 管理员管理
                             </a>
-                            <ul class="children " id="sub-item-1">
-                                <li>
-                                    <a class="" href="user_management.jsp">
-                                        <span class="glyphicon glyphicon-share-alt"></span> 管理员管理
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="" href="front_user_management.jsp">
-                                        <span class="glyphicon glyphicon-share-alt"></span> 前台用户管理
-                                    </a>
-                                </li>
-
-
-                            </ul>
                         </li>
+                        <li>
+                            <a class="" href="front_user_management.jsp">
+                                <span class="glyphicon glyphicon-share-alt"></span> 前台用户管理
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
 		<li class="parent ">
             <a href="#">
                 <span class="glyphicon glyphicon-list"></span> 基本结构与功能 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id="basic"></span>
             </a>
             <ul class="children " id="sub-item-1">
                 <li>
-                    <a class="" href="#">
+                    <a class="" href="./room_management.jsp">
                         <span class="glyphicon glyphicon-share-alt"></span> 科室管理
                     </a>
                 </li>
@@ -127,7 +127,7 @@
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
-				<li class="active">用户管理</li>
+				<li class="active">科室管理</li>
 			</ol>
 		</div><!--/.row-->
 
@@ -147,30 +147,27 @@
             						<table class="table">
             						    <thead id ="table_content">
             						    <tr>
-            						        <th >用户名</th>
-            						        <th >用户权限</th>
-            						        <th >注册时间</th>
+            						        <th >科室ID</th>
+            						        <th >科室名</th>
             						        <th >修改信息</th>
-            						        <th >删除用户</th>
+            						        <th >删除科室</th>
             						    </tr>
             						    </thead>
             						    <tr>
-            						        <td id="user_1">二号狗蛋</td>          		  
-            						        <td id="auth_1" value= "3">一般用户</td>
-            						        <td>2017-01-02</td>
-            						        <td><button class="btn btn-primary" onclick="modify(1)">修改</button></td>
-            						        <td><button class="btn btn-success" onclick="">删除</button></td>
+            						        <td id="room_id_1">1</td>          		  
+            						        <td id="room_name_1">内科</td>
+            						    
+            						        <td><button class="btn btn-success" onclick="delete(1)">删除</button></td>
             						    </tr>
 
             						    <tr>
-                                            <td>李狗蛋</td>
-                                            <td>前台</td>
-                                            <td>2017-01-02</td>
-                                            <td><button class="btn btn-primary" onclick="">修改</button></td>
-                                            <td><button class="btn btn-success" onclick="">删除</button></td>
+                                            <td id="room_id_2">2</td>                 
+                                            <td id="room_name_2">外科</td>
+                                    
+                                            <td><button class="btn btn-success" onclick="delete(2)">删除</button></td>
                                         </tr>
             						</table>
-            						<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">增加用户</button>
+            						<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">增加科室</button>
             					</div>
             				</div>
 
@@ -189,30 +186,17 @@
                         aria-hidden="true">×
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                    增加新用户
+                    增加新科室
                 </h4>
             </div>
             <div class="modal-body">
                 <div class = "row">
                   <table class="table">
                     <tr>
-                        <td>用户名</td>
+                        <td>科室名</td>
                         <td><input class = 'form-control' id="user_name_new"/></td>
                     </tr>
-                    <tr>
-                        <td>密码</td>
-                        <td><input class = 'form-control' id="password_new"/></td>
-                    </tr>
-                    <tr>
-                        <td>用户权限</td>
-                        <td>
-                            <select class="form-control" id="auth_new">
-                               <option value="1">管理员</option>
-                               <option value="2">前台</option>
-                               <option value="3">一般用户</option> 
-                            </select>
-                        </td>
-                    </tr>
+                
                     
 
                   </table>
@@ -222,7 +206,7 @@
                 <button type="button" class="btn btn-default" 
                         data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary" onclick="new_user()">
+                <button type="button" class="btn btn-primary" onclick="new_room()">
                     提交
                 </button>
             </div>
@@ -230,55 +214,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="modiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" 
-                        aria-hidden="true">×
-                </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    修改用户
-                </h4>
-            </div>
-            <div class="modal-body">
-                <div class = "row">
-                  <table class="table">
-                    <tr>
-                        <td>用户名</td>
-                        <td><input class = 'form-control' id="user_name_modi" readonly/></td>
-                    </tr>
-                    <tr>
-                        <td>密码</td>
-                        <td><input class = 'form-control' id="password_modi"/></td>
-                    </tr>
-                    <tr>
-                        <td>用户权限</td>
-                        <td>
-                            <select class="form-control" id="auth_modi">
-                               <option value="1">管理员</option>
-                               <option value="2">前台</option>
-                               <option value="3">一般用户</option> 
-                            </select>
-                        </td>
-                    </tr>
 
-                   
-
-                  </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" 
-                        data-dismiss="modal">关闭
-                </button>
-                <button type="button" class="btn btn-primary" id="modify_button">
-                    提交
-                </button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 	<script src="./assets/js/jquery-1.11.1.min.js"></script>
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/chart.min.js"></script>
@@ -310,7 +246,7 @@
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
 
-        function new_user()
+        function new_room()
         {
             $.post("/webapp/test_user_new.php",
             {
@@ -324,32 +260,10 @@
             });
         }
 
-        function modify(id)
-        {
-            $("#user_name_modi").val($("#user_"+id).text());
-            $("#auth_modi").val($("#auth_"+id).attr("value"));
-            $("#modiModal").modal("show");
-            $("#modify_button").attr("onclick","change("+id+")");
-        }
 
-        function change(id)
+        function delete(id)
         {
-            var flag = 0;
-            if($("#password_modi").val() == "" || $("#password_modi").val() == null)
-            {
-                flag = 1;
-            }
-            $.post("/webapp/test_user_modify.php",
-            {
-                auth : $("#auth_modi").val(),
-                password : $("#password_modi").val(),
-                flag : flag,
-                user_id : id
-            },
-            function(data,status)
-            {
-                alert(data);
-            });
+            alert(id);
         }
 	</script>
 </body>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>科室管理</title>
+
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/css/datepicker3.css" rel="stylesheet">
+    <link href="./assets/css/styles.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script src="./assets/js/html5shiv.js"></script>
+    <script src="./assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script src="./assets/bootstrap-3.3.7-dist/js/jquery-3.1.1.js"></script>
+    <script src="./assets/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+    <!--BootStrap-loading-->
+    <link rel="stylesheet" href="./assets/bootstrap-loading/dist/ladda-themeless.min.css">
+    <script src="./assets/bootstrap-loading/dist/spin.min.js"></script>
+    <script src="./assets/bootstrap-loading/dist/ladda.min.js"></script>
+
+    <!--fileinput-->
+    <link href="./assets/file-input/css/fileinput.css" rel="stylesheet">
+    <script src="./assets/file-input/js/fileinput.js"></script>
+    <script src="./assets/file-input/js/locales/zh.js"></script>
+
+    <!--jquery-confirm-->
+    <link href="./assets/jquery-confirm/css/jquery-confirm.css" rel="stylesheet">
+    <script src="./assets/jquery-confirm/js/jquery-confirm.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="main.jsp"><span>宠物</span>医院</a>
+            <ul class="user-menu">
+                <li class="dropdown pull-right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> User <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+    <ul class="nav menu">
+        <a href="#">
+            <li class="parent">
+                <span class="glyphicon glyphicon-list"></span> 用户管理 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
+        </a>
+        <ul class="children " id="sub-item-1">
+            <li>
+                <a class="" href="user_management.jsp">
+                    <span class="glyphicon glyphicon-share-alt"></span> 管理员管理
+                </a>
+            </li>
+            <li>
+                <a class="" href="front_user_management.jsp">
+                    <span class="glyphicon glyphicon-share-alt"></span> 前台用户管理
+                </a>
+            </li>
+
+
+        </ul>
+        </li>
+        <li class="parent ">
+            <a href="#">
+                <span class="glyphicon glyphicon-list"></span> 基本结构与功能 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id="basic"></span>
+            </a>
+            <ul class="children " id="sub-item-1">
+                <li>
+                    <a class="" href="./room_management.jsp">
+                        <span class="glyphicon glyphicon-share-alt"></span> 科室管理
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="employee_management.jsp">
+                        <span class="glyphicon glyphicon-share-alt"></span> 人员管理
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="#">
+                        <span class="glyphicon glyphicon-share-alt"></span> 药品管理
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="#">
+                        <span class="glyphicon glyphicon-share-alt"></span> 收费管理
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="#">
+                        <span class="glyphicon glyphicon-share-alt"></span> 住院管理
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li class="parent ">
+            <a href="#">
+                <span class="glyphicon glyphicon-list"></span> 职能学习 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
+            </a>
+            <ul class="children " id="sub-item-1">
+                <li>
+                    <a class="" href="#">
+                        <span class="glyphicon glyphicon-share-alt"></span> 角色扮演管理
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="#">
+                        <span class="glyphicon glyphicon-share-alt"></span> 病例学习管理
+                    </a>
+                </li>
+
+
+            </ul>
+        </li>
+        <li class=""><a href="/example_management.jsp"><span class="glyphicon glyphicon-dashboard"></span> 病例管理</a></li>
+
+
+        <li role="presentation" class="divider"></li>
+
+    </ul>
+</div><!--/.sidebar-->
+
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li class="active">病例管理</li>
+        </ol>
+    </div><!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+    </div><!--/.row-->
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    病例列表
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead id ="table_content">
+                        <tr>
+                            <th >病例类型</th>
+                            <th >病例名称</th>
+                            <th >接诊信息</th>
+                            <th >检查信息</th>
+                            <th >诊断信息</th>
+                            <th >治疗信息</th>
+                            <th >状态</th>
+                            <th >修改</th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <td id="case_type_1">没病装病</td>
+                            <td id="case_name_1">头晕</td>
+                            <td><button class="btn btn-primary" onclick="welcome(1)">查看</button></td>
+                            <td><button class="btn btn-danger" onclick="check(1)">查看</button></td>
+                            <td><button class="btn btn-warning" onclick="judge(1)">查看</button></td>
+                            <td><button class="btn btn-success" onclick="cure(1)">查看</button></td>
+                            <td>失效</td>
+                            <td><button class="btn btn-default" onclick="view(1)">修改</button></td>
+                        </tr>
+
+                        <tr>
+                            <td id="case_type_2">小病</td>
+                            <td id="case_name_2">腹泻</td>
+                            <td><button class="btn btn-primary" onclick="welcome(2)">查看</button></td>
+                            <td><button class="btn btn-danger" onclick="check(2)">查看</button></td>
+                            <td><button class="btn btn-warning" onclick="judge(2)">查看</button></td>
+                            <td><button class="btn btn-success" onclick="cure(2)">查看</button></td>
+                            <td>有效</td>
+                            <td><button class="btn btn-default" onclick="view(2)">修改</button></td>
+                        </tr>
+                    </table>
+                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">增加病例</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div><!--/.row-->
+
+
+</div>	<!--/.main-->
+
+<div class="modal fade" id="welcome_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title">
+                    接诊信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class = "row">
+                    <table class="table">
+                        <tr>
+                            <td>病例名</td>
+                            <td><input class = 'form-control' id="welcome_name" readonly/></td>
+                        </tr>
+
+                        <tr>
+                            <td>接诊文字</td>
+                            <td><textarea class = 'form-control' id="welcome_text"/></textarea></td>
+                        </tr>
+
+                        <tr>
+                            <td>接诊图片</td>
+                            <td id="welcome_pic_list">
+                                <div class="row">
+                                    <div class="col-xs-4">图片</div>
+                                    <div class="col-xs-4">上传时间</div>
+                                    <div class="col-xs-4">操作</div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="new_case()">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="check_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="">
+                    检查信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class = "row">
+                    <table class="table">
+                        <tr>
+                            <td>病例名</td>
+                            <td><input class = 'form-control' id=""/></td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="new_case()">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="judge_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="">
+                    诊断信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class = "row">
+                    <table class="table">
+                        <tr>
+                            <td>病例名</td>
+                            <td><input class = 'form-control' id=""/></td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="new_case()">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="cure_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="">
+                    治疗信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class = "row">
+                    <table class="table">
+                        <tr>
+                            <td>病例名</td>
+                            <td><input class = 'form-control' id=""/></td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="new_case()">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="view_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="">
+                    修改病例
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class = "row">
+                    <table class="table">
+                        <tr>
+                            <td>病例名</td>
+                            <td><input class = 'form-control' id=""/></td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="new_case()">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    增加病例
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class = "row">
+                    <table class="table">
+                        <tr>
+                            <td>病例名</td>
+                            <td><input class = 'form-control' id="case_name_new"/></td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="new_case()">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--图片上传的modal-->
+<div class="modal fade modal_upload" id="image_upload" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Upload</h4>
+            </div>
+            <div class="modal-body">
+                <input id="input_image" name="uploadFile" type="file" multiple>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function uploadImage() {
+        $("#input_image").fileinput('refresh');
+    }
+
+    !function ($) {
+        $(document).on("click","#basic", function(){
+            $('#basic_em').toggleClass("glyphicon-minus");
+        });
+        $('#basic_em').addClass("glyphicon-plus");
+    }(window.jQuery);
+
+    !function ($) {
+        $(document).on("click","#role", function(){
+            $('#role_em').toggleClass("glyphicon-minus");
+        });
+        $('#role_em').addClass("glyphicon-plus");
+    }(window.jQuery);
+    $(window).on('resize', function () {
+        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+    })
+    $(window).on('resize', function () {
+        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+    })
+
+    function new_case()
+    {
+        $.post("/webapp/test_user_new.php",
+            {
+                user : $("#user_name_new").val(),
+                password : $("#password_new").val(),
+                auth : $("#auth_new").val()
+            },
+            function(data,status)
+            {
+                alert(data);
+            });
+    }
+
+    function welcome(id)
+    {
+        $("#welcome_name").val($("#case_name_"+id).text());
+        $("#welcome_pic_list").empty();
+        $.post("./test_pic_return.php",
+            {
+                welcome_id : id
+            },
+            function(data,status)
+            {
+                json1 = eval("("+data+")");
+                for(i= 0;i<json1.length;i+=3)
+                {
+                    welcome_row = '<div class = "row">';
+                    for(j=0;j<3;j++)
+                    {
+                        welcome_row+='<div class="col-xs-4"><img style="width:100px;height: 100px" class="img-square" src="./assets/images/'+json1[i].pic+'"/><div class="closeLayer"  onClick="alert(1)"><img src="./assets/images/close.jpeg" style="width:15px;height: 15px"/></div></div>';
+                    }
+                    welcome_row +="</div>";
+                    $("#welcome_pic_list").append(welcome_row);
+
+                }
+            });
+        $("#welcome_modal").modal("show");
+    }
+
+    function check(id)
+    {
+        $("#check_modal").modal("show");
+    }
+
+    function judge(id)
+    {
+        $("#judge_modal").modal("show");
+    }
+
+    function cure(id)
+    {
+        $("#cure_modal").modal("show");
+    }
+
+    function view(id)
+    {
+        $("#view_modal").modal("show");
+    }
+
+
+</script>
+</body>
+
+</html>

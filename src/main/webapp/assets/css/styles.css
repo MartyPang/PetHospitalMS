@@ -1,7 +1,31 @@
 
 
 /*Global Styles*/
+.img-square{
 
+	/*border: 1px solid red;*/
+
+	margin-left: 10px;
+
+	margin-top: 10px;
+
+}
+
+.closeLayer{
+
+	/*display: none;*/
+
+	z-index: 99;
+
+	position:absolute; /*绝对定位*/
+
+	left:65%; /*位置自己看着调整，在图片上方*/
+
+	top:5px;
+
+	/*border: 1px solid red;*/
+
+}
 body {
 	background: #f1f4f7;
 	padding-top: 50px;
