@@ -265,6 +265,7 @@ DROP TABLE IF EXISTS `ph_video`;
 CREATE TABLE `ph_video` (
   `video_id` int(11) NOT NULL AUTO_INCREMENT,
   `cover_img` varchar(255) NOT NULL,
+  `capture_img` varchar(255) NOT NULL,
   `video_type` int(11) NOT NULL DEFAULT '0',
   `video_path` varchar(255) NOT NULL,
   `desc` varchar(255) NOT NULL,
