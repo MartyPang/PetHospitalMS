@@ -8,19 +8,20 @@
 <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
 <link href="./assets/css/datepicker3.css" rel="stylesheet">
 <link href="./assets/css/styles.css" rel="stylesheet">
+    <link href="./assets/x0popup/css/x0popup.min.css" rel="stylesheet">
 
 <!--[if lt IE 9]>
 <script src="./assets/js/html5shiv.js"></script>
 <script src="./assets/js/respond.min.js"></script>
 <![endif]-->
     <script src="./assets/js/jquery-1.11.1.min.js"></script>
+    <script src="./assets/x0popup/js/x0popup.min.js"></script>
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/chart.min.js"></script>
     <script src="./assets/js/chart-data.js"></script>
     <script src="./assets/js/easypiechart.js"></script>
     <script src="./assets/js/easypiechart-data.js"></script>
     <script src="./assets/js/bootstrap-datepicker.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function() {
         $.post("/user/getUserList.action",
@@ -293,11 +294,11 @@
             var password = $("#password_new").val();
             var authority = $("#auth_new").val();
             if(username.length==0){
-                alert("请输入用户名");
+                x0p('提示', '请输入用户名');
                 return;
             }
             if(password.length<6){
-                alert("密码至少6位");
+                x0p('提示', '密码至少6位');
                 return;
             }
             $.post("/addUser.action",
@@ -327,7 +328,7 @@
                 flag = 1;
             }
             if($("#password_modi").val().length>0&&$("#password_modi").val().length<6){
-                alert("密码至少6位");
+                x0p('提示', '密码至少6位');
                 return;
             }
             $.post("/updateUser.action",
@@ -345,18 +346,22 @@
         }
 
         function deleteUser(id){
-            if(confirm("确认删除？")){
-                $.post("/deleteUser.action",
-                        {
-                            id : id
-                        },
-                        function(data,status)
-                        {
-                            if(data=='true'){
-                                window.location.href = "/user_management.jsp";
-                            }
-                        });
-            }
+            x0p('Confirmation', 'Are you sure?', 'warning',
+                 function (button) {
+                     if(button == 'cancel'){
+                     }else{
+                         $.post("/deleteUser.action",
+                                 {
+                                     id : id
+                                 },
+                                 function(data,status)
+                                 {
+                                     if(data=='true'){
+                                         location.reload();
+                                     }
+                                 });
+                     }
+                 });
         }
 	</script>
 </body>
