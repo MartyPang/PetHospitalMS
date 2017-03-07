@@ -130,8 +130,6 @@ CREATE TABLE `ph_image` (
   `image_id` int(11) NOT NULL AUTO_INCREMENT,
   `image_type` int(11) NOT NULL DEFAULT '0',
   `image_path` varchar(255) NOT NULL,
-  `desc` varchar(255) NOT NULL,
-  `link` varchar(255) NOT NULL,
   `upload_time` datetime NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`image_id`)
@@ -268,8 +266,6 @@ CREATE TABLE `ph_video` (
   `capture_img` varchar(255) NOT NULL,
   `video_type` int(11) NOT NULL DEFAULT '0',
   `video_path` varchar(255) NOT NULL,
-  `desc` varchar(255) NOT NULL,
-  `link` varchar(255) NOT NULL,
   `upload_time` datetime NOT NULL,
   `status` int(11) NOT NULL,
   PRIMARY KEY (`video_id`)
