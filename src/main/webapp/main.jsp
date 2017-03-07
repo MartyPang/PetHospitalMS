@@ -44,19 +44,37 @@
 
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<ul class="nav menu">
-		<li><a href="${ctx}/user_management.jsp"><span class="glyphicon glyphicon-user"></span> 用户管理</a></li>
+        <li class="parent ">
+            <a href="#">
+                <span class="glyphicon glyphicon-list"></span> 用户管理 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
+            </a>
+            <ul class="children " id="sub-item-1">
+                <li>
+                    <a class="" href="user_management.jsp">
+                        <span class="glyphicon glyphicon-share-alt"></span> 管理员管理
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="front_user_management.jsp">
+                        <span class="glyphicon glyphicon-share-alt"></span> 前端用户管理
+                    </a>
+                </li>
+
+
+            </ul>
+        </li>
 		<li class="parent ">
             <a href="#">
                 <span class="glyphicon glyphicon-list"></span> 基本结构与功能 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id="basic"></span>
             </a>
-            <ul class="children " id="sub-item-1">
+            <ul class="children " id="sub-item-basic">
                 <li>
                     <a class="" href="#">
                         <span class="glyphicon glyphicon-share-alt"></span> 科室管理
                     </a>
                 </li>
                 <li>
-                    <a class="" href="#">
+                    <a class="" href="employee_management.jsp">
                         <span class="glyphicon glyphicon-share-alt"></span> 人员管理
                     </a>
                 </li>
@@ -157,6 +175,20 @@
 		$(window).on('resize', function () {
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
+
+		$.post("./test_for_widgets.php",
+		{
+		},
+		function(data,status)
+		{
+		    $("#sub-item-basic").empty();
+		    $("#sub-item-basic").append("<li><a href=''><span class='glyphicon glyphicon-share-alt'></span> 科室管理</a></li>");
+            json1 = eval("("+data+")");
+		    for(i=0;i<json1.length;i++)
+		    {
+		        $("#sub-item-basic").append("<li><a href='"+json1[i].id+"'><span class='glyphicon glyphicon-share-alt'></span> "+json1[i].name+"</a></li>");
+            }
+		});
 	</script>
 </body>
 

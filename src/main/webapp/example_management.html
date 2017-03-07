@@ -29,6 +29,12 @@
     <!--jquery-confirm-->
     <link href="./assets/jquery-confirm/css/jquery-confirm.css" rel="stylesheet">
     <script src="./assets/jquery-confirm/js/jquery-confirm.js"></script>
+    <style type="text/css">
+        .modal
+        {
+            postion : absolute;
+        }
+    </style>
 </head>
 
 <body>
@@ -159,8 +165,8 @@
                     病例列表
                 </div>
                 <div class="panel-body">
-                    <table class="table">
-                        <thead id ="table_content">
+                    <table class="table" id ="table_content">
+                        <thead>
                         <tr>
                             <th >病例类型</th>
                             <th >病例名称</th>
@@ -237,11 +243,39 @@
                                     <div class="col-xs-4">上传时间</div>
                                     <div class="col-xs-4">操作</div>
                                 </div>
-
                             </td>
-
+                        </tr>
+                        <tr>
+                            <td>选择图片</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" id="welcome_choose_pic_button">选择图片</button>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
 
+                        <tr>
+                            <td>接诊视频</td>
+                            <td id="welcome_video_list">
+                                <div class="row">
+                                    <div class="col-xs-4">视频</div>
+                                    <div class="col-xs-4">上传时间</div>
+                                    <div class="col-xs-4">操作</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>选择视频</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" id="welcome_choose_video_button">选择视频</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
 
                     </table>
                 </div>
@@ -250,7 +284,7 @@
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary" onclick="new_case()">
+                <button type="button" class="btn btn-primary" id="welcome_submit">
                     提交
                 </button>
             </div>
@@ -265,7 +299,7 @@
                 <button type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">×
                 </button>
-                <h4 class="modal-title" id="">
+                <h4 class="modal-title">
                     检查信息
                 </h4>
             </div>
@@ -274,10 +308,55 @@
                     <table class="table">
                         <tr>
                             <td>病例名</td>
-                            <td><input class = 'form-control' id=""/></td>
+                            <td><input class = 'form-control' id="check_name" readonly/></td>
                         </tr>
 
+                        <tr>
+                            <td>检查文字</td>
+                            <td><textarea class = 'form-control' id="check_text"/></textarea></td>
+                        </tr>
 
+                        <tr>
+                            <td>检查图片</td>
+                            <td id="check_pic_list">
+                                <div class="row">
+                                    <div class="col-xs-4">图片</div>
+                                    <div class="col-xs-4">上传时间</div>
+                                    <div class="col-xs-4">操作</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>选择图片</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" id="check_choose_pic_button">选择图片</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>检查视频</td>
+                            <td id="check_video_list">
+                                <div class="row">
+                                    <div class="col-xs-4">视频</div>
+                                    <div class="col-xs-4">上传时间</div>
+                                    <div class="col-xs-4">操作</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>选择视频</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" id="check_choose_video_button">选择视频</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
 
                     </table>
                 </div>
@@ -286,7 +365,7 @@
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary" onclick="new_case()">
+                <button type="button" class="btn btn-primary" id="check_submit">
                     提交
                 </button>
             </div>
@@ -373,8 +452,45 @@
                 <button type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">×
                 </button>
-                <h4 class="modal-title" id="">
+                <h4 class="modal-title">
                     修改病例
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class = "row">
+                    <table class="table">
+                        <tr>
+                            <td>病例名</td>
+                            <td><input class = 'form-control'/></td>
+                        </tr>
+
+
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="new_case()">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" id="add_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" id="">
+                    增加病例
                 </h4>
             </div>
             <div class="modal-body">
@@ -402,27 +518,20 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="pic_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">×
                 </button>
-                <h4 class="modal-title" id="myModalLabel">
-                    增加病例
+                <h4 class="modal-title">
+                    选择图片
                 </h4>
             </div>
             <div class="modal-body">
                 <div class = "row">
-                    <table class="table">
-                        <tr>
-                            <td>病例名</td>
-                            <td><input class = 'form-control' id="case_name_new"/></td>
-                        </tr>
-
-
+                    <table class="table" id="pic_table">
 
                     </table>
                 </div>
@@ -431,7 +540,7 @@
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary" onclick="new_case()">
+                <button type="button" class="btn btn-primary" id="pic_upload_button">
                     提交
                 </button>
             </div>
@@ -439,23 +548,35 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<!--图片上传的modal-->
-<div class="modal fade modal_upload" id="image_upload" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<div class="modal fade" id="video_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Upload</h4>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title">
+                    选择图片
+                </h4>
             </div>
             <div class="modal-body">
-                <input id="input_image" name="uploadFile" type="file" multiple>
+                <div class = "row">
+                    <table class="table" id="video_table">
+
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="video_upload_button">
+                    提交
+                </button>
             </div>
-        </div>
-    </div>
-</div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <script>
     function uploadImage() {
@@ -482,68 +603,11 @@
         if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
     })
 
-    function new_case()
-    {
-        $.post("/webapp/test_user_new.php",
-            {
-                user : $("#user_name_new").val(),
-                password : $("#password_new").val(),
-                auth : $("#auth_new").val()
-            },
-            function(data,status)
-            {
-                alert(data);
-            });
-    }
 
-    function welcome(id)
-    {
-        $("#welcome_name").val($("#case_name_"+id).text());
-        $("#welcome_pic_list").empty();
-        $.post("./test_pic_return.php",
-            {
-                welcome_id : id
-            },
-            function(data,status)
-            {
-                json1 = eval("("+data+")");
-                for(i= 0;i<json1.length;i+=3)
-                {
-                    welcome_row = '<div class = "row">';
-                    for(j=0;j<3;j++)
-                    {
-                        welcome_row+='<div class="col-xs-4"><img style="width:100px;height: 100px" class="img-square" src="./assets/images/'+json1[i].pic+'"/><div class="closeLayer"  onClick="alert(1)"><img src="./assets/images/close.jpeg" style="width:15px;height: 15px"/></div></div>';
-                    }
-                    welcome_row +="</div>";
-                    $("#welcome_pic_list").append(welcome_row);
-
-                }
-            });
-        $("#welcome_modal").modal("show");
-    }
-
-    function check(id)
-    {
-        $("#check_modal").modal("show");
-    }
-
-    function judge(id)
-    {
-        $("#judge_modal").modal("show");
-    }
-
-    function cure(id)
-    {
-        $("#cure_modal").modal("show");
-    }
-
-    function view(id)
-    {
-        $("#view_modal").modal("show");
-    }
 
 
 </script>
+<script src="./assets/js/case_manage.js"></script>
 </body>
 
 </html>
