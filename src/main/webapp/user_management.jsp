@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -13,7 +13,34 @@
 <script src="./assets/js/html5shiv.js"></script>
 <script src="./assets/js/respond.min.js"></script>
 <![endif]-->
+    <script src="./assets/js/jquery-1.11.1.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/chart.min.js"></script>
+    <script src="./assets/js/chart-data.js"></script>
+    <script src="./assets/js/easypiechart.js"></script>
+    <script src="./assets/js/easypiechart-data.js"></script>
+    <script src="./assets/js/bootstrap-datepicker.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.post("/user/getUserList.action",
+                {},
+        function(data,status){
+            var result = data.Result;
+            if(result=='OK'){
+                var jsonArray = data.Records;
+                for(var i=0;i<jsonArray.length;++i){
+                    var oneline = jsonArray[i];
+                    $("#user_table").append("<tr><td id='user_"+oneline.id+"'>"+oneline.name+
+                            "</td><td>"+
+                            oneline.create_time+
+                            "</td><td><button class='btn btn-primary' onclick='modify("+oneline.id+ ")'>修改</button></td> <td><button class='btn btn-success' onclick='deleteUser("+oneline.id+")'>删除</button></td> </tr>");
+                }
+            }
+            //alert(data.Records);
+        });
+            });
+</script>
 </head>
 
 <body>
@@ -47,7 +74,7 @@
                 <li class="parent">
                                 <span class="glyphicon glyphicon-list"></span> 用户管理 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
                             </a>
-                            <ul class="children " id="sub-item-1">
+                            <ul class="children ">
                                 <li>
                                     <a class="" href="user_management.jsp">
                                         <span class="glyphicon glyphicon-share-alt"></span> 管理员管理
@@ -98,9 +125,9 @@
 
         <li class="parent ">
             <a href="#">
-                <span class="glyphicon glyphicon-list"></span> 职能学习 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
+                <span class="glyphicon glyphicon-list"></span> 职能学习 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"></span>
             </a>
-            <ul class="children " id="sub-item-1">
+            <ul class="children ">
                 <li>
                     <a class="" href="#">
                         <span class="glyphicon glyphicon-share-alt"></span> 角色扮演管理
@@ -144,31 +171,15 @@
             					用户列表
             					</div>
             					<div class="panel-body">
-            						<table class="table">
+            						<table class="table" id="user_table">
             						    <thead id ="table_content">
             						    <tr>
             						        <th >用户名</th>
-            						        <th >用户权限</th>
             						        <th >注册时间</th>
             						        <th >修改信息</th>
             						        <th >删除用户</th>
             						    </tr>
             						    </thead>
-            						    <tr>
-            						        <td id="user_1">二号狗蛋</td>          		  
-            						        <td id="auth_1" value= "3">一般用户</td>
-            						        <td>2017-01-02</td>
-            						        <td><button class="btn btn-primary" onclick="modify(1)">修改</button></td>
-            						        <td><button class="btn btn-success" onclick="">删除</button></td>
-            						    </tr>
-
-            						    <tr>
-                                            <td>李狗蛋</td>
-                                            <td>前台</td>
-                                            <td>2017-01-02</td>
-                                            <td><button class="btn btn-primary" onclick="">修改</button></td>
-                                            <td><button class="btn btn-success" onclick="">删除</button></td>
-                                        </tr>
             						</table>
             						<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">增加用户</button>
             					</div>
@@ -188,7 +199,7 @@
                 <button type="button" class="close" data-dismiss="modal" 
                         aria-hidden="true">×
                 </button>
-                <h4 class="modal-title" id="myModalLabel">
+                <h4 class="modal-title">
                     增加新用户
                 </h4>
             </div>
@@ -203,18 +214,6 @@
                         <td>密码</td>
                         <td><input class = 'form-control' id="password_new"/></td>
                     </tr>
-                    <tr>
-                        <td>用户权限</td>
-                        <td>
-                            <select class="form-control" id="auth_new">
-                               <option value="1">管理员</option>
-                               <option value="2">前台</option>
-                               <option value="3">一般用户</option> 
-                            </select>
-                        </td>
-                    </tr>
-                    
-
                   </table>
                 </div>
             </div>
@@ -222,7 +221,7 @@
                 <button type="button" class="btn btn-default" 
                         data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary" onclick="new_user()">
+                <button type="button" class="btn btn-primary" onclick="addUser()">
                     提交
                 </button>
             </div>
@@ -237,7 +236,7 @@
                 <button type="button" class="close" data-dismiss="modal" 
                         aria-hidden="true">×
                 </button>
-                <h4 class="modal-title" id="myModalLabel">
+                <h4 class="modal-title">
                     修改用户
                 </h4>
             </div>
@@ -252,19 +251,6 @@
                         <td>密码</td>
                         <td><input class = 'form-control' id="password_modi"/></td>
                     </tr>
-                    <tr>
-                        <td>用户权限</td>
-                        <td>
-                            <select class="form-control" id="auth_modi">
-                               <option value="1">管理员</option>
-                               <option value="2">前台</option>
-                               <option value="3">一般用户</option> 
-                            </select>
-                        </td>
-                    </tr>
-
-                   
-
                   </table>
                 </div>
             </div>
@@ -279,16 +265,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-	<script src="./assets/js/jquery-1.11.1.min.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
-    <script src="./assets/js/chart.min.js"></script>
-    <script src="./assets/js/chart-data.js"></script>
-    <script src="./assets/js/easypiechart.js"></script>
-    <script src="./assets/js/easypiechart-data.js"></script>
-    <script src="./assets/js/bootstrap-datepicker.js"></script>
 	<script>
-		$('#calendar').datepicker({
-		});
 
 		!function ($) {
 		    $(document).on("click","#basic", function(){
@@ -310,24 +287,34 @@
 		  if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
 		})
 
-        function new_user()
+        function addUser()
         {
-            $.post("/webapp/test_user_new.php",
+            var username = $("#user_name_new").val();
+            var password = $("#password_new").val();
+            var authority = $("#auth_new").val();
+            if(username.length==0){
+                alert("请输入用户名");
+                return;
+            }
+            if(password.length<6){
+                alert("密码至少6位");
+                return;
+            }
+            $.post("/addUser.action",
             {
-                user : $("#user_name_new").val(),
-                password : $("#password_new").val(),
-                auth : $("#auth_new").val()
+                username : username,
+                password : password,
             },
-            function(data,status)
-            {
-                alert(data);
+            function(data,status){
+                if(data=='true'){
+                    window.location.href = "/user_management.jsp";
+                }
             });
         }
 
         function modify(id)
         {
             $("#user_name_modi").val($("#user_"+id).text());
-            $("#auth_modi").val($("#auth_"+id).attr("value"));
             $("#modiModal").modal("show");
             $("#modify_button").attr("onclick","change("+id+")");
         }
@@ -339,17 +326,37 @@
             {
                 flag = 1;
             }
-            $.post("/webapp/test_user_modify.php",
+            if($("#password_modi").val().length>0&&$("#password_modi").val().length<6){
+                alert("密码至少6位");
+                return;
+            }
+            $.post("/updateUser.action",
             {
-                auth : $("#auth_modi").val(),
                 password : $("#password_modi").val(),
                 flag : flag,
-                user_id : id
+                id : id
             },
             function(data,status)
             {
-                alert(data);
+                if(data=='true'){
+                    window.location.href = "/user_management.jsp";
+                }
             });
+        }
+
+        function deleteUser(id){
+            if(confirm("确认删除？")){
+                $.post("/deleteUser.action",
+                        {
+                            id : id
+                        },
+                        function(data,status)
+                        {
+                            if(data=='true'){
+                                window.location.href = "/user_management.jsp";
+                            }
+                        });
+            }
         }
 	</script>
 </body>

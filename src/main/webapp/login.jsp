@@ -23,7 +23,7 @@
 			<div class="login-panel panel panel-default">
 				<div class="panel-heading">Log in</div>
 				<div class="panel-body">
-					<form role="form" action="${ctx}/user/userLogin.action" method="post">
+					<form role="form" action="${ctx}/userLogin.action" method="post">
 						<fieldset>
 							<div class="form-group">
 								<input class="form-control" placeholder="User name" id="username" name="username" autofocus="">

@@ -1,7 +1,4 @@
 package action;
-/**
- * Created by Marty Pang on 2017/2/21.
- */
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -25,7 +22,7 @@ public class UserAction extends BaseAction {
     private Integer id=0;
     private String username;
     private String password;
-    private Integer authority;
+    private Integer authority=1;
     private UserService userService;
 
     //getters and setters
@@ -141,20 +138,6 @@ public class UserAction extends BaseAction {
         return SUCCESS;
     }
 
-    /**
-     *
-     * @Description: 跳转到用户管理页面
-     * @author: Martin Pang
-     * @CreateTime: 2016-8-5 上午11:31:04
-     * @return
-     */
-    public String preUserList() {
-        //logger.info("preUserList");
-        // 左侧菜单选中
-        setRequestAttribute("column", "user");
-        setRequestAttribute("onthis", "user");
-        return SUCCESS;
-    }
 
     /**
      *
@@ -162,19 +145,19 @@ public class UserAction extends BaseAction {
      * @author: Martin Pang
      * @CreateTime: 2016-8-5 上午11:30:48
      */
-//    public void getUserList() {
-//        //logger.info("getUserList");
-//        //int beginIndex = getJtStartIndex();
-//        //int pageSize = getJtPageSize();
-//
-//        userService = new UserService();
-//        // 分页获取列表
-//        Map<String, Object> dataMap = userService.getUserList(
-//                beginIndex, pageSize);
-//        // 将数据列表转换成Jtable控件所需的Json字符串
-//        String resultJsonString = changeListToJsonStringWithJtable(dataMap);
-//        Struts2Utils.renderJson(resultJsonString);
-//    }
+    public void getUserList() {
+        //logger.info("getUserList");
+        //int beginIndex = getJtStartIndex();
+        //int pageSize = getJtPageSize();
+
+        userService = new UserService();
+        // 分页获取列表
+        Map<String, Object> dataMap = userService.getUserList(
+                0, 10);
+        // 将数据列表转换成Jtable控件所需的Json字符串
+        String resultJsonString = changeListToJsonStringWithJtable(dataMap);
+        Struts2Utils.renderJson(resultJsonString);
+    }
 
     /**
      *
@@ -183,7 +166,7 @@ public class UserAction extends BaseAction {
      * @CreateTime: 2016-8-5 上午11:37:42
      * @return
      */
-    public String addUser(){
+    public void addUser(){
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("username", username);
         String newPassword = password;
@@ -191,9 +174,8 @@ public class UserAction extends BaseAction {
         dataMap.put("authority",authority);
 
         userService = new UserService();
-        userService.addAdmin(dataMap);
-
-        return SUCCESS;
+        boolean result = userService.addAdmin(dataMap);
+        Struts2Utils.renderText(String.valueOf(result));
     }
 
     /**
@@ -203,12 +185,15 @@ public class UserAction extends BaseAction {
      * @CreateTime: 2016-8-5 上午11:39:40
      */
     public void updateUser(){
+        String flag = getParam("flag");
+        if(flag.equals("1")){
+            Struts2Utils.renderText("true");
+            return;
+        }
         Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("id", id);
-        dataMap.put("username", username);
         String newPassword = password;
         dataMap.put("password", newPassword);
-        dataMap.put("authority", authority);
 
         userService = new UserService();
         boolean result = userService.editAdmin(dataMap);
@@ -239,4 +224,5 @@ public class UserAction extends BaseAction {
         dataMap = userService.getUserInfo(id);
         Struts2Utils.renderJson(JsonUtils.map2Json(dataMap));
     }
+
 }
