@@ -24,7 +24,7 @@
     <script src="./assets/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $.post("/user/getUserList.action",
+        $.post("/getUserList.action",
                 {},
         function(data,status){
             var result = data.Result;
