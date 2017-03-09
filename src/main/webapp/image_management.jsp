@@ -21,6 +21,16 @@
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/x0popup/js/x0popup.min.js"></script>
 
+      <!--fileinput-->
+      <link href="./assets/file-input/css/fileinput.css" rel="stylesheet">
+      <script src="./assets/file-input/js/fileinput.js"></script>
+      <script src="./assets/file-input/js/locales/zh.js"></script>
+
+      <!-- checkbox -->
+      <link href="./assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+      <link href="./assets/pinterest/css/awesome-bootstrap-checkbox.css" rel="stylesheet">
+
+
 
     <!--[if lt IE 9]>
     <script src="./assets/js/html5shiv.js"></script>
@@ -235,7 +245,8 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        图片列表
+                        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#image_upload">添加图片</button>
+                        <button class="btn btn-danger btn-lg" onclick="batchDelete()">批量删除</button>
                     </div>
                     <div class="panel-body"> 
                         <section id="gallery-wrapper">
@@ -254,6 +265,23 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!--图片上传的modal-->
+    <div class="modal fade modal_upload" id="image_upload" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Upload</h4>
+                </div>
+                <div class="modal-body">
+                    <input id="input_image" name="uploadFile" type="file" multiple>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <script src="./assets/pinterest/js/pinterest_grid.js"></script>
 <script src="./assets/pinterest/js/photo-gallery.js"></script>
 <script type="text/javascript">
@@ -288,6 +316,44 @@
     $(window).on('resize', function () {
         if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
     })
+
+    function batchDelete() {
+        var flag=0;
+        var checked = $("input[type='checkbox']:checked");
+        if(checked.length == 0){
+            x0p('提示', '未选择图片！');
+            return;
+        }
+        var filter="";
+        checked.each(function(i){
+            image_id = $(this).attr('id').substr(1);
+            filter = filter + "," + image_id;
+        })
+        x0p('Confirmation', 'Are you sure?', 'warning',
+                function (button) {
+                    if(button == 'cancel'){
+                    }else{
+                        $.post("/deleteImage.action",
+                                {
+                                    filter:filter
+                                },
+                                function(data,status){
+                                    if(data=='true'){
+                                        window.location.href = "/image_management.jsp";
+                                    }
+                                });
+                    }
+                });
+    }
+    
+    $("#input_image").fileinput({
+        language: 'en',
+        uploadUrl: "/upload?type=image",
+        showCaption: true,
+        browseClass: "btn btn-info",
+        allowedPreviewTypes: ['image'],
+        allowedFileExtensions: ['bmp','jpg','jpeg','gif','png']
+    });
 </script>
 </body>
 </html>

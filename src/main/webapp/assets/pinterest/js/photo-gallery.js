@@ -5,10 +5,9 @@
 	var clicked = {};
 
 	function showModal(){
-
-		var src = $(this).attr('src');
-		var img = '<img src="' + src + '" class="img-responsive"/>';
 		var index = $(this).parent('article').attr('data-index');
+		var src = $('#img_b'+index).text();
+		var img = '<img src="' + src + '" class="img-responsive"/>';
 
 		clicked.prevImg = parseInt(index) - parseInt(1);
 		clicked.nextImg = parseInt(index) + parseInt(1);
@@ -33,7 +32,7 @@
 	function nextPrevHandler(){
 
 		var index = $(this).attr('href');
-		var src = $('article[data-index="'+index+'"] img').attr('src');
+		var src = $('#img_b'+index).text();
 
 		$('.modal-body img').attr('src', src);
 
@@ -83,8 +82,8 @@
 					for(var i=0;i<jsonArray.length;++i){
 						var oneline = jsonArray[i];
 						$("#gallery-wrapper").append("<article class='white-panel' id='"+oneline.image_id+"' data-index='"+i+"'><img src='"+
-							oneline.img_s+"' class='thumb'><div id='img_b"+oneline.image_id+"' style='display: none' >"+oneline.img_b+
-							"</div></article>");
+							oneline.img_s+"' class='thumb'><div id='img_b"+i+"' style='display: none' >"+oneline.img_b+
+							"</div><div><div class='checkbox checkbox-danger'><input type='checkbox' id='_"+oneline.image_id+"' class='styled'><label for='_"+oneline.image_id+"'></label></div></div></article>");
 					}
 
 		$('article').each(function(i){
