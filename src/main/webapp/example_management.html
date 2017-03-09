@@ -87,7 +87,7 @@
             <a href="#">
                 <span class="glyphicon glyphicon-list"></span> 基本结构与功能 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id="basic"></span>
             </a>
-            <ul class="children " id="sub-item-1">
+            <ul class="children " id="sub-item-basic">
                 <li>
                     <a class="" href="./room_management.jsp">
                         <span class="glyphicon glyphicon-share-alt"></span> 科室管理
@@ -121,7 +121,7 @@
             <a href="#">
                 <span class="glyphicon glyphicon-list"></span> 职能学习 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
             </a>
-            <ul class="children " id="sub-item-1">
+            <ul class="children " id="sub-item-role">
                 <li>
                     <a class="" href="#">
                         <span class="glyphicon glyphicon-share-alt"></span> 角色扮演管理
@@ -144,6 +144,8 @@
     </ul>
 </div><!--/.sidebar-->
 
+
+
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
         <ol class="breadcrumb">
@@ -160,49 +162,99 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    病例列表
-                </div>
-                <div class="panel-body">
-                    <table class="table" id ="table_content">
-                        <thead>
-                        <tr>
-                            <th >病例类型</th>
-                            <th >病例名称</th>
-                            <th >接诊信息</th>
-                            <th >检查信息</th>
-                            <th >诊断信息</th>
-                            <th >治疗信息</th>
-                            <th >状态</th>
-                            <th >修改</th>
-                        </tr>
-                        </thead>
-                        <tr>
-                            <td id="case_type_1">没病装病</td>
-                            <td id="case_name_1">头晕</td>
-                            <td><button class="btn btn-primary" onclick="welcome(1)">查看</button></td>
-                            <td><button class="btn btn-danger" onclick="check(1)">查看</button></td>
-                            <td><button class="btn btn-warning" onclick="judge(1)">查看</button></td>
-                            <td><button class="btn btn-success" onclick="cure(1)">查看</button></td>
-                            <td>失效</td>
-                            <td><button class="btn btn-default" onclick="view(1)">修改</button></td>
-                        </tr>
+            <ul id="myTab" class="nav nav-tabs">
+                <li class="active">
+                    <a href="#home" data-toggle="tab">
+                        病例管理
+                    </a>
+                </li>
+                <li><a href="#ios" data-toggle="tab">病例类型管理</a></li>
 
-                        <tr>
-                            <td id="case_type_2">小病</td>
-                            <td id="case_name_2">腹泻</td>
-                            <td><button class="btn btn-primary" onclick="welcome(2)">查看</button></td>
-                            <td><button class="btn btn-danger" onclick="check(2)">查看</button></td>
-                            <td><button class="btn btn-warning" onclick="judge(2)">查看</button></td>
-                            <td><button class="btn btn-success" onclick="cure(2)">查看</button></td>
-                            <td>有效</td>
-                            <td><button class="btn btn-default" onclick="view(2)">修改</button></td>
-                        </tr>
-                    </table>
-                    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">增加病例</button>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade in active" id="home">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            病例列表
+                        </div>
+                        <div class="panel-body">
+                            <table class="table" id ="table_content">
+                                <thead>
+                                <tr>
+                                    <th >病例类型</th>
+                                    <th >病例名称</th>
+                                    <th >接诊信息</th>
+                                    <th >检查信息</th>
+                                    <th >诊断信息</th>
+                                    <th >治疗信息</th>
+                                    <th >状态</th>
+                                    <th >修改</th>
+                                </tr>
+                                </thead>
+                                <tr>
+                                    <td id="case_type_1">没病装病</td>
+                                    <td id="case_name_1">头晕</td>
+                                    <td><button class="btn btn-primary" onclick="welcome(1)">查看</button></td>
+                                    <td><button class="btn btn-danger" onclick="check(1)">查看</button></td>
+                                    <td><button class="btn btn-warning" onclick="judge(1)">查看</button></td>
+                                    <td><button class="btn btn-success" onclick="cure(1)">查看</button></td>
+                                    <td>失效</td>
+                                    <td><button class="btn btn-default" onclick="view(1)">修改</button></td>
+                                </tr>
+
+                                <tr>
+                                    <td id="case_type_2">小病</td>
+                                    <td id="case_name_2">腹泻</td>
+                                    <td><button class="btn btn-primary" onclick="welcome(2)">查看</button></td>
+                                    <td><button class="btn btn-danger" onclick="check(2)">查看</button></td>
+                                    <td><button class="btn btn-warning" onclick="judge(2)">查看</button></td>
+                                    <td><button class="btn btn-success" onclick="cure(2)">查看</button></td>
+                                    <td>有效</td>
+                                    <td><button class="btn btn-default" onclick="view(2)">修改</button></td>
+                                </tr>
+                            </table>
+                            <button class="btn btn-primary btn-lg" data-toggle="modal" onclick="add()">增加病例</button>
+                        </div>
+                    </div>
                 </div>
+                <div class="tab-pane fade" id="ios">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            病例类型列表
+                        </div>
+                        <div class="panel-body">
+                            <table class="table" id ="type_content">
+                                <thead>
+                                <tr>
+                                    <th >类型ID</th>
+                                    <th >类型名称</th>
+                                    <th >更新时间</th>
+                                    <th >状态</th>
+                                    <th >修改</th>
+                                </tr>
+                                </thead>
+                                <tr>
+                                    <td id="type_1">1</td>
+                                    <td id="type_name_1">没病装病</td>
+                                    <td>2222</td>
+                                    <td>1</td>
+                                    <td><button class="btn btn-primary" onclick="modifyType(1)">修改</button></td>
+                                </tr>
+                                <tr>
+                                    <td id="type_2">2</td>
+                                    <td id="type_name_2">小病</td>
+                                    <td>3333</td>
+                                    <td>1</td>
+                                    <td><button class="btn btn-primary" onclick="modifyType(2)">修改</button></td>
+                                </tr>
+                            </table>
+                            <button class="btn btn-primary btn-lg" data-toggle="modal" onclick="addType()">增加类型</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
 
 
         </div>
@@ -389,10 +441,55 @@
                     <table class="table">
                         <tr>
                             <td>病例名</td>
-                            <td><input class = 'form-control' id=""/></td>
+                            <td><input class = 'form-control' id="judge_name" readonly/></td>
                         </tr>
 
+                        <tr>
+                            <td>检查文字</td>
+                            <td><textarea class = 'form-control' id="judge_text"/></textarea></td>
+                        </tr>
 
+                        <tr>
+                            <td>检查图片</td>
+                            <td id="judge_pic_list">
+                                <div class="row">
+                                    <div class="col-xs-4">图片</div>
+                                    <div class="col-xs-4">上传时间</div>
+                                    <div class="col-xs-4">操作</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>选择图片</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" id="judge_choose_pic_button">选择图片</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>检查视频</td>
+                            <td id="judge_video_list">
+                                <div class="row">
+                                    <div class="col-xs-4">视频</div>
+                                    <div class="col-xs-4">上传时间</div>
+                                    <div class="col-xs-4">操作</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>选择视频</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" id="judge_choose_video_button">选择视频</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
 
                     </table>
                 </div>
@@ -401,7 +498,7 @@
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary" onclick="new_case()">
+                <button type="button" class="btn btn-primary" id="judge_submit">
                     提交
                 </button>
             </div>
@@ -425,10 +522,55 @@
                     <table class="table">
                         <tr>
                             <td>病例名</td>
-                            <td><input class = 'form-control' id=""/></td>
+                            <td><input class = 'form-control' id="cure_name" readonly/></td>
                         </tr>
 
+                        <tr>
+                            <td>检查文字</td>
+                            <td><textarea class = 'form-control' id="cure_text"/></textarea></td>
+                        </tr>
 
+                        <tr>
+                            <td>检查图片</td>
+                            <td id="cure_pic_list">
+                                <div class="row">
+                                    <div class="col-xs-4">图片</div>
+                                    <div class="col-xs-4">上传时间</div>
+                                    <div class="col-xs-4">操作</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>选择图片</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" id="cure_choose_pic_button">选择图片</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>检查视频</td>
+                            <td id="cure_video_list">
+                                <div class="row">
+                                    <div class="col-xs-4">视频</div>
+                                    <div class="col-xs-4">上传时间</div>
+                                    <div class="col-xs-4">操作</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>选择视频</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-primary" id="cure_choose_video_button">选择视频</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
 
                     </table>
                 </div>
@@ -437,7 +579,7 @@
                 <button type="button" class="btn btn-default"
                         data-dismiss="modal">关闭
                 </button>
-                <button type="button" class="btn btn-primary" onclick="new_case()">
+                <button type="button" class="btn btn-primary" id="cure_submit">
                     提交
                 </button>
             </div>
@@ -489,7 +631,7 @@
                 <button type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">×
                 </button>
-                <h4 class="modal-title" id="">
+                <h4 class="modal-title" >
                     增加病例
                 </h4>
             </div>
@@ -556,7 +698,7 @@
                         aria-hidden="true">×
                 </button>
                 <h4 class="modal-title">
-                    选择图片
+                    选择视频
                 </h4>
             </div>
             <div class="modal-body">
@@ -578,6 +720,97 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<!--   新增病例类型模态框     -->
+<div class="modal fade" id="add_type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" >
+                    增加病例类型
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class = "row">
+                    <table class="table">
+                        <tr>
+                            <td>病例类型名</td>
+                            <td><input class = 'form-control' id="new_type_name"/></td>
+                        </tr>
+
+                        <tr>
+                            <td>病例类型描述</td>
+                            <td><textarea class = 'form-control' id="new_type_desc"></textarea></td>
+                        </tr>
+
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="new_case_type_submit()">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- 修改病例类型   -->
+<div class="modal fade" id="modify_type_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×
+                </button>
+                <h4 class="modal-title" >
+                    修改病例类型
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class = "row">
+                    <table class="table">
+                        <tr>
+                            <td>病例类型名</td>
+                            <td><input class = 'form-control' id="modify_type_name"/></td>
+                        </tr>
+
+                        <tr>
+                            <td>病例类型描述</td>
+                            <td><textarea class = 'form-control' id="modify_type_desc"></textarea></td>
+                        </tr>
+
+                        <tr>
+                            <td>病例状态</td>
+                            <td>
+                                <select class="form-control">
+                                    <option value="0">删除</option>
+                                    <option value="1">创建</option>
+                                    <option value="2">发布</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="modify_case_type_submit()">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <script>
     function uploadImage() {
         $("#input_image").fileinput('refresh');
@@ -603,11 +836,24 @@
         if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
     })
 
-
+    $.post("./test_for_widgets.php",
+        {
+        },
+        function(data,status)
+        {
+            $("#sub-item-basic").empty();
+            $("#sub-item-basic").append("<li><a href=''><span class='glyphicon glyphicon-share-alt'></span> 科室管理</a></li>");
+            json1 = eval("("+data+")");
+            for(i=0;i<json1.length;i++)
+            {
+                $("#sub-item-basic").append("<li><a href='"+json1[i].id+"'><span class='glyphicon glyphicon-share-alt'></span> "+json1[i].name+"</a></li>");
+            }
+        });
 
 
 </script>
 <script src="./assets/js/case_manage.js"></script>
+<script src="./assets/js/case_type_manage.js"></script>
 </body>
 
 </html>
