@@ -1,5 +1,7 @@
 package servlet;
 
+import service.VideoService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +28,7 @@ public class VideoServlet extends HttpServlet {
             throws ServletException, IOException {
         String savePath = this.getServletConfig().getServletContext()
                 .getRealPath("");
+        String rootPath = savePath;
         String folad = "upload";
         savePath = savePath + "\\"+folad+"\\";
 
@@ -63,7 +66,7 @@ public class VideoServlet extends HttpServlet {
                 }
             });
 
-            File outputFile = new File(savePath+"/"+filename);
+            File outputFile = new File(savePath+"/video/"+filename);
             //创建文件
             outputFile.createNewFile();
             //输出流
@@ -84,6 +87,10 @@ public class VideoServlet extends HttpServlet {
                 tempFile.delete();
             }
             System.out.println("合并成功");
+
+            //插入视频记录
+            new VideoService().addVideo(rootPath,filename);
+
         }else if(action.equals("checkChunk")){
             //检查当前分块是否上传成功
             String fileMd5 = request.getParameter("fileMd5");

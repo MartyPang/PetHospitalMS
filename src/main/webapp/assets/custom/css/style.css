@@ -1,87 +1,7 @@
-body {
-    margin-top: 50px;
-    font-size: 16px;
-    font-family: "Myriad Pro", "Hiragino Sans GB","Microsoft YaHei","微软雅黑", Calibri, Helvetica, tahoma,arial,simsun,"宋体", sans-serif;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
-
-.jumbotron {
-    background: transparent url(../images/banner.jpg) repeat-x 50% 0%;
-    color: #fff;
-    text-shadow: 1px 1px 1px #3b3262;
-    margin-bottom: 0;
-}
-
-.jumbotron .container {
-    position: relative;
-}
-
-.jumbotron .github-btns {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
-
-.fetature {
-    margin-top: 30px;
-}
-
-.page-body {
-    min-height: 450px;
-}
-
-.page-container {
-    margin-top: 10px;
-}
-
-.page-container h1,
-.page-container h2,
-.page-container h3 {
-    padding-top: 70px;
-    margin-top: -50px;
-}
-
-.logo {
-    position: relative;
-    padding-left: 60px;
-}
-.logo span {
-    position: absolute;
-    left: 15px;
-    top: 8px;
-    font-size: 2em;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-}
-.logo.active {
-    color: #fff;
-}
-@media (min-width: 768px) {
-    .fetature .row .col-lg-4 {
-        min-height: 250px;
-    }
-}
-.footer {
-    width: 100%;
-    overflow: hidden;
-    color: #f2f2f2;
-    background: #212121;
-    margin-top: 50px;
-}
-.footer-fixed-bottom {
-    position: fixed;
-    bottom: 0;
-}
-.footer a {
-    color: #f2f2f2;
-}
-.footer .footer-inner {
-    margin: 15px;
-}
 .wu-example {
     position: relative;
-    padding: 45px 15px 15px;
-    margin: 15px 0;
+    padding: 0px 0px 0px;
+    margin: 0px 0;
     background-color: #fafafa;
     box-shadow: inset 0 3px 6px rgba(0, 0, 0, .05);
     border-color: #e5e5e5 #eee #eee;
@@ -89,10 +9,9 @@ body {
     border-width: 1px 0;
 }
 .wu-example:after {
-    content:"示例";
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 0px;
+    left: 0px;
     font-size: 12px;
     font-weight: bold;
     color: #bbb;

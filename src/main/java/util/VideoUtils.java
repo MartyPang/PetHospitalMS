@@ -12,7 +12,7 @@ import java.util.List;
 public class VideoUtils {
 	private static final Logger logger = Logger.getLogger(VideoUtils.class);
 
-	private static String ffmpegPath = "";
+	private static String ffmpegPath = "F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\assets\\tool\\ffmpeg";
 	private static String mencoderPath = "";
 
 //	public static void main(String[] args) throws InterruptedException {

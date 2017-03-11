@@ -11,6 +11,7 @@
     <include file="struts-user.xml"></include>
     <include file="struts-case.xml"></include>
     <include file="struts-image.xml"></include>
+    <include file="struts-video.xml"></include>
     <package name="default" namespace="/" extends="struts-default">
     <!--
     <global-results>
