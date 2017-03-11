@@ -23,10 +23,6 @@
     <script src="${ctx}/assets/file-input/js/fileinput.js"></script>
     <script src="${ctx}/assets/file-input/js/locales/zh.js"></script>
 
-    <!--jquery-confirm-->
-    <link href="${ctx}/assets/jquery-confirm/css/jquery-confirm.css" rel="stylesheet">
-    <script src="${ctx}/assets/jquery-confirm/js/jquery-confirm.js"></script>
-
     <script type="text/javascript">
         function uploadText() {
             $("#input_text").fileinput('refresh');

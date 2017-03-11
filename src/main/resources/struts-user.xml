@@ -11,10 +11,6 @@
             <result>/login.jsp</result>
         </action>
         <action name="userLogin" class="action.UserAction" method="userLogin">
-            <!--<result type="redirectAction">
-                <param name="namespace">/article</param>
-                <param name="actionName">preArticleList</param>
-            </result> -->
             <result name="success">/main.jsp</result>
             <result name="failed">/login.jsp</result>
         </action>
