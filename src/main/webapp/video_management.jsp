@@ -24,6 +24,7 @@
   	<script src="./assets/js/jquery-1.11.1.min.js"></script>
   	<script src="./assets/js/bootstrap.min.js"></script>
   	<script src="./assets/x0popup/js/x0popup.min.js"></script>
+  	<script src="./assets/dplayer/DPlayer.min.js"></script>
 
   	<!-- checkbox -->
   	<link href="./assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -165,6 +166,17 @@
   			</div>
   		</div><!--/.row-->
   	</div>	<!--/.main-->
+
+  	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  		<div class="modal-dialog">
+  			<div class="modal-content">
+  				<div class="modal-body">
+  					<div class="dplayer" id="video_player"></div>
+  				</div>
+  			</div><!-- /.modal-content -->
+  		</div><!-- /.modal-dialog -->
+  	</div><!-- /.modal -->
+
   	<div class="modal fade" id="video_upload" tabindex="-1" role="dialog" aria-hidden="true">
   		<div class="modal-dialog modal-lg">
   			<div class="modal-content">
@@ -199,68 +211,68 @@
   	</div>
   	<script type="text/javascript" src="${ctx}/assets/webuploader-0.1.5/webuploader.js"></script>
   	<script src="./assets/pinterest/js/pinterest_grid.js"></script>
-  	  	<script type="text/javascript" src="${ctx}/assets/custom/js/demo.js"></script>
-	<script type="text/javascript">
-		$(function(){
-			$("#gallery-wrapper").pinterest_grid({
-				no_columns: 4,
-				padding_x: 10,
-				padding_y: 10,
-				margin_bottom: 50,
-				single_column_breakpoint: 700
-			});
+  	<script type="text/javascript" src="${ctx}/assets/custom/js/demo.js"></script>
+  	<script type="text/javascript">
+  		$(function(){
+  			$("#gallery-wrapper").pinterest_grid({
+  				no_columns: 4,
+  				padding_x: 10,
+  				padding_y: 10,
+  				margin_bottom: 50,
+  				single_column_breakpoint: 700
+  			});
 
-		});
-	</script>
-	<script type="text/javascript">
-		!function ($) {
-			$(document).on("click","#basic", function(){
-				$('#basic_em').toggleClass("glyphicon-minus");
-			});
-			$('#basic_em').addClass("glyphicon-plus");
-		}(window.jQuery);
+  		});
+  	</script>
+  	<script type="text/javascript">
+  		!function ($) {
+  			$(document).on("click","#basic", function(){
+  				$('#basic_em').toggleClass("glyphicon-minus");
+  			});
+  			$('#basic_em').addClass("glyphicon-plus");
+  		}(window.jQuery);
 
-		!function ($) {
-			$(document).on("click","#role", function(){
-				$('#role_em').toggleClass("glyphicon-minus");
-			});
-			$('#role_em').addClass("glyphicon-plus");
-		}(window.jQuery);
-		$(window).on('resize', function () {
-			if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-		})
-		$(window).on('resize', function () {
-			if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-		})
+  		!function ($) {
+  			$(document).on("click","#role", function(){
+  				$('#role_em').toggleClass("glyphicon-minus");
+  			});
+  			$('#role_em').addClass("glyphicon-plus");
+  		}(window.jQuery);
+  		$(window).on('resize', function () {
+  			if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+  		})
+  		$(window).on('resize', function () {
+  			if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+  		})
 
-		function batchDelete() {
-			var flag=0;
-			var checked = $("input[type='checkbox']:checked");
-			if(checked.length == 0){
-				x0p('提示', '未选择视频！');
-				return;
-			}
-			var filter="";
-			checked.each(function(i){
-				video_id = $(this).attr('id').substr(1);
-				filter = filter + "," + video_id;
-			})
-			x0p('Confirmation', 'Are you sure?', 'warning',
-				function (button) {
-					if(button == 'cancel'){
-					}else{
-						$.post("/deleteVideo.action",
-						{
-							filter:filter
-						},
-						function(data,status){
-							if(data=='true'){
-								window.location.href = "/video_management.jsp";
-							}
-						});
-					}
-				});
-		}
-	</script>
+  		function batchDelete() {
+  			var flag=0;
+  			var checked = $("input[type='checkbox']:checked");
+  			if(checked.length == 0){
+  				x0p('提示', '未选择视频！');
+  				return;
+  			}
+  			var filter="";
+  			checked.each(function(i){
+  				video_id = $(this).attr('id').substr(1);
+  				filter = filter + "," + video_id;
+  			})
+  			x0p('Confirmation', 'Are you sure?', 'warning',
+  				function (button) {
+  					if(button == 'cancel'){
+  					}else{
+  						$.post("/deleteVideo.action",
+  						{
+  							filter:filter
+  						},
+  						function(data,status){
+  							if(data=='true'){
+  								window.location.href = "/video_management.jsp";
+  							}
+  						});
+  					}
+  				});
+  		}
+  	</script>
   </body>
   </html>

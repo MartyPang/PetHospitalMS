@@ -529,15 +529,44 @@ jQuery(function() {
                         "</div><div><div class='checkbox checkbox-danger'><input type='checkbox' id='_" + oneline.video_id + "' class='styled'><label for='_" + oneline.video_id + "'></label></div></div></article>");
                 }
 
-                // $('article').each(function(i) {
-                //     $(this).attr('data-index', i);
-                //     var img = $(this).find('img');
-                //     img.on('click', showModal);
-                // });
+                $('article').each(function(i) {
+                    $(this).attr('data-index', i);
+                    var img = $(this).find('img');
+                    img.on('click', showModal);
+                });
             }
             //alert(data.Records);
         });
 });
+
+
+function showModal() {
+    var index = $(this).parent('article').attr('data-index');
+    var src = $('#v_path' + index).text();
+    var pic = $(this).attr('src');
+
+
+    $('#myModal').modal('show');
+    var dp = new DPlayer({
+        element: document.getElementById('video_player'), // Optional, player element
+        autoplay: false, // Optional, autoplay video, not supported by mobile browsers
+        theme: '#FADFA3', // Optional, theme color, default: #b7daff
+        loop: true, // Optional, loop play music, default: true
+        lang: 'zh', // Optional, language, `zh` for Chinese, `en` for English, default: Navigator language
+        screenshot: true, // Optional, enable screenshot function, default: false, NOTICE: if set it to true, video and video poster must enable Cross-Origin
+        hotkey: true, // Optional, binding hot key, including left right and Space, default: true
+        preload: 'auto', // Optional, the way to load music, can be 'none' 'metadata' 'auto', default: 'auto'
+        video: { // Required, video info
+            url: src, // Required, video link
+            pic: pic, // Optional, video poster
+            type: 'auto' // Optional, video type, `flv` for flv format, `hls` for m3u8 format, `normal` for mp4 ogg and webm format, `auto` for automatic detection, default: `auto`
+        },
+    });
+
+    $('#myModal').on('hidden.bs.modal', function() {
+        $('#myModal .modal-body .dplayer').html('');
+    });
+}
 
 function closeUploader() {
     // 移除所有缩略图并将上传文件移出上传序列
