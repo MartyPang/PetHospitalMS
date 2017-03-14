@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <package name="dpm" extends="default" namespace="/">
+        <action name="getDepartmentList" class="action.DepartmentAction" method="getDepartmentList">
+        </action>
+        <action name="addDepartment" class="action.DepartmentAction" method="addDepartment">
+        </action>
+        <action name="updateDepartment" class="action.DepartmentAction" method="updateDepartment">
+        </action>
+        <action name="deleteDepartment" class="action.DepartmentAction" method="deleteDepartment">
+        </action>
+        <action name="getDepartmentInfo" class="action.DepartmentAction" method="getDepartmentInfo">
+        </action>
+    </package>
+</struts>

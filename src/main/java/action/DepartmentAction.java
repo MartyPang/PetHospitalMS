@@ -47,8 +47,8 @@ public class DepartmentAction extends BaseAction {
 
     public void addDepartment(){
         Map<String, Object> departmentMap = new HashMap<String, Object>();
-        departmentMap.put("dmp_name",dpm_name);
-        departmentMap.put("dmp_des",dpm_des);
+        departmentMap.put("dpm_name",dpm_name);
+        departmentMap.put("dpm_des",dpm_des);
         departmentMap.put("func",func);
         departmentMap.put("role_id",role_id);
         departmentMap.put("role_name",role_name);

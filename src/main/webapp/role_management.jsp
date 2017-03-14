@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -7,11 +7,15 @@
 
 	<link href="./assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="./assets/css/styles.css" rel="stylesheet">
+	<link href="./assets/x0popup/css/x0popup.min.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="./assets/js/html5shiv.js"></script>
     <script src="./assets/js/respond.min.js"></script>
     <![endif]-->
+	<script src="./assets/js/jquery-1.11.1.min.js"></script>
+	<script src="./assets/js/bootstrap.min.js"></script>
+	<script src="./assets/x0popup/js/x0popup.min.js"></script>
 
     <script type="text/javascript">
     	$(document).ready(function() {
@@ -29,9 +33,9 @@
     						if(role_des.length>15){
     							role_des = role_des.substr(0,15);
     						}
-    						$("#user_table").append("<tr><td id='role_id"+role_id+"'>"+role_id+"<td id='role_name"+role_id+"'>"+role_name+
+    						$("#role_table").append("<tr><td id='role_id"+role_id+"'>"+role_id+"<td id='role_name"+role_id+"'>"+role_name+
     							"</td><td>"+role_des+
-    							"</td><td><button class='btn btn-primary' onclick='showModifyModal("+role_id+ ")'>修改</button></td> <td><button class='btn btn-success' onclick='deleterole("+role_id+")'>删除</button></td> </tr>");
+    							"</td><td><button class='btn btn-primary' onclick='showModifyModal("+role_id+ ")'>修改</button></td> <td><button class='btn btn-success' onclick='deleteRole("+role_id+")'>删除</button></td> </tr>");
     					}
     				}
                         //alert(data.Records);
@@ -69,7 +73,7 @@
 		<ul class="nav menu">
 			<a href="#">
 				<li class="parent">
-					<span class="glyphicon glyphicon-list"></span> 用户管理 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
+					<span class="glyphicon glyphicon-list"></span> 用户管理 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"></span>
 				</a>
 				<ul class="children " id="sub-item-1">
 					<li>
@@ -90,7 +94,7 @@
 				<a href="#">
 					<span class="glyphicon glyphicon-list"></span> 基本结构与功能 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id="basic"></span>
 				</a>
-				<ul class="children " id="sub-item-1">
+				<ul class="children ">
 					<li>
 						<a class="" href="./room_management.jsp">
 							<span class="glyphicon glyphicon-share-alt"></span> 角色管理
@@ -124,7 +128,7 @@
 				<a href="#">
 					<span class="glyphicon glyphicon-list"></span> 职能学习 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right" id='role'></span>
 				</a>
-				<ul class="children " id="sub-item-1">
+				<ul class="children ">
 					<li>
 						<a class="" href="#">
 							<span class="glyphicon glyphicon-share-alt"></span> 角色扮演管理
@@ -168,7 +172,7 @@
 						角色列表
 					</div>
 					<div class="panel-body">
-						<table class="table">
+						<table class="table" id="role_table">
 							<thead id ="table_content">
 								<tr>
 									<th >角色ID</th>
@@ -270,8 +274,6 @@
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script src="./assets/js/jquery-1.11.1.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
 <script>
 	!function ($) {
 		$(document).on("click","#basic", function(){
@@ -300,7 +302,7 @@
 			x0p("提示","请输入角色名");
 			return;
 		}
-		role_des_new = $("#role_des_new").text();
+		role_des_new = $("#role_des_new").val();
 		if(role_des_new.length == 0){
 			x0p("提示","请输入角色描述");
 			return;
@@ -339,13 +341,14 @@
 			x0p("提示","请输入角色名");
 			return;
 		}
-		role_des_modi = $("#role_des_modi").text();
+		role_des_modi = $("#role_des_modi").val();
 		if(role_des_modi.length == 0){
 			x0p("提示","请输入角色描述");
 			return;
 		}
 		$.post("/updateRole.action",
 		{
+			role_id : id,
 			role_name : role_name_modi,
 			role_des : role_des_modi,
 		},
@@ -362,7 +365,7 @@
 			function (button) {
 				if(button == 'cancel'){
 				}else{
-					$.post("/deleterole.action",
+					$.post("/deleteRole.action",
 					{
 						role_id : id
 					},

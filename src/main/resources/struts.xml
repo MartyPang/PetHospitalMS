@@ -12,6 +12,8 @@
     <include file="struts-case.xml"></include>
     <include file="struts-image.xml"></include>
     <include file="struts-video.xml"></include>
+    <include file="struts-dpm.xml"></include>
+    <include file="struts-role.xml"></include>
     <package name="default" namespace="/" extends="struts-default">
     <!--
     <global-results>
@@ -29,9 +31,6 @@
         <!-- 当返回login视图名时，转入/login.jsp页面 -->
         <result name="login">/login.jsp</result>
     </global-results>
-
-
-
     </package>
 
 
