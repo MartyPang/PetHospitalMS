@@ -35,7 +35,7 @@ function new_case_type_submit() {
         },
         function(data, status) {
             if (data == 'true') {
-                window.location.href = "example_management.html";
+                window.location.href = "../../example_management.jsp";
             }
         });
 }
@@ -63,7 +63,7 @@ function modify_case_type_submit() {
         },
         function(data, status) {
             if (data == 'true') {
-                window.location.href = "example_management.html";
+                window.location.href = "../../example_management.jsp";
             }
         })
 }

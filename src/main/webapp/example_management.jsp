@@ -17,6 +17,8 @@
     <script src="./assets/js/bootstrap.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function() {
+        //获取case列表
+        
         //获取caseType列表
         $.post("/getCaseTypeList.action", {},
             function(data, status) {
