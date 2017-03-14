@@ -6,6 +6,9 @@
 
 <struts>
     <package name="dpm" extends="default" namespace="/">
+        <action name="preDepartmentManage" class="action.DepartmentAction" method="preDepartmentManage">
+            <result name="success">/room_management.jsp</result>
+        </action>
         <action name="getDepartmentList" class="action.DepartmentAction" method="getDepartmentList">
         </action>
         <action name="addDepartment" class="action.DepartmentAction" method="addDepartment">

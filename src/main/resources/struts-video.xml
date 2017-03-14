@@ -6,6 +6,9 @@
 
 <struts>
     <package name="video" extends="default" namespace="/">
+        <action name="preVideoManage" class="action.VideoAction" method="preVideoManage">
+            <result name="success">/video_management.jsp</result>
+        </action>
         <action name="getVideoList" class="action.VideoAction" method="getVideoList">
         </action>
         <action name="deleteVideo" class="action.VideoAction" method="deleteVideo">

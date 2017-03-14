@@ -6,6 +6,9 @@
 
 <struts>
     <package name="role" extends="default" namespace="/">
+        <action name="preRoleManage" class="action.RoleAction" method="preRoleManage">
+            <result name="success">/role_management.jsp</result>
+        </action>
         <action name="getRoleList" class="action.RoleAction" method="getRoleList">
         </action>
         <action name="addRole" class="action.RoleAction" method="addRole">

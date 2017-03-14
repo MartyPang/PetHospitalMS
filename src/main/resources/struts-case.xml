@@ -6,6 +6,9 @@
 
 <struts>
     <package name="case" extends="default" namespace="/">
+        <action name="preCaseManage" class="action.CaseAction" method="preCaseManage">
+            <result name="success">/example_management.jsp</result>
+        </action>
         <action name="getCaseTypeList" class="action.CaseTypeAction" method="getCaseTypeList">
         </action>
         <action name="addCaseType" class="action.CaseTypeAction" method="addCaseType">

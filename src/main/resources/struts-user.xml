@@ -19,6 +19,9 @@
                 <param name="actionName">prepareLogin</param>
             </result>
         </action>
+        <action name="preUserManage" class="action.UserAction" method="preUserManage">
+            <result name="success">/user_management.jsp</result>
+        </action>
         <action name="getUserList" class="action.UserAction" method="getUserList">
         </action>
         <action name="addUser" class="action.UserAction" method="addUser">

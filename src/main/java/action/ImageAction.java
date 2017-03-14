@@ -20,6 +20,10 @@ public class ImageAction extends BaseAction {
     private static final Logger logger = Logger.getLogger(ImageAction.class);
     private ImageService imageService = new ImageService();
 
+    public String preImageManage(){
+        return SUCCESS;
+    }
+
     /**
      * 按页获取图片
      */

@@ -31,6 +31,10 @@ public class DepartmentAction extends BaseAction {
     //所属此科室的角色名
     private String role_name;
 
+    public String preDepartmentManage(){
+        return SUCCESS;
+    }
+
     /**
      * 获取科室列表的一页
      */

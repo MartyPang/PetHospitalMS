@@ -6,6 +6,9 @@
 
 <struts>
     <package name="image" extends="default" namespace="/">
+        <action name="preImageManage" class="action.ImageAction" method="preImageManage">
+            <result name="success">/image_management.jsp</result>
+        </action>
         <action name="getImageList" class="action.ImageAction" method="getImageList">
         </action>
         <action name="deleteImage" class="action.ImageAction" method="deleteImage">

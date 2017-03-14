@@ -15,6 +15,10 @@ public class VideoAction extends BaseAction {
     private static final Logger logger = Logger.getLogger(VideoAction.class);
     private VideoService videoService = new VideoService();
 
+    public String preVideoManage(){
+        return SUCCESS;
+    }
+
     /**
      * 获取视频列表
      */

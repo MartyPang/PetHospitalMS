@@ -62,6 +62,10 @@ public class UserAction extends BaseAction {
         return SUCCESS;
     }
 
+    public String preUserManage(){
+        return SUCCESS;
+    }
+
     /**
      * 处理用户登录操作
      */

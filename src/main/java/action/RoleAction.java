@@ -24,6 +24,10 @@ public class RoleAction extends BaseAction{
     //描述
     private String role_des;
 
+    public String preRoleManage(){
+        return SUCCESS;
+    }
+
     /**
      * 获取角色列表的一页
      */
