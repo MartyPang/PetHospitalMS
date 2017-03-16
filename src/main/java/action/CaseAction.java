@@ -19,6 +19,7 @@ public class CaseAction extends BaseAction{
 
     private Integer case_id = 0;
     private Integer casetype_id;
+    private Integer casetype_name;
     private String case_name;
     private String reception_des;
     private String reception_pic;
@@ -33,6 +34,11 @@ public class CaseAction extends BaseAction{
     private String treatment_pic;
     private String treatment_video;
 
+    private Integer p_type;
+    private String p_list;
+    private Integer v_type;
+    private String v_list;
+
     public String preCaseManage(){
         return SUCCESS;
     }
@@ -46,7 +52,7 @@ public class CaseAction extends BaseAction{
         int beginIndex = getBeginIndex();
         int pageSize = getPageSize();
 
-        Map<String, Object> dataMap = caseService.getCaseList(beginIndex,pageSize);
+        Map<String, Object> dataMap = caseService.getCaseList();
         String resultJsonString = changeListToJsonStringWithJtable(dataMap);
         Struts2Utils.renderJson(resultJsonString);
     }
@@ -55,26 +61,19 @@ public class CaseAction extends BaseAction{
      * 增加病例
      * @return
      */
-    public String addCase(){
+    public void addCase(){
         Map<String, Object> caseMap = new HashMap<String, Object>();
         //获取病例信息
         caseMap.put("casetype_id",casetype_id);
+        caseMap.put("casetype_name",casetype_name);
         caseMap.put("case_name",case_name);
         caseMap.put("reception_des",reception_des);
-        caseMap.put("reception_pic",reception_pic);
-        caseMap.put("reception_video",reception_video);
         caseMap.put("examination_des",examination_des);
-        caseMap.put("examination_pic",examination_pic);
-        caseMap.put("examination_video",examination_video);
         caseMap.put("diagnosis_des",diagnosis_des);
-        caseMap.put("diagnosis_pic",diagnosis_pic);
-        caseMap.put("diagnosis_video",diagnosis_video);
         caseMap.put("treatment_des",treatment_des);
-        caseMap.put("treatment_pic",treatment_pic);
-        caseMap.put("treatment_video",treatment_video);
 
-        caseService.addCase(caseMap);
-        return SUCCESS;
+        boolean result = caseService.addCase(caseMap);
+        Struts2Utils.renderText(String.valueOf(result));
     }
 
     /**
@@ -93,19 +92,13 @@ public class CaseAction extends BaseAction{
         //获取病例信息
         caseMap.put("case_id",case_id);
         caseMap.put("casetype_id",casetype_id);
+        caseMap.put("casetype_name",casetype_name);
         caseMap.put("case_name",case_name);
         caseMap.put("reception_des",reception_des);
-        caseMap.put("reception_pic",reception_pic);
-        caseMap.put("reception_video",reception_video);
         caseMap.put("examination_des",examination_des);
-        caseMap.put("examination_pic",examination_pic);
-        caseMap.put("examination_video",examination_video);
         caseMap.put("diagnosis_des",diagnosis_des);
-        caseMap.put("diagnosis_pic",diagnosis_pic);
-        caseMap.put("diagnosis_video",diagnosis_video);
         caseMap.put("treatment_des",treatment_des);
-        caseMap.put("treatment_pic",treatment_pic);
-        caseMap.put("treatment_video",treatment_video);
+
 
         boolean result = caseService.updateCase(caseMap);
         Struts2Utils.renderText(String.valueOf(result));
@@ -118,6 +111,22 @@ public class CaseAction extends BaseAction{
         Map<String, Object> caseMap = new HashMap<String, Object>();
         caseMap = caseService.getCaseInfo(case_id);
         Struts2Utils.renderJson(JsonUtils.map2Json(caseMap));
+    }
+
+    public void updateCImage(){
+        Map<String, Object> caseMap = new HashMap<String, Object>();
+        caseMap.put("case_id",case_id);
+        caseMap.put("p_type",p_type);
+        caseMap.put("p_list",p_list);
+        caseService.updateCImage(caseMap);
+    }
+
+    public void updateCVideo(){
+        Map<String, Object> caseMap = new HashMap<String, Object>();
+        caseMap.put("case_id",case_id);
+        caseMap.put("v_type",v_type);
+        caseMap.put("v_list",v_list);
+        caseService.updateCVideo(caseMap);
     }
 
     //getters and setters
@@ -239,5 +248,45 @@ public class CaseAction extends BaseAction{
 
     public void setTreatment_video(String treatment_video) {
         this.treatment_video = treatment_video;
+    }
+
+    public Integer getP_type() {
+        return p_type;
+    }
+
+    public void setP_type(Integer p_type) {
+        this.p_type = p_type;
+    }
+
+    public String getP_list() {
+        return p_list;
+    }
+
+    public void setP_list(String p_list) {
+        this.p_list = p_list;
+    }
+
+    public Integer getV_type() {
+        return v_type;
+    }
+
+    public void setV_type(Integer v_type) {
+        this.v_type = v_type;
+    }
+
+    public String getV_list() {
+        return v_list;
+    }
+
+    public void setV_list(String v_list) {
+        this.v_list = v_list;
+    }
+
+    public Integer getCasetype_name() {
+        return casetype_name;
+    }
+
+    public void setCasetype_name(Integer casetype_name) {
+        this.casetype_name = casetype_name;
     }
 }

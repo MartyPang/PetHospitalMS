@@ -24,11 +24,9 @@ public class CaseDao extends BaseDao {
 
     /**
      * 获取一页病例
-     * @param beginIndex 开始索引
-     * @param pageSize 页大小
      * @return
      */
-    public Map<String, Object> getCaseList(int beginIndex, int pageSize){
+    public Map<String, Object> getCaseList(){
         Map<String, Object> dataMap = new HashMap<String, Object>();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         Long totalCount = 0L;
@@ -40,8 +38,8 @@ public class CaseDao extends BaseDao {
             sql = "select count(*) from ph_case where status=1";
             totalCount = getQueryRunner().query(conn,sql,new ScalarHandler<Long>());
             //获取一页病例
-            sql = "select * from ph_case where status<>0 order by casetype_id limit ?,?";
-            list = getQueryRunner().query(conn,sql,new MapListHandler(new BasicRowProcessorFix()),beginIndex,pageSize);
+            sql = "select * from ph_case where status<>0 order by casetype_id";
+            list = getQueryRunner().query(conn,sql,new MapListHandler(new BasicRowProcessorFix()));
             DbUtils.closeQuietly(conn);
         }catch(Exception e){
             logger.error("",e);
@@ -66,29 +64,30 @@ public class CaseDao extends BaseDao {
             conn = DbControl.getConnection();
 
             Integer casetype_id = Integer.parseInt(Case.get("casetype_id").toString());
+            String casetype_name = Case.get("casetype_name").toString();
             String case_name = Case.get("case_name").toString();
             String case_link = createLink();
             String reception_des = Case.get("reception_des").toString();
-            String reception_pic = Case.get("reception_pic").toString();
-            String reception_video = Case.get("reception_video").toString();
+            String reception_pic = "";
+            String reception_video = "";
             String examination_des = Case.get("examination_des").toString();
-            String examination_pic = Case.get("examination_pic").toString();
-            String examination_video = Case.get("examination_video").toString();
+            String examination_pic = "";
+            String examination_video = "";
             String diagnosis_des = Case.get("diagnosis_des").toString();
-            String diagnosis_pic = Case.get("diagnosis_pic").toString();
-            String diagnosis_video = Case.get("diagnosis_video").toString();
+            String diagnosis_pic = "";
+            String diagnosis_video = "";
             String treatment_des = Case.get("treatment_des").toString();
-            String treatment_pic = Case.get("treatment_pic").toString();
-            String treatment_video = Case.get("treatment_video").toString();
+            String treatment_pic = "";
+            String treatment_video = "";
             Integer status = 1;
             String create_time = DateUtils.getCurrentDateTime();
             String update_time = create_time;
 
-            sql = "insert into ph_case(casetype_id,case_name,case_link,reception_des,reception_pic,reception_video," +
+            sql = "insert into ph_case(casetype_id,casetype_name,case_name,case_link,reception_des,reception_pic,reception_video," +
                     "examination_des,examination_pic,examination_video,diagnosis_des,diagnosis_pic,diagnosis_video," +
-                    "treatment_des,treatment_pic,treatment_video,status,create_time,update_time) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "treatment_des,treatment_pic,treatment_video,status,create_time,update_time) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-            result = getQueryRunner().update(conn, sql, casetype_id,case_name,case_link,reception_des,reception_pic,reception_video,
+            result = getQueryRunner().update(conn, sql, casetype_id,casetype_name,case_name,case_link,reception_des,reception_pic,reception_video,
                     examination_des,examination_pic,examination_video,diagnosis_des,diagnosis_pic,diagnosis_video,
                     treatment_des,treatment_pic,treatment_video,status,create_time,update_time)>0?true:false;
             DbUtils.closeQuietly(conn);
@@ -142,30 +141,23 @@ public class CaseDao extends BaseDao {
 
             Integer case_id = Integer.parseInt(Case.get("case_id").toString());
             Integer casetype_id = Integer.parseInt(Case.get("casetype_id").toString());
+            String casetype_name = Case.get("casetype_name").toString();
             String case_name = Case.get("case_name").toString();
             String reception_des = Case.get("reception_des").toString();
-            String reception_pic = Case.get("reception_pic").toString();
-            String reception_video = Case.get("reception_video").toString();
             String examination_des = Case.get("examination_des").toString();
-            String examination_pic = Case.get("examination_pic").toString();
-            String examination_video = Case.get("examination_video").toString();
             String diagnosis_des = Case.get("diagnosis_des").toString();
-            String diagnosis_pic = Case.get("diagnosis_pic").toString();
-            String diagnosis_video = Case.get("diagnosis_video").toString();
             String treatment_des = Case.get("treatment_des").toString();
-            String treatment_pic = Case.get("treatment_pic").toString();
-            String treatment_video = Case.get("treatment_video").toString();
             String update_time = DateUtils.getCurrentDateTime();
 
 
-            sql = "update ph_case set casetype_id=?,case_name=?,reception_des=?,reception_pic=?,reception_video=?," +
-                    "examination_des=?,examination_pic=?,examination_video=?," +
-                    "diagnosis_des=?,diagnosis_pic=?,diagnosis_video=?," +
-                    "treatment_des=?,treatment_pic=?,treatment_pic=?," +
+            sql = "update ph_case set casetype_id=?,casetype_name=?,case_name=?,reception_des=?," +
+                    "examination_des=?," +
+                    "diagnosis_des=?," +
+                    "treatment_des=?," +
                     "update_time=? where case_id=?";
-            result = getQueryRunner().update(conn, sql, casetype_id,case_name,reception_des,reception_pic,reception_video,
-                    examination_des,examination_pic,examination_video,diagnosis_des,diagnosis_pic,diagnosis_video,
-                    treatment_des,treatment_pic,treatment_video,update_time,case_id)>0?true:false;
+            result = getQueryRunner().update(conn, sql, casetype_id,casetype_name,case_name,reception_des,
+                    examination_des,diagnosis_des,
+                    treatment_des,update_time,case_id)>0?true:false;
             DbUtils.closeQuietly(conn);
 
         }catch(Exception e){
@@ -224,5 +216,55 @@ public class CaseDao extends BaseDao {
             DbUtils.closeQuietly(conn);
         }
         return link;
+    }
+
+    public boolean updateCImage(Map<String, Object> caseMap) {
+        Connection conn = null;
+        String sql = "";
+        boolean result = false;
+        try{
+            conn = DbControl.getConnection();
+
+            Integer case_id = Integer.parseInt(caseMap.get("case_id").toString());
+            String p_list= caseMap.get("p_list").toString();
+            String field_name = caseMap.get("field_name").toString();
+
+
+            sql = "update ph_case set "+field_name+"=?,"+
+                    "update_time=? where case_id=?";
+            result = getQueryRunner().update(conn, sql,p_list,DateUtils.getCurrentDateTime(),case_id)>0?true:false;
+            DbUtils.closeQuietly(conn);
+
+        }catch(Exception e){
+            logger.info("CaseDao中updateCImage函数捕获异常: ",e);
+        }finally{
+            DbUtils.closeQuietly(conn);
+        }
+        return result;
+    }
+
+    public boolean updateCVideo(Map<String, Object> caseMap) {        Connection conn = null;
+        String sql = "";
+        boolean result = false;
+        try{
+            conn = DbControl.getConnection();
+
+            Integer case_id = Integer.parseInt(caseMap.get("case_id").toString());
+            String v_list= caseMap.get("v_list").toString();
+            String field_name = caseMap.get("field_name").toString();
+
+
+            sql = "update ph_case set "+field_name+"=?,"+
+                    "update_time=? where case_id=?";
+            result = getQueryRunner().update(conn, sql,v_list,DateUtils.getCurrentDateTime(),case_id)>0?true:false;
+            DbUtils.closeQuietly(conn);
+
+        }catch(Exception e){
+            logger.info("CaseDao中updateCVideo函数捕获异常: ",e);
+        }finally{
+            DbUtils.closeQuietly(conn);
+        }
+        return result;
+
     }
 }

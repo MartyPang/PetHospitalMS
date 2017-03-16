@@ -4,6 +4,7 @@ import dao.VideoDao;
 import util.VideoUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,5 +35,9 @@ public class VideoService {
         filter = filter.substring(1,filter.length());
         filter = "("+filter+")";
         return videoDao.deleteVideo(filter);
+    }
+
+    public List<Map<String,Object>> getVideoListByFilter(String filter) {
+        return videoDao.getVideoListByFilter(filter);
     }
 }

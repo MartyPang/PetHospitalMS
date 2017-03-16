@@ -11,6 +11,8 @@
         </action>
         <action name="getImageList" class="action.ImageAction" method="getImageList">
         </action>
+        <action name="getImageListByFilter" class="action.ImageAction" method="getImageListByFilter">
+        </action>
         <action name="deleteImage" class="action.ImageAction" method="deleteImage">
         </action>
     </package>

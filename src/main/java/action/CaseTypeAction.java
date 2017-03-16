@@ -33,6 +33,7 @@ public class CaseTypeAction extends BaseAction {
 
         Map<String, Object> dataMap = casetypeService.getCaseTypeList(0,10);
         String resultJsonString = changeListToJsonStringWithJtable(dataMap);
+        logger.info(resultJsonString);
         Struts2Utils.renderJson(resultJsonString);
     }
 

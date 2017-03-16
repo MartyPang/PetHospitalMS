@@ -63,7 +63,7 @@ public class VideoDao extends BaseDao {
         String sql = "";
         try{
             conn = DbControl.getConnection();
-            sql = "select * from ph_video where status<>0 and id "+filter;
+            sql = "select * from ph_video where status<>0 and video_id "+filter;
             list = getQueryRunner().query(conn,sql,new MapListHandler(new BasicRowProcessorFix()));
             DbUtils.closeQuietly(conn);
         }catch(Exception e){

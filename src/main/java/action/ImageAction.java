@@ -1,6 +1,5 @@
 package action;
 
-import com.mchange.v2.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,16 +44,15 @@ public class ImageAction extends BaseAction {
         logger.info("getImageListByFilter");
 
         String filter = getRequest().getParameter("filter");
-        if(filter != null && !filter.equals("") && StringUtils.nonEmptyString(filter)){
-            List<Map<String, Object>> list = imageService.getImageListByFilter(filter);
-            // 将List转为JSONArray字符串
-            String res = JsonUtils.listO2Json(list);
-            JSONArray resArray;
-            resArray = new JSONArray(res);
-            JSONObject jObj = new JSONObject();
-            jObj.put("records",resArray);
-            Struts2Utils.renderJson(jObj.toString());
-        }
+        List<Map<String, Object>> list = imageService.getImageListByFilter(filter);
+        // 将List转为JSONArray字符串
+        String res = JsonUtils.listO2Json(list);
+        JSONArray resArray;
+        resArray = new JSONArray(res);
+        JSONObject jObj = new JSONObject();
+        jObj.put("records",resArray);
+        logger.info(jObj);
+        Struts2Utils.renderJson(jObj.toString());
     }
 
     public void deleteImage(){

@@ -9,6 +9,20 @@
         <action name="preCaseManage" class="action.CaseAction" method="preCaseManage">
             <result name="success">/example_management.jsp</result>
         </action>
+        <action name="getCaseList" class="action.CaseAction" method="getCaseList">
+        </action>
+        <action name="addCaseee" class="action.CaseAction" method="addCase">
+        </action>
+        <action name="updateCase" class="action.CaseAction" method="updateCase">
+        </action>
+        <action name="updateCImage" class="action.CaseAction" method="updateCImage">
+        </action>
+        <action name="updateCVideo" class="action.CaseAction" method="updateCVideo">
+        </action>
+        <action name="deleteCase" class="action.CaseAction" method="deleteCase">
+        </action>
+        <action name="getCaseInfo" class="action.CaseAction" method="getCaseInfo">
+        </action>
         <action name="getCaseTypeList" class="action.CaseTypeAction" method="getCaseTypeList">
         </action>
         <action name="addCaseType" class="action.CaseTypeAction" method="addCaseType">

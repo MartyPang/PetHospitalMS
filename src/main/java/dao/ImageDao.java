@@ -63,7 +63,7 @@ public class ImageDao extends BaseDao {
         String sql = "";
         try{
             conn = DbControl.getConnection();
-            sql = "select * from ph_image where status<>0 and id "+filter;
+            sql = "select * from ph_image where status<>0 and image_id "+filter;
             list = getQueryRunner().query(conn,sql,new MapListHandler(new BasicRowProcessorFix()));
             DbUtils.closeQuietly(conn);
         }catch(Exception e){

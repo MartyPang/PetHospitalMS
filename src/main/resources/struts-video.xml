@@ -11,6 +11,8 @@
         </action>
         <action name="getVideoList" class="action.VideoAction" method="getVideoList">
         </action>
+        <action name="getVideoListByFilter" class="action.VideoAction" method="getVideoListByFilter">
+        </action>
         <action name="deleteVideo" class="action.VideoAction" method="deleteVideo">
         </action>
     </package>

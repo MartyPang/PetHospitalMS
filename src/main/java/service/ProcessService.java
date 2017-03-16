@@ -10,10 +10,10 @@ import java.util.Map;
  */
 public class ProcessService {
     //获取流程列表
-    public Map<String, Object> getProcessList(int beginIndex, int pageSize, int p_dmp/**, String sorting, String filter**/) {
+    public Map<String, Object> getProcessList(int p_dmp/**, String sorting, String filter**/) {
         // TODO Auto-generated method stub
         ProcessDao ProcessDao = new ProcessDao();
-        return ProcessDao.getProcessList(beginIndex, pageSize,p_dmp);
+        return ProcessDao.getProcessList(p_dmp);
     }
 
     //获取流程详情
@@ -28,6 +28,18 @@ public class ProcessService {
         // TODO Auto-generated method stub
         ProcessDao ProcessDao = new ProcessDao();
         return ProcessDao.editProcess(param);
+    }
+
+    public boolean updatePImage(Integer p_id, String p_img) {
+        // TODO Auto-generated method stub
+        ProcessDao ProcessDao = new ProcessDao();
+        return ProcessDao.updatePImage(p_id, p_img);
+    }
+
+    public boolean updatePVideo(Integer p_id, String p_video) {
+        // TODO Auto-generated method stub
+        ProcessDao ProcessDao = new ProcessDao();
+        return ProcessDao.updatePVideo(p_id, p_video);
     }
 
     //删除流程

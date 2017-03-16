@@ -1,5 +1,6 @@
 package action;
 
+import com.mchange.v2.lang.StringUtils;
 import org.apache.log4j.Logger;
 import service.ProcessService;
 import util.JsonUtils;
@@ -22,7 +23,7 @@ public class ProcessAction extends BaseAction{
     //流程名称
     private String p_name;
     //流程所属科室id
-    private Integer p_dmp;
+    private Integer p_dpm;
     //流程文字描述
     private String p_content;
     //流程责任
@@ -33,7 +34,15 @@ public class ProcessAction extends BaseAction{
     private String p_video;
 
     public String preProcessManage(){
-        return SUCCESS;
+        String dpm_id = getParam("dpm_id");
+        String dpm_name = getParam("dpm_name");
+        if(StringUtils.nonEmptyString(dpm_id) && StringUtils.nonEmptyString(dpm_name)){
+            setSessionAttribute("dpm_id",dpm_id);
+            setSessionAttribute("dpm_name",dpm_name);
+            return SUCCESS;
+        }
+        //返回错误页面
+        return ERROR;
     }
 
     /**
@@ -45,22 +54,19 @@ public class ProcessAction extends BaseAction{
         int beginIndex = getBeginIndex();
         int pageSize = getPageSize();
 
-        Map<String, Object> dataMap = processService.getProcessList(beginIndex,pageSize,p_dmp);
+        Map<String, Object> dataMap = processService.getProcessList(p_dpm);
         String resultJsonString = changeListToJsonStringWithJtable(dataMap);
         Struts2Utils.renderJson(resultJsonString);
     }
 
-    public String addProcess(){
+    public void addProcess(){
         Map<String, Object> processMap = new HashMap<String, Object>();
         processMap.put("p_name",p_name);
-        processMap.put("p_dmp",p_dmp);
+        processMap.put("p_dpm",p_dpm);
         processMap.put("p_content",p_content);
-        processMap.put("p_responsibility",p_responsibility);
-        processMap.put("p_img",p_img);
-        processMap.put("p_video",p_video);
 
-        processService.addProcess(processMap);
-        return SUCCESS;
+        boolean result = processService.addProcess(processMap);
+        Struts2Utils.renderText(String.valueOf(result));
     }
 
     /**
@@ -79,11 +85,18 @@ public class ProcessAction extends BaseAction{
         processMap.put("p_id",p_id);
         processMap.put("p_name",p_name);
         processMap.put("p_content",p_content);
-        processMap.put("p_responsibility",p_responsibility);
-        processMap.put("p_img",p_img);
-        processMap.put("p_video",p_video);
 
         boolean result = processService.updateProcess(processMap);
+        Struts2Utils.renderText(String.valueOf(result));
+    }
+
+    public void updatePImage(){
+        boolean result = processService.updatePImage(p_id,p_img);
+        Struts2Utils.renderText(String.valueOf(result));
+    }
+
+    public void updatePVideo(){
+        boolean result = processService.updatePVideo(p_id,p_video);
         Struts2Utils.renderText(String.valueOf(result));
     }
 
@@ -113,12 +126,12 @@ public class ProcessAction extends BaseAction{
         this.p_name = p_name;
     }
 
-    public Integer getP_dmp() {
-        return p_dmp;
+    public Integer getP_dpm() {
+        return p_dpm;
     }
 
-    public void setP_dmp(Integer p_dmp) {
-        this.p_dmp = p_dmp;
+    public void setP_dpm(Integer p_dpm) {
+        this.p_dpm = p_dpm;
     }
 
     public String getP_content() {

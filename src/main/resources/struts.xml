@@ -14,6 +14,7 @@
     <include file="struts-video.xml"></include>
     <include file="struts-dpm.xml"></include>
     <include file="struts-role.xml"></include>
+    <include file="struts-process.xml"></include>
     <package name="default" namespace="/" extends="struts-default">
     <!--
     <global-results>
