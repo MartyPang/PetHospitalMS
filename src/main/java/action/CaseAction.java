@@ -19,7 +19,7 @@ public class CaseAction extends BaseAction{
 
     private Integer case_id = 0;
     private Integer casetype_id;
-    private Integer casetype_name;
+    private String casetype_name;
     private String case_name;
     private String reception_des;
     private String reception_pic;
@@ -282,11 +282,11 @@ public class CaseAction extends BaseAction{
         this.v_list = v_list;
     }
 
-    public Integer getCasetype_name() {
+    public String getCasetype_name() {
         return casetype_name;
     }
 
-    public void setCasetype_name(Integer casetype_name) {
+    public void setCasetype_name(String casetype_name) {
         this.casetype_name = casetype_name;
     }
 }

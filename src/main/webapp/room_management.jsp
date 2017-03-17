@@ -355,7 +355,7 @@
 			function (button) {
 				if(button == 'cancel'){
 				}else{
-					$.post("/deleteDpm.action",
+					$.post("/deleteDepartment.action",
 					{
 						dpm_id : id
 					},

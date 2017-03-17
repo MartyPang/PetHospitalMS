@@ -43,7 +43,7 @@
                     if(treatment_des.length>15){
                         treatment_des = treatment_des.substr(0,15)+"...";
                     }
-                    $("#table_content").append("<tr><td>"+jsonArray[i].casetype_id+"/<td><td>"+jsonArray[i].case_name+"</td><td>"+reception_des+"</td><td>"+examination_des+"</td><td>"+diagnosis_des+"</td><td>"+treatment_des+"</td><td>"+jsonArray[i].update_time+"</td><td><button class='btn btn-primary btn-lg' data-toggle='modal' onclick='main("+jsonArray[i].case_id+")'>修改</button></td></tr>");
+                    $("#table_content").append("<tr><td>"+jsonArray[i].casetype_id+"</td><td>"+jsonArray[i].case_name+"</td><td>"+reception_des+"</td><td>"+examination_des+"</td><td>"+diagnosis_des+"</td><td>"+treatment_des+"</td><td>"+jsonArray[i].update_time+"</td><td><button class='btn btn-primary btn-lg' data-toggle='modal' onclick='main("+jsonArray[i].case_id+")'>修改</button></td></tr>");
                 }
             }
         });
@@ -182,7 +182,7 @@
 
                                         <tr>
                                             <td>接诊文字</td>
-                                            <td><textarea class = 'form-control' id="welcome_text"/></textarea></td>
+                                            <td><textarea class = 'form-control' id="welcome_text"></textarea></td>
                                         </tr>
 
                                         <tr>
@@ -235,7 +235,7 @@
 
                                         <tr>
                                             <td>检查文字</td>
-                                            <td><textarea class = 'form-control' id="check_text"/></textarea></td>
+                                            <td><textarea class = 'form-control' id="check_text"></textarea></td>
                                         </tr>
 
                                         <tr>
@@ -288,7 +288,7 @@
 
                                         <tr>
                                             <td>诊断文字</td>
-                                            <td><textarea class = 'form-control' id="judge_text"/></textarea></td>
+                                            <td><textarea class = 'form-control' id="judge_text"></textarea></td>
                                         </tr>
 
                                         <tr>
@@ -341,7 +341,7 @@
 
                                         <tr>
                                             <td>治疗文字</td>
-                                            <td><textarea class = 'form-control' id="cure_text"/></textarea></td>
+                                            <td><textarea class = 'form-control' id="cure_text"></textarea></td>
                                         </tr>
 
                                         <tr>
@@ -661,6 +661,7 @@
 </script>
 <script src="./assets/js/case_manage.js"></script>
 <script src="./assets/js/case_type_manage.js"></script>
+    <script src="./assets/js/sidebar.js"></script>
 </body>
 
 </html>

@@ -32,7 +32,7 @@ public class CaseService {
     }
 
     public void updateCImage(Map<String, Object> caseMap) {
-        Integer type = Integer.parseInt(caseMap.get("type").toString());
+        Integer type = Integer.parseInt(caseMap.get("p_type").toString());
         String field_name = "";
         switch (type){
             case 1:field_name="reception_pic";break;
@@ -45,7 +45,7 @@ public class CaseService {
     }
 
     public void updateCVideo(Map<String, Object> caseMap) {
-        Integer type = Integer.parseInt(caseMap.get("type").toString());
+        Integer type = Integer.parseInt(caseMap.get("v_type").toString());
         String field_name = "";
         switch (type){
             case 1:field_name="reception_video";break;

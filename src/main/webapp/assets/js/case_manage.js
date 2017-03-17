@@ -54,84 +54,77 @@ function main(id) {
             welcome_img_ids = data.reception_pic;
             img_filter = '';
             if (welcome_img_ids.length > 0) {
-
-                img_filter = "in (" + welcome_img_ids.substr(1) + ")"
+                fillPicRow('welcome_pic_list', welcome_img_ids, id, 1);
             } else {
                 img_filter = "in (-1)";
                 welcome_img_ids = 0;
             }
-            fillPicRow('welcome_pic_list', img_filter);
+
 
             check_img_ids = data.examination_pic;
             img_filter = '';
             if (check_img_ids.length > 0) {
-                img_filter = "in (" + check_img_ids.substr(1) + ")"
+                fillPicRow('check_pic_list', check_img_ids, id, 2);
             } else {
                 img_filter = "in (-1)";
                 check_img_ids = 0;
             }
-            fillPicRow('check_pic_list', img_filter);
 
             judge_img_ids = data.diagnosis_pic;
             img_filter = '';
             if (judge_img_ids.length > 0) {
-                img_filter = "in (" + judge_img_ids.substr(1) + ")"
+                fillPicRow('judge_pic_list', judge_img_ids, id, 3);
             } else {
                 img_filter = "in (-1)";
                 judge_img_ids = 0;
             }
-            fillPicRow('judge_pic_list', img_filter);
 
             cure_img_ids = data.treatment_pic;
             img_filter = '';
             if (cure_img_ids.length > 0) {
-                img_filter = "in (" + cure_img_ids.substr(1) + ")"
+                fillPicRow('cure_pic_list', cure_img_ids, id, 4);
             } else {
                 img_filter = "in (-1)";
                 cure_img_ids = 0;
             }
-            fillPicRow('cure_pic_list', img_filter);
 
             //病例已选视频
             welcome_video_ids = data.reception_video;
             v_filter = '';
             if (welcome_video_ids.length > 0) {
-                v_filter = "in (" + welcome_video_ids.substr(1) + ")"
+                fillVideoRow('welcome_video_list', welcome_video_ids, id, 1);
             } else {
                 v_filter = "in (-1)";
                 welcome_video_ids = 0;
             }
-            fillVideoRow('welcome_video_list', v_filter);
 
             check_video_ids = data.examination_video;
             v_filter = '';
             if (check_video_ids.length > 0) {
-                v_filter = "in (" + check_video_ids.substr(1) + ")"
+                fillVideoRow('check_video_list', check_video_ids, id, 2);
             } else {
                 v_filter = "in (-1)";
                 check_video_ids = 0;
             }
-            fillVideoRow('check_video_list', v_filter);
 
             judge_video_ids = data.diagnosis_video;
             v_filter = '';
             if (judge_video_ids.length > 0) {
-                v_filter = "in (" + judge_video_ids.substr(1) + ")"
+                fillVideoRow('judge_video_list', judge_video_ids, id, 3);
             } else {
                 v_filter = "in (-1)";
                 judge_video_ids = 0;
             }
-            fillVideoRow('judge_video_list', v_filter);
 
             cure_video_ids = data.treatment_video;
             v_filter = '';
             if (cure_video_ids.length > 0) {
-                v_filter = "in (" + cure_video_ids.substr(1) + ")"
+                fillVideoRow('cure_video_list', cure_video_ids, id, 4);
             } else {
                 v_filter = "in (-1)";
                 cure_video_ids = 0;
             }
-            fillVideoRow('cure_video_list', v_filter);
+
 
             //按钮绑定点击事件
             $("#welcome_choose_pic_button").attr("onclick", "show_pic_upload(" + id + ",'" + welcome_img_ids + "',1)");
@@ -149,7 +142,8 @@ function main(id) {
 }
 
 //获取已有图片
-function fillPicRow(pic_list_id, img_filter) {
+function fillPicRow(pic_list_id, img_ids, case_id, type) {
+    img_filter = "in (" + img_ids.substr(1) + ")";
     $.post("/getImageListByFilter.action", {
             filter: img_filter
         },
@@ -158,7 +152,7 @@ function fillPicRow(pic_list_id, img_filter) {
             for (i = 0; i < jsonArray.length; i += 3) {
                 pig_row = '<div class = "row">';
                 for (j = 0; j < 3 && i + j < jsonArray.length; j++) {
-                    pig_row += '<div class="col-xs-4"><img style="width:100px;height: 100px" class="img-square" src="' + jsonArray[i + j].img_s + '"/><div class="closeLayer"  onClick="alert(1)"><img src="./assets/images/close.jpeg" style="width:15px;height: 15px"/></div></div>';
+                    pig_row += '<div class="col-xs-4"><img style="width:100px;height: 100px" class="img-square" src="' + jsonArray[i + j].img_s + '"/><div class="closeLayer"  onClick="deletePic(' + jsonArray[i + j].image_id + ',\'' + img_ids + '\',' + case_id + ',' + type + ')"><img src="./assets/images/close.png" style="width:20px;height: 20px"/></div></div>';
                 }
                 pig_row += "</div>";
                 $("#" + pic_list_id).append(pig_row);
@@ -168,7 +162,8 @@ function fillPicRow(pic_list_id, img_filter) {
 }
 
 //获取已有视频
-function fillVideoRow(video_list_id, v_filter) {
+function fillVideoRow(video_list_id, v_ids, case_id, type) {
+    v_filter = "in (" + v_ids.substr(1) + ")";
     $.post("/getVideoListByFilter.action", {
             filter: v_filter
         },
@@ -177,7 +172,7 @@ function fillVideoRow(video_list_id, v_filter) {
             for (i = 0; i < jsonArray.length; i += 3) {
                 v_row = '<div class = "row">';
                 for (j = 0; j < 3 && i + j < jsonArray.length; j++) {
-                    v_row += '<div class="col-xs-4"><img style="width:100px;height: 100px" class="img-square" src="' + jsonArray[i + j].cover_img + '"/><div class="closeLayer"  onClick="alert(1)"><img src="./assets/images/close.jpeg" style="width:15px;height: 15px"/></div></div>';
+                    v_row += '<div class="col-xs-4"><img style="width:100px;height: 100px" class="img-square" src="' + jsonArray[i + j].cover_img + '"/><div class="closeLayer"  onClick="deleteVideo(' + jsonArray[i + j].video_id + ',\'' + v_ids + '\',' + case_id + ',' + type + ')"><img src="./assets/images/close.png" style="width:20px;height:20px"/></div></div>';
                 }
                 v_row += "</div>";
                 $("#" + video_list_id).append(v_row);
@@ -194,7 +189,7 @@ function show_pic_upload(case_id, img_ids, type) {
     } else {
         img_filter = "not in (-1)";
     }
-    $.post("/getVideoListByFilter.action", {
+    $.post("/getImageListByFilter.action", {
             filter: img_filter
         },
         function(data, status) {
@@ -202,7 +197,7 @@ function show_pic_upload(case_id, img_ids, type) {
             jsonArray = data.records;
             for (i = 0; i < jsonArray.length; i += 3) {
                 row = '<tr>';
-                for (j = 0; j < 3; j++) {
+                for (j = 0; j < 3 && i + j < jsonArray.length; j++) {
                     row += '<td><input name="pic_box" type="checkbox" value="' + jsonArray[i + j].image_id + '"><img style="width:100px;height: 100px" class="img-square" src="' + jsonArray[i + j].img_s + '"/></td>';
                 }
                 row += "</tr>";
@@ -210,7 +205,7 @@ function show_pic_upload(case_id, img_ids, type) {
             }
         });
     $("#main_modal").modal("hide");
-    $("#pic_upload_button").attr("onclick", "upload_pic(" + case_id + "," + img_ids + "," + type + ")");
+    $("#pic_upload_button").attr("onclick", "upload_pic(" + case_id + ",'" + img_ids + "'," + type + ")");
     $("#pic_modal").modal("show");
 }
 
@@ -230,7 +225,7 @@ function show_video_upload(case_id, v_ids, type) {
             jsonArray = data.records;
             for (i = 0; i < jsonArray.length; i += 3) {
                 row = '<tr>';
-                for (j = 0; j < 3; j++) {
+                for (j = 0; j < 3 && i + j < jsonArray.length; j++) {
                     row += '<td><input name="video_box" type="checkbox" value="' + jsonArray[i + j].video_id + '"><img style="width:100px;height: 100px" class="img-square" src="' + jsonArray[i + j].cover_img + '"/></td>';
                 }
                 row += "</tr>";
@@ -238,7 +233,7 @@ function show_video_upload(case_id, v_ids, type) {
             }
         });
     $("#main_modal").modal("hide");
-    $("#video_upload_button").attr("onclick", "upload_video(" + case_id + "," + v_ids + "," + type + ")");
+    $("#video_upload_button").attr("onclick", "upload_video(" + case_id + ",'" + v_ids + "'," + type + ")");
     $("#video_modal").modal("show");
 }
 
@@ -255,31 +250,31 @@ function upload_pic(case_id, img_ids, type) {
         img_ids = pic_list;
     }
     $.post("/updateCImage.action", {
-            case_id: id,
+            case_id: case_id,
             p_type: type,
-            p_list: pic_list
+            p_list: img_ids
         },
         function(data, status) {
             $("#pic_modal").modal("hide");
             $("#pic_table").empty();
             pic_list = "";
-            main(id);
+            main(case_id);
         });
 
 }
 
 //更新所选视频
 function upload_video(case_id, v_ids, type) {
-    video_list = "";
+    v_list = "";
     $("input[name='video_box']:checked").each(function() { //由于复选框一般选中的是多个,所以可以循环输出选中的值
-        video_list = video_list + "," + ($(this).val());
+        v_list = v_list + "," + ($(this).val());
     });
     if (v_ids.length > 1) {
         v_ids = v_ids + v_list;
     } else {
         v_ids = v_list;
     }
-    $.post("/updaateCVideo.action", {
+    $.post("/updateCVideo.action", {
             case_id: case_id,
             v_type: type,
             v_list: v_ids
@@ -288,9 +283,47 @@ function upload_video(case_id, v_ids, type) {
             $("#video_modal").modal("hide");
             $("#video_table").empty();
             video_list = "";
-            main(id);
+            main(case_id);
         });
 
+}
+
+function deletePic(image_id, img_ids, case_id, type) {
+    image_id = "," + image_id;
+    var reg = new RegExp(image_id, "g");
+    img_ids = img_ids.replace(reg, "");
+    x0p('Confirmation', 'Are you sure?', 'warning',
+        function(button) {
+            if (button == 'cancel') {} else {
+                $.post("/updateCImage.action", {
+                        case_id: case_id,
+                        p_type: type,
+                        p_list: img_ids
+                    },
+                    function(data, status) {
+                        main(case_id);
+                    });
+            }
+        });
+}
+
+function deleteVideo(video_id, v_ids, case_id, type) {
+    video_id = "," + video_id;
+    var reg = new RegExp(video_id, "g");
+    v_ids = v_ids.replace(reg, "");
+    x0p('Confirmation', 'Are you sure?', 'warning',
+        function(button) {
+            if (button == 'cancel') {} else {
+                $.post("/updateCVideo.action", {
+                        case_id: case_id,
+                        v_type: type,
+                        v_list: v_ids
+                    },
+                    function(data, status) {
+                        main(case_id);
+                    });
+            }
+        });
 }
 
 function showAddModal() {
@@ -318,6 +351,7 @@ function showAddModal() {
 function addCase() {
     casetype_id = $("#casetype_select").val();
     casetype_name = $("#casetype_select").find("option:selected").text();
+    //alert(casetype_id);
     case_name = $("#case_name_new").val();
     reception_des = $("#reception_des_new").val();
     examination_des = $("#examination_des_new").val();
@@ -344,7 +378,7 @@ function addCase() {
         return;
     }
 
-    $.post("/addCaseee.action", {
+    $.post("/addCase.action", {
             case_name: case_name,
             casetype_id: casetype_id,
             casetype_name: casetype_name,
