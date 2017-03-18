@@ -7,15 +7,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VideoUtils {
 	private static final Logger logger = Logger.getLogger(VideoUtils.class);
 
-	private static String ffmpegPath = "F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\assets\\tool\\ffmpeg";
+	private static String ffmpegPath = PropertyUtils.getProperty("FFMPEGPath");
 	private static String mencoderPath = "";
 
-//	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException {
 //		String videoLocation = "E:/Tomcat/apache-tomcat-6.0.26/webapps/Ferrari_Wechat_Manager/upload/video/CarDisplay//2015-09//20150920201844_514.avi";
 //		videoLocation = "C:\\Users\\Administrator\\Desktop\\法拉利微信项目\\iamge\\Engine_eng_def-800.mp4";
 //		String imageLocation = "f:\\迅雷下载\\test.jpg";
@@ -28,7 +30,12 @@ public class VideoUtils {
 //		// imageLocation);
 //		System.out.println(getVideoTime(ffmpegPath, videoLocation));
 //		Thread.sleep(10000);
-//	}
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("input_path","F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\upload\\video\\LPTV.mp4");
+		map.put("logo_path","F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\assets\\custom\\images\\success.png");
+		map.put("output_path","F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\upload\\video\\watermark.mp4");
+		addLogo(map);
+	}
 
 	/**
 	 * 获得视频的size(kb)
@@ -106,24 +113,24 @@ public class VideoUtils {
 	public static boolean capturePic(Integer picSecond,
 			Integer width, Integer height, String videoLocation,
 			String imageLocation) {
-		List<String> commend = new ArrayList<String>();
-		commend.add(ffmpegPath);// 视频提取工具的位置
-		commend.add("-y");
-		commend.add("-ss");// 添加参数＂-ss＂，该参数指定截取的起始时间s
-		commend.add(picSecond.toString());
-		commend.add("-i"); // 添加参数＂-i＂，该参数指定要转换的文件
-		commend.add(videoLocation);
-		commend.add("-s");// 添加参数＂-s＂，该参数指定截取的图片大小
-		commend.add(width.toString() + "x" + height.toString());// 添加截取的图片大小
-		commend.add("-frames");
-		commend.add("1");
-		commend.add("-f");
-		commend.add("image2");
-		commend.add(imageLocation);// 添加截取的图片的保存路径
+		List<String> command = new ArrayList<String>();
+		command.add(ffmpegPath);// 视频提取工具的位置
+		command.add("-y");
+		command.add("-ss");// 添加参数＂-ss＂，该参数指定截取的起始时间s
+		command.add(picSecond.toString());
+		command.add("-i"); // 添加参数＂-i＂，该参数指定要转换的文件
+		command.add(videoLocation);
+		command.add("-s");// 添加参数＂-s＂，该参数指定截取的图片大小
+		command.add(width.toString() + "x" + height.toString());// 添加截取的图片大小
+		command.add("-frames");
+		command.add("1");
+		command.add("-f");
+		command.add("image2");
+		command.add(imageLocation);// 添加截取的图片的保存路径
 		try {
 			ProcessBuilder builder = new ProcessBuilder();
 			builder.redirectErrorStream(true);
-			builder.command(commend);
+			builder.command(command);
 			Process p = builder.start();
 			BufferedReader br = new BufferedReader(new InputStreamReader(p
 					.getInputStream()));
@@ -135,6 +142,38 @@ public class VideoUtils {
 		}
 		logger.info("退出截图");
 		return true;
+	}
+
+	/**
+	 * 添加水印
+	 * @param map
+	 * @return
+	 */
+	public static boolean addLogo(Map<String,Object> map){
+		boolean result = false;
+		List<String> cmd = new ArrayList<String>();
+		cmd.add(ffmpegPath);
+		cmd.add("-y");
+		cmd.add("-i");
+		cmd.add(map.get("input_path").toString());
+		cmd.add("-i");
+		cmd.add(map.get("logo_path").toString());
+		cmd.add("-filter_complex");
+		cmd.add("\"overlay= main_w-overlay_w:main_h-overlay_h\"");
+		cmd.add(map.get("output_path").toString());
+		try {
+			ProcessBuilder builder = new ProcessBuilder();
+			builder.command(cmd);
+			Process p = builder.start();
+			new PrintStream(p.getErrorStream()).start();
+			new PrintStream(p.getInputStream()).start();
+			p.waitFor();
+			//System.out.println("true");
+			return true;
+		} catch (Exception e) {
+			logger.error("加水印发生错误", e);
+			return false;
+		}
 	}
 
 	// 对ffmpeg无法解析的文件格式(wmv9，rm，rmvb等), 可以先用别的工具（mencoder）转换为avi(ffmpeg能解析的)格式.
@@ -203,21 +242,19 @@ public class VideoUtils {
 		}
 	}
 	//获取视频名称
-	private static String getVideoName(String inputPath){
-		String name = inputPath.substring(inputPath.lastIndexOf("/") + 1, inputPath.lastIndexOf("."))
-				.toLowerCase();
+	public static String getVideoName(String inputPath){
+		String name = inputPath.substring(inputPath.lastIndexOf("/") + 1, inputPath.lastIndexOf("."));
 		return name;
 	}
 
 	//获取视频路径，不带视频名称
 	private static String getVideoPath(String inputPath){
-		String path = inputPath.substring(0, inputPath.lastIndexOf("/")+1)
-				.toLowerCase();
+		String path = inputPath.substring(0, inputPath.lastIndexOf("/")+1);
 		return path;
 	}
 
 	//获取视频类型
-	private static String getVideoType(String inputPath){
+	public static String getVideoType(String inputPath){
 		String type = inputPath.substring(inputPath.lastIndexOf(".") + 1, inputPath.length())
 				.toLowerCase();
 		return type;

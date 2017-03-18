@@ -86,7 +86,7 @@
 #uploader .filelist li {
     width: 110px;
     height: 110px;
-    background: url(../images/bg.png) no-repeat;
+    background: url(../images/bg2.png) no-repeat;
     text-align: center;
     margin: 0 8px 20px 0;
     position: relative;
@@ -356,3 +356,14 @@
     pointer-events: none;
     opacity: 0.6;
 }
+
+.con_img{position:relative;width: 100%; max-width:100%; height: auto;}
+.ms{position:absolute; bottom: 0;left: 0; width: 100%; max-width:100%; height: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: #ee0d18;
+    line-height: 130px;
+    filter:alpha(opacity=60);
+-moz-opacity:0.6; 
+opacity:0.6;
+    background: #90988f;}

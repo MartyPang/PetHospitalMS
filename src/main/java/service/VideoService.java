@@ -1,6 +1,7 @@
 package service;
 
 import dao.VideoDao;
+import util.PropertyUtils;
 import util.VideoUtils;
 
 import java.util.HashMap;
@@ -39,5 +40,20 @@ public class VideoService {
 
     public List<Map<String,Object>> getVideoListByFilter(String filter) {
         return videoDao.getVideoListByFilter(filter);
+    }
+
+    public void addLogo(Map<String,Object> map){
+        String input_path  = map.get("input_path").toString();
+        String video_name = VideoUtils.getVideoName(input_path);
+        String video_type = VideoUtils.getVideoType(input_path);
+        //System.out.println(video_name);
+        //System.out.println(video_type);
+        String output_path = PropertyUtils.getProperty("uploadPathPrefix") + input_path.replace(video_name,video_name+"_logo");
+        input_path = PropertyUtils.getProperty("uploadPathPrefix") + input_path;
+        map.put("input_path",input_path);
+        map.put("output_path",output_path);
+        map.put("logo_path",PropertyUtils.getProperty("logoPath"));
+
+        videoDao.addLogo(map);
     }
 }

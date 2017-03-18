@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import util.BasicRowProcessorFix;
 import util.DateUtils;
 import util.DbControl;
+import util.VideoUtils;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -124,4 +125,40 @@ public class VideoDao extends BaseDao {
         return result;
     }
 
+    public void addLogo(Map<String,Object> map){
+        //更新数据库字段transfering 0 --> 1
+        String sql = "update ph_video set transfering=1 where video_id=?";
+        Connection conn = null;
+        try{
+            conn = DbControl.getConnection();
+            Integer video_id = Integer.parseInt(map.get("video_id").toString());
+            getQueryRunner().update(conn, sql,video_id);
+            DbUtils.closeQuietly(conn);
+        }catch(Exception e){
+            logger.error("更新字段transfering出错",e);
+        }finally {
+            DbUtils.closeQuietly(conn);
+        }
+        //添加水印
+        logger.info(map.get("input_path").toString());
+        logger.info(map.get("output_path").toString());
+        VideoUtils.addLogo(map);
+
+        //更新数据库字段transfering 1 --> 0
+        //更新video_path
+        String output_path = map.get("output_path").toString();
+        String video_path = output_path.substring(output_path.indexOf("/upload"));
+        //logger.info(output_path.indexOf("/upload"));
+        sql = "update ph_video set transfering=0,video_path=? where video_id=?";
+        try{
+            conn = DbControl.getConnection();
+            Integer video_id = Integer.parseInt(map.get("video_id").toString());
+            getQueryRunner().update(conn, sql,video_path,video_id);
+            DbUtils.closeQuietly(conn);
+        }catch(Exception e){
+            logger.error("更新字段transfering,video_path出错",e);
+        }finally {
+            DbUtils.closeQuietly(conn);
+        }
+    }
 }

@@ -147,8 +147,8 @@ jQuery(function() {
 
         accept: {
             title: 'Image',
-            extensions: 'mp4',
-            mimeTypes: 'video/mp4'
+            extensions: 'mp4,flv,wmv,mov',
+            mimeTypes: 'video/*'
         },
 
         // swf文件路径
@@ -161,8 +161,8 @@ jQuery(function() {
         //server: 'http://2betop.net/fileupload.php',
         server: '/UploadVideo',
         fileNumLimit: 300,
-        fileSizeLimit: 500 * 1024 * 1024, // 200 M
-        fileSingleSizeLimit: 200 * 1024 * 1024 // 50 M
+        fileSizeLimit: 2 * 1024 * 1024 * 1024, // 200 M
+        fileSingleSizeLimit: 1024 * 1024 * 1024 // 50 M
     });
 
     // 添加“添加文件”的按钮，
@@ -209,7 +209,7 @@ jQuery(function() {
             $wrap.text('预览中');
             uploader.makeThumb(file, function(error, src) {
                 if (error) {
-                    $wrap.text('不能预览');
+                    $wrap.text('');
                     return;
                 }
 
@@ -524,9 +524,16 @@ jQuery(function() {
                 var jsonArray = data.Records;
                 for (var i = 0; i < jsonArray.length; ++i) {
                     var oneline = jsonArray[i];
-                    $("#gallery-wrapper").append("<article class='white-panel' id='" + oneline.video_id + "' data-index='" + i + "'><img src='" +
-                        oneline.cover_img + "' class='thumb'><div id='v_path" + i + "' style='display: none' >" + oneline.video_path +
-                        "</div><div><div class='checkbox checkbox-danger'><input type='checkbox' id='_" + oneline.video_id + "' class='styled'><label for='_" + oneline.video_id + "'></label></div></div></article>");
+                    row="";
+                    if(oneline.transfering==0){
+                        row="<article class='white-panel' id='" + oneline.video_id + "' data-index='" + i + "'><img src='" +
+                        oneline.cover_img + "' class='thumb'><div id='v_path" + oneline.video_id + "' style='display: none' >" + oneline.video_path +
+                        "</div><div><div class='checkbox checkbox-danger'><input type='checkbox' id='_" + oneline.video_id + "' class='styled'><label for='_" + oneline.video_id + "'></label></div></div></article>"
+                    }else{
+                        row="<article class='white-panel' id='" + oneline.video_id + "' data-index='" + i + "'><div class='con_img' onclick='transfer_warning()'><img src='"+oneline.cover_img+"' class='thumb'><span class='ms'>正在进行操作...</span></div><div id='v_path" + i + "' style='display: none' >" + oneline.video_path +
+                        "</div></article>"
+                    }
+                    $("#gallery-wrapper").append(row);
                 }
 
                 $('article').each(function(i) {
@@ -541,7 +548,7 @@ jQuery(function() {
 
 
 function showModal() {
-    var index = $(this).parent('article').attr('data-index');
+    var index = $(this).parent('article').attr('id');
     var src = $('#v_path' + index).text();
     var pic = $(this).attr('src');
 
@@ -589,4 +596,8 @@ function closeUploader() {
     uploader.reset();
     // 更新状态等，重新计算文件总个数和总大小
     //updateStatus();
+}
+
+function transfer_warning(){
+    x0p("提示","该视频正在添加水印，无法播放");
 }

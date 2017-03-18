@@ -7,6 +7,7 @@ import service.VideoService;
 import util.JsonUtils;
 import util.Struts2Utils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,8 @@ public class VideoAction extends BaseAction {
     private static final long serialVersionUID = 1L;
     private static final Logger logger = Logger.getLogger(VideoAction.class);
     private VideoService videoService = new VideoService();
+
+    Integer video_id = 0;
 
     public String preVideoManage(){
         return SUCCESS;
@@ -58,5 +61,21 @@ public class VideoAction extends BaseAction {
         String filter = getParam("filter");
         boolean result = videoService.deleteVideo(filter);
         Struts2Utils.renderText(String.valueOf(result));
+    }
+
+    public void addLogo(){
+        Map<String,Object> dataMap = new HashMap();
+        dataMap.put("video_id",video_id);
+        dataMap.put("input_path",getParam("input_path"));
+
+        videoService.addLogo(dataMap);
+    }
+
+    public Integer getVideo_id() {
+        return video_id;
+    }
+
+    public void setVideo_id(Integer video_id) {
+        this.video_id = video_id;
     }
 }

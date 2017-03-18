@@ -54,6 +54,7 @@
   				<div class="panel panel-default">
   					<div class="panel-heading">
   						<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#video_upload">添加视频</button>
+  						<button class="btn btn-danger btn-lg" onclick="addLogo()">添加水印</button>
   						<button class="btn btn-danger btn-lg" onclick="batchDelete()">批量删除</button>
   					</div>
   					<div class="panel-body"> 
@@ -107,9 +108,9 @@
   			</div>
   		</div>
   	</div>
-  	<script type="text/javascript" src="${ctx}/assets/webuploader-0.1.5/webuploader.js"></script>
+  	<script type="text/javascript" src="./assets/webuploader-0.1.5/webuploader.js"></script>
   	<script src="./assets/pinterest/js/pinterest_grid.js"></script>
-  	<script type="text/javascript" src="${ctx}/assets/custom/js/demo.js"></script>
+  	<script type="text/javascript" src="./assets/custom/js/demo.js"></script>
         <script src="./assets/js/sidebar.js"></script>
   	<script type="text/javascript">
   		$(function(){
@@ -171,6 +172,29 @@
   						});
   					}
   				});
+  		}
+
+  		function addLogo(){
+  			var checked = $("input[type='checkbox']:checked");
+  			if(checked.length == 0){
+  				x0p('提示', '未选择视频！');
+  				return;
+  			}
+  			id_array = new Array();
+  			checked.each(function(i){
+  				video_id = $(this).attr('id').substr(1);
+  				id_array.push(video_id);
+  			})
+  			//先做一个视频
+  			v_id = id_array[0];
+  			var index = $("#"+v_id).attr('id');
+            var src = $('#v_path' + index).text();
+            $.post("/addLogo.action",
+            {
+            	video_id:v_id,
+            	input_path:src
+            });
+            location.reload();
   		}
   	</script>
   </body>

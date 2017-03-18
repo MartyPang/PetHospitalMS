@@ -15,5 +15,7 @@
         </action>
         <action name="deleteVideo" class="action.VideoAction" method="deleteVideo">
         </action>
+        <action name="addLogo" class="action.VideoAction" method="addLogo">
+        </action>
     </package>
 </struts>
