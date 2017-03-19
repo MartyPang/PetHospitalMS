@@ -15,5 +15,7 @@
         </action>
         <action name="deleteImage" class="action.ImageAction" method="deleteImage">
         </action>
+        <action name="transferFormat" class="action.ImageAction" method="transferFormat">
+        </action>
     </package>
 </struts>

@@ -7,7 +7,6 @@ import service.VideoService;
 import util.JsonUtils;
 import util.Struts2Utils;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +20,7 @@ public class VideoAction extends BaseAction {
     private VideoService videoService = new VideoService();
 
     Integer video_id = 0;
+    private String v_list;
 
     public String preVideoManage(){
         return SUCCESS;
@@ -64,11 +64,15 @@ public class VideoAction extends BaseAction {
     }
 
     public void addLogo(){
-        Map<String,Object> dataMap = new HashMap();
-        dataMap.put("video_id",video_id);
-        dataMap.put("input_path",getParam("input_path"));
+//        Map<String,Object> dataMap = new HashMap();
+//        dataMap.put("video_id",video_id);
+//        dataMap.put("input_path",getParam("input_path"));
 
-        videoService.addLogo(dataMap);
+        videoService.addLogo(v_list);
+    }
+
+    public void processMP4(){
+        videoService.processMP4(v_list);
     }
 
     public Integer getVideo_id() {
@@ -77,5 +81,13 @@ public class VideoAction extends BaseAction {
 
     public void setVideo_id(Integer video_id) {
         this.video_id = video_id;
+    }
+
+    public String getV_list() {
+        return v_list;
+    }
+
+    public void setV_list(String v_list) {
+        this.v_list = v_list;
     }
 }

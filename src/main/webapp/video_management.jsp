@@ -33,8 +33,8 @@
   	<link href="./assets/pinterest/css/pinterest.css" rel="stylesheet">
   </head>
   <body>
-    <%@include file="./navbar.jsp"%>
-    <%@include file="./sidebar.jsp"%>
+  	<%@include file="./navbar.jsp"%>
+  	<%@include file="./sidebar.jsp"%>
   	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
   		<div class="row">
   			<ol class="breadcrumb">
@@ -53,9 +53,23 @@
   			<div class="col-md-12">
   				<div class="panel panel-default">
   					<div class="panel-heading">
-  						<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#video_upload">添加视频</button>
-  						<button class="btn btn-danger btn-lg" onclick="addLogo()">添加水印</button>
-  						<button class="btn btn-danger btn-lg" onclick="batchDelete()">批量删除</button>
+  						<button class="btn btn-primary" data-toggle="modal" data-target="#video_upload">添加视频</button>
+  						<div class="btn-group">
+  							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">批量操作
+  								<span class="caret"></span>
+  							</button>
+  							<ul class="dropdown-menu" role="menu">
+  								<li>
+  									<a onclick="addLogo()">添加水印</a>
+  								</li>
+  								<li>
+  									<a onclick="processMP4()">格式转换</a>
+  								</li>
+  								<li>
+  									<a onclick="batchDelete()">删除视频</a>
+  								</li>
+  							</ul>
+  						</div>
   					</div>
   					<div class="panel-body"> 
   						<section id="gallery-wrapper">
@@ -111,7 +125,7 @@
   	<script type="text/javascript" src="./assets/webuploader-0.1.5/webuploader.js"></script>
   	<script src="./assets/pinterest/js/pinterest_grid.js"></script>
   	<script type="text/javascript" src="./assets/custom/js/demo.js"></script>
-        <script src="./assets/js/sidebar.js"></script>
+  	<script src="./assets/js/sidebar.js"></script>
   	<script type="text/javascript">
   		$(function(){
   			$("#gallery-wrapper").pinterest_grid({
@@ -180,21 +194,58 @@
   				x0p('提示', '未选择视频！');
   				return;
   			}
-  			id_array = new Array();
+  			//id_array = new Array();
+  			var v_list = [];
   			checked.each(function(i){
   				video_id = $(this).attr('id').substr(1);
-  				id_array.push(video_id);
+  				var src = $('#v_path' + video_id).text();
+  				var item = {
+  					video_id : video_id,
+  					input_path : src
+  				};
+
+  				v_list.push(item);
   			})
+  			_list = JSON.stringify(v_list);
   			//先做一个视频
-  			v_id = id_array[0];
-  			var index = $("#"+v_id).attr('id');
-            var src = $('#v_path' + index).text();
-            $.post("/addLogo.action",
-            {
-            	video_id:v_id,
-            	input_path:src
-            });
-            location.reload();
+  			// v_id = id_array[0];
+  			// var index = $("#"+v_id).attr('id');
+  			// var src = $('#v_path' + index).text();
+  			$.post("/addLogo.action",
+  			{
+  				v_list : _list
+  			});
+  			location.reload();
+  		}
+
+  		function processMP4(){
+  			var checked = $("input[type='checkbox']:checked");
+  			if(checked.length == 0){
+  				x0p('提示', '未选择视频！');
+  				return;
+  			}
+  			//id_array = new Array();
+  			var v_list = [];
+  			checked.each(function(i){
+  				video_id = $(this).attr('id').substr(1);
+  				var src = $('#v_path' + video_id).text();
+  				var item = {
+  					video_id : video_id,
+  					input_path : src
+  				};
+
+  				v_list.push(item);
+  			})
+  			_list = JSON.stringify(v_list);
+  			//先做一个视频
+  			// v_id = id_array[0];
+  			// var index = $("#"+v_id).attr('id');
+  			// var src = $('#v_path' + index).text();
+  			$.post("/processMP4.action",
+  			{
+  				v_list : _list
+  			});
+  			location.reload();
   		}
   	</script>
   </body>

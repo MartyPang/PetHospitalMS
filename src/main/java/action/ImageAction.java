@@ -19,6 +19,9 @@ public class ImageAction extends BaseAction {
     private static final Logger logger = Logger.getLogger(ImageAction.class);
     private ImageService imageService = new ImageService();
 
+    private String p_list;
+    private String dest_type;
+
     public String preImageManage(){
         return SUCCESS;
     }
@@ -61,4 +64,24 @@ public class ImageAction extends BaseAction {
         Struts2Utils.renderText(String.valueOf(result));
     }
 
+    public void transferFormat(){
+        imageService.transferFormat(p_list,dest_type);
+        Struts2Utils.renderText(String.valueOf(true));
+    }
+
+    public String getP_list() {
+        return p_list;
+    }
+
+    public void setP_list(String p_list) {
+        this.p_list = p_list;
+    }
+
+    public String getDest_type() {
+        return dest_type;
+    }
+
+    public void setDest_type(String dest_type) {
+        this.dest_type = dest_type;
+    }
 }

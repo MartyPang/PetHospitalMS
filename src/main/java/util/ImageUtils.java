@@ -113,6 +113,11 @@ public class ImageUtils {
                 destFile);
     }
 
+    public static void transferFormat(String src,String dest) throws IOException {
+        BufferedImage bim = getBufferedImage(src);
+        writeImage(bim,dest);
+    }
+
     /**
      * 返回图像文件的详细信息
      *

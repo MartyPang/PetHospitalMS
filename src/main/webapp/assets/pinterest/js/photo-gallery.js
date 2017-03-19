@@ -83,7 +83,7 @@
 						var oneline = jsonArray[i];
 						$("#gallery-wrapper").append("<article class='white-panel' id='"+oneline.image_id+"' data-index='"+i+"'><img src='"+
 							oneline.img_s+"' class='thumb'><div id='img_b"+i+"' style='display: none' >"+oneline.img_b+
-							"</div><div><div class='checkbox checkbox-danger'><input type='checkbox' id='_"+oneline.image_id+"' class='styled'><label for='_"+oneline.image_id+"'></label></div></div></article>");
+							"</div><div id='img_o"+i+"' style='display: none'>"+oneline.image_path+"</div><div><div class='checkbox checkbox-danger'><input type='checkbox' id='_"+oneline.image_id+"' class='styled'><label for='_"+oneline.image_id+"'>"+oneline.image_name+"</label></div></div></article>");
 					}
 
 		$('article').each(function(i){

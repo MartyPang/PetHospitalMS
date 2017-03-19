@@ -38,8 +38,8 @@
     <![endif]-->
 </head>
 <body>
-    <%@include file="./navbar.jsp"%>
-    <%@include file="./sidebar.jsp"%>
+	<%@include file="./navbar.jsp"%>
+	<%@include file="./sidebar.jsp"%>
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -58,116 +58,178 @@
 			<div class="col-md-12">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#image_upload">添加图片</button>
-						<button class="btn btn-danger btn-lg" onclick="batchDelete()">批量删除</button>
+						<button class="btn btn-primary" data-toggle="modal" data-target="#image_upload">添加图片</button>
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">批量操作
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a onclick="transferFormat()">格式转换</a>
+								</li>
+								<li>
+									<a onclick="batchDelete()">删除视频</a>
+								</li>
+							</ul>
+						</div>
 					</div>
-					<div class="panel-body"> 
-						<section id="gallery-wrapper">
-						</section>   
-					</div>
 				</div>
-			</div>
-		</div><!--/.row-->
-	</div>	<!--/.main-->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body">
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
-	<!--图片上传的modal-->
-	<div class="modal fade modal_upload" id="image_upload" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h4 class="modal-title">Upload</h4>
-				</div>
-				<div class="modal-body">
-					<input id="input_image" name="uploadFile" type="file" multiple>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<div class="panel-body"> 
+					<section id="gallery-wrapper">
+					</section>   
 				</div>
 			</div>
 		</div>
+	</div><!--/.row-->
+</div>	<!--/.main-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--图片上传的modal-->
+<div class="modal fade modal_upload" id="image_upload" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title">Upload</h4>
+			</div>
+			<div class="modal-body">
+				<input id="input_image" name="uploadFile" type="file" multiple>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
 	</div>
-	<script src="./assets/pinterest/js/pinterest_grid.js"></script>
-	<script src="./assets/pinterest/js/photo-gallery.js"></script>
-	    <script src="./assets/js/sidebar.js"></script>
-	<script type="text/javascript">
-		$(function(){
-			$("#gallery-wrapper").pinterest_grid({
-				no_columns: 4,
-				padding_x: 10,
-				padding_y: 10,
-				margin_bottom: 50,
-				single_column_breakpoint: 700
-			});
-
+</div>
+<script src="./assets/pinterest/js/pinterest_grid.js"></script>
+<script src="./assets/pinterest/js/photo-gallery.js"></script>
+<script src="./assets/js/sidebar.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#gallery-wrapper").pinterest_grid({
+			no_columns: 4,
+			padding_x: 10,
+			padding_y: 10,
+			margin_bottom: 50,
+			single_column_breakpoint: 700
 		});
-	</script>
-	<script type="text/javascript">
-		!function ($) {
-			$(document).on("click","#basic", function(){
-				$('#basic_em').toggleClass("glyphicon-minus");
-			});
-			$('#basic_em').addClass("glyphicon-plus");
-		}(window.jQuery);
 
-		!function ($) {
-			$(document).on("click","#role", function(){
-				$('#role_em').toggleClass("glyphicon-minus");
-			});
-			$('#role_em').addClass("glyphicon-plus");
-		}(window.jQuery);
-		$(window).on('resize', function () {
-			if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-		})
-		$(window).on('resize', function () {
-			if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-		})
+	});
+</script>
+<script type="text/javascript">
+	!function ($) {
+		$(document).on("click","#basic", function(){
+			$('#basic_em').toggleClass("glyphicon-minus");
+		});
+		$('#basic_em').addClass("glyphicon-plus");
+	}(window.jQuery);
 
-		function batchDelete() {
-			var flag=0;
-			var checked = $("input[type='checkbox']:checked");
-			if(checked.length == 0){
-				x0p('提示', '未选择图片！');
-				return;
-			}
-			var filter="";
-			checked.each(function(i){
-				image_id = $(this).attr('id').substr(1);
-				filter = filter + "," + image_id;
-			})
-			x0p('Confirmation', 'Are you sure?', 'warning',
-				function (button) {
-					if(button == 'cancel'){
-					}else{
-						$.post("/deleteImage.action",
-						{
-							filter:filter
-						},
-						function(data,status){
-							if(data=='true'){
-								window.location.href = "/image_management.jsp";
-							}
-						});
-					}
-				});
+	!function ($) {
+		$(document).on("click","#role", function(){
+			$('#role_em').toggleClass("glyphicon-minus");
+		});
+		$('#role_em').addClass("glyphicon-plus");
+	}(window.jQuery);
+	$(window).on('resize', function () {
+		if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+	})
+	$(window).on('resize', function () {
+		if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+	})
+
+	function batchDelete() {
+		var flag=0;
+		var checked = $("input[type='checkbox']:checked");
+		if(checked.length == 0){
+			x0p('提示', '未选择图片！');
+			return;
 		}
-		
-		$("#input_image").fileinput({
-			language: 'en',
-			uploadUrl: "/upload?type=image",
-			showCaption: true,
-			browseClass: "btn btn-info",
-			allowedPreviewTypes: ['image'],
-			allowedFileExtensions: ['bmp','jpg','jpeg','gif','png']
-		});
-	</script>
+		var filter="";
+		checked.each(function(i){
+			image_id = $(this).attr('id').substr(1);
+			filter = filter + "," + image_id;
+		})
+		x0p('Confirmation', 'Are you sure?', 'warning',
+			function (button) {
+				if(button == 'cancel'){
+				}else{
+					$.post("/deleteImage.action",
+					{
+						filter:filter
+					},
+					function(data,status){
+						if(data=='true'){
+							location.reload();
+						}
+					});
+				}
+			});
+	}
+
+	function transferFormat(){
+		var checked = $("input[type='checkbox']:checked");
+		if(checked.length == 0){
+			x0p('提示', '未选择视频！');
+			return;
+		}
+  		//id_array = new Array();
+  		var p_list = [];
+  		checked.each(function(i){
+  			var image_id = $(this).attr("id").substr(1);
+  			var index = $(this).parent('div').parent('div').parent('article').attr('data-index');
+  			var src = $('#img_o'+index).text();
+  			var item = {
+  				image_id : image_id,
+  				input_path : src
+  			};
+  			p_list.push(item);
+  		})
+  		_list = JSON.stringify(p_list);
+  		x0p({
+  			title: '转换格式',
+  			type: 'warning',
+  			inputType: 'text',
+  			inputPlaceholder: '支持jpg,bmp,png,gif...',
+  			inputColor: '#F29F3F',
+  			inputValidator: function(button, value) {
+  				if(value == '' || value != 'jpg' && value != 'bmp' && value != 'png' && value != 'gif')
+  					return 'Not a valid image type!';
+  				return null;
+  			}
+  		}, function(button, text) {
+  			if(button == 'warning') {
+  				// x0p('提示', 
+  				// 	'正在转换格式！', 
+  				// 	'ok', true);  
+  				$.post("/transferFormat.action",{
+  					p_list : _list,
+  					dest_type : text
+  				},
+  				function(data,status){
+  					if(data == 'true'){
+  						location.reload();
+  					}
+  				});
+  			}
+  		});
+  		
+  	}
+
+  	$("#input_image").fileinput({
+  		language: 'en',
+  		uploadUrl: "/upload?type=image",
+  		showCaption: true,
+  		browseClass: "btn btn-info",
+  		allowedPreviewTypes: ['image'],
+  		allowedFileExtensions: ['bmp','jpg','jpeg','gif','png']
+  	});
+  </script>
 </body>
 </html>

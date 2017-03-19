@@ -17,5 +17,7 @@
         </action>
         <action name="addLogo" class="action.VideoAction" method="addLogo">
         </action>
+        <action name="processMP4" class="action.VideoAction" method="processMP4">
+        </action>
     </package>
 </struts>

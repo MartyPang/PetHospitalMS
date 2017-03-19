@@ -4,6 +4,8 @@ import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import util.BasicRowProcessorFix;
 import util.DateUtils;
 import util.DbControl;
@@ -88,9 +90,10 @@ public class VideoDao extends BaseDao {
             conn = DbControl.getConnection();
             String cover_img = param.get("cover_img").toString();
             String video_path = param.get("video_path").toString();
-            sql = "insert into ph_video(cover_img,capture_img,video_path,upload_time,status) values(?,?,?,?,?)";
+            String video_name = VideoUtils.getVideoName(video_path);
+            sql = "insert into ph_video(cover_img,capture_img,video_name,video_path,upload_time,status) values(?,?,?,?,?,?)";
 
-            result = (getQueryRunner().update(conn,sql,cover_img,"",video_path, DateUtils.getCurrentDateTime(),1))>0?true:false;
+            result = (getQueryRunner().update(conn,sql,cover_img,"",video_name,video_path, DateUtils.getCurrentDateTime(),1))>0?true:false;
             DbUtils.closeQuietly(conn);
         }catch(Exception e){
             logger.info("VideoDao中addVideo捕获异常", e);
@@ -125,35 +128,81 @@ public class VideoDao extends BaseDao {
         return result;
     }
 
-    public void addLogo(Map<String,Object> map){
-        //更新数据库字段transfering 0 --> 1
+    public void addLogo(JSONArray v_list){
+        setTransfering(v_list);
+        logger.info(v_list);
+        for(Object obj:v_list){
+            JSONObject jObj = (JSONObject) obj;
+            //logger.info(obj);
+//            logger.info(jObj.get("input_path").toString());
+//            logger.info(jObj.get("output_path").toString());
+            //添加水印
+            VideoUtils.addLogo(jObj);
+            //更新字段
+            setTransferAndVPath(jObj);
+        }
+    }
+
+    public void processMP4(JSONArray v_list){
+        logger.info("processMP4");
+        //logger.info(v_list);
+        setTransfering(v_list);
+        for(Object obj:v_list) {
+            JSONObject jObj = (JSONObject) obj;
+            String input_path = jObj.get("input_path").toString();
+            //格式转换
+            VideoUtils.processMP4(input_path);
+            //更新字段
+            String sql = "update ph_video set transfering=0,video_name=?,video_path=? where video_id=?";
+            try{
+                conn = DbControl.getConnection();
+                String output_path = jObj.get("output_path").toString();
+                String video_name = output_path.substring(output_path.lastIndexOf("/")+1);
+                String video_path = output_path.substring(output_path.indexOf("/upload"));
+                //logger.info(output_path.indexOf("/upload"));
+                Integer video_id = Integer.parseInt(jObj.get("video_id").toString());
+                getQueryRunner().update(conn, sql,video_name,video_path,video_id);
+
+                DbUtils.closeQuietly(conn);
+            }catch(Exception e){
+                logger.error("更新字段transfering,video_name,video_path出错",e);
+            }finally {
+                DbUtils.closeQuietly(conn);
+            }
+        }
+    }
+
+    //更新数据库字段transfering 0 --> 1
+    private void setTransfering(JSONArray v_list){
         String sql = "update ph_video set transfering=1 where video_id=?";
         Connection conn = null;
         try{
             conn = DbControl.getConnection();
-            Integer video_id = Integer.parseInt(map.get("video_id").toString());
-            getQueryRunner().update(conn, sql,video_id);
+            for(Object obj:v_list) {
+                JSONObject jObj = (JSONObject) obj;
+                Integer video_id = Integer.parseInt(jObj.get("video_id").toString());
+                getQueryRunner().update(conn, sql, video_id);
+            }
             DbUtils.closeQuietly(conn);
         }catch(Exception e){
             logger.error("更新字段transfering出错",e);
         }finally {
             DbUtils.closeQuietly(conn);
         }
-        //添加水印
-        logger.info(map.get("input_path").toString());
-        logger.info(map.get("output_path").toString());
-        VideoUtils.addLogo(map);
+    }
 
-        //更新数据库字段transfering 1 --> 0
-        //更新video_path
-        String output_path = map.get("output_path").toString();
-        String video_path = output_path.substring(output_path.indexOf("/upload"));
-        //logger.info(output_path.indexOf("/upload"));
-        sql = "update ph_video set transfering=0,video_path=? where video_id=?";
+    //更新数据库字段transfering 1 --> 0
+    //更新video_path
+    private void setTransferAndVPath(JSONObject jObj){
+        String sql = "update ph_video set transfering=0,video_path=? where video_id=?";
         try{
             conn = DbControl.getConnection();
-            Integer video_id = Integer.parseInt(map.get("video_id").toString());
+            String output_path = jObj.get("output_path").toString();
+            String video_path = output_path.substring(output_path.indexOf("/upload"));
+            //logger.info(output_path.indexOf("/upload"));
+            Integer video_id = Integer.parseInt(jObj.get("video_id").toString());
             getQueryRunner().update(conn, sql,video_path,video_id);
+
             DbUtils.closeQuietly(conn);
         }catch(Exception e){
             logger.error("更新字段transfering,video_path出错",e);

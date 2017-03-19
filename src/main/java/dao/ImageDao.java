@@ -4,10 +4,14 @@ import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import util.BasicRowProcessorFix;
 import util.DateUtils;
 import util.DbControl;
+import util.ImageUtils;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -124,5 +128,31 @@ public class ImageDao extends BaseDao {
             DbUtils.closeQuietly(conn);
         }
         return result;
+    }
+
+    public void transferFormat(JSONArray p_list){
+        String sql = "";
+        Connection conn = null;
+        try{
+            conn = DbControl.getConnection();
+            sql = "update ph_image set image_name=?,image_path=? where image_id=?";
+            for(Object obj:p_list){
+                JSONObject jObj = (JSONObject) obj;
+                Integer image_id = Integer.parseInt(jObj.getString("image_id"));
+                String input_path = jObj.getString("input_path");
+                String output_path = jObj.getString("output_path");
+                String image_name = output_path.substring(output_path.lastIndexOf(File.separator)+1);
+                String image_path = output_path.substring(output_path.indexOf(File.separator+"upload"));
+                //格式转换
+                ImageUtils.transferFormat(input_path,output_path);
+                //更新字段
+                getQueryRunner().update(conn,sql,image_name,image_path,image_id);
+            }
+        }catch(Exception e){
+            logger.error("transferFormat error",e);
+            DbUtils.closeQuietly(conn);
+        }finally{
+            DbUtils.closeQuietly(conn);
+        }
     }
 }

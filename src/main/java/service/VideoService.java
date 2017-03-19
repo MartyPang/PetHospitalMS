@@ -1,6 +1,8 @@
 package service;
 
 import dao.VideoDao;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import util.PropertyUtils;
 import util.VideoUtils;
 
@@ -42,18 +44,45 @@ public class VideoService {
         return videoDao.getVideoListByFilter(filter);
     }
 
-    public void addLogo(Map<String,Object> map){
-        String input_path  = map.get("input_path").toString();
-        String video_name = VideoUtils.getVideoName(input_path);
-        String video_type = VideoUtils.getVideoType(input_path);
-        //System.out.println(video_name);
-        //System.out.println(video_type);
-        String output_path = PropertyUtils.getProperty("uploadPathPrefix") + input_path.replace(video_name,video_name+"_logo");
-        input_path = PropertyUtils.getProperty("uploadPathPrefix") + input_path;
-        map.put("input_path",input_path);
-        map.put("output_path",output_path);
-        map.put("logo_path",PropertyUtils.getProperty("logoPath"));
+    public void addLogo(String v_list){
+        JSONArray v_array = new JSONArray(v_list);
+        JSONArray video_list = new JSONArray();
+        System.out.println(v_array);
+        for(int i=0;i<v_array.length();++i){
+            JSONObject jObj = v_array.getJSONObject(i);
+            String input_path  = jObj.get("input_path").toString();
+            String video_name = VideoUtils.getVideoName(input_path);
+            //System.out.println(video_name);
+            //System.out.println(video_type);
+            String output_path = PropertyUtils.getProperty("uploadPathPrefix") + input_path.replace(video_name,video_name+"_logo");
+            input_path = PropertyUtils.getProperty("uploadPathPrefix") + input_path;
+            jObj.put("input_path",input_path);
+            jObj.put("output_path",output_path);
+            jObj.put("logo_path",PropertyUtils.getProperty("logoPath"));
 
-        videoDao.addLogo(map);
+            video_list.put(jObj);
+        }
+        videoDao.addLogo(video_list);
+    }
+
+    public void processMP4(String v_list){
+        JSONArray v_array = new JSONArray(v_list);
+        JSONArray video_list = new JSONArray();
+        //System.out.println(v_list);
+        for(Object obj:v_array){
+            JSONObject jObj = (JSONObject) obj;
+            String input_path  = jObj.get("input_path").toString();
+            String video_type = VideoUtils.getVideoType(input_path);
+            //System.out.println(video_type);
+            //只处理不是MP4类型的视频
+            if(!video_type.equals("mp4")){
+                String output_path = input_path.replace(video_type,"mp4");
+                input_path = PropertyUtils.getProperty("uploadPathPrefix") + input_path;
+                jObj.put("input_path",input_path);
+                jObj.put("output_path",output_path);
+                video_list.put(jObj);
+            }
+        }
+        videoDao.processMP4(video_list);
     }
 }

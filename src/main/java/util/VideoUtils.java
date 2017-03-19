@@ -2,14 +2,13 @@ package util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class VideoUtils {
 	private static final Logger logger = Logger.getLogger(VideoUtils.class);
@@ -17,7 +16,7 @@ public class VideoUtils {
 	private static String ffmpegPath = PropertyUtils.getProperty("FFMPEGPath");
 	private static String mencoderPath = "";
 
-	public static void main(String[] args) throws InterruptedException {
+//	public static void main(String[] args) throws InterruptedException {
 //		String videoLocation = "E:/Tomcat/apache-tomcat-6.0.26/webapps/Ferrari_Wechat_Manager/upload/video/CarDisplay//2015-09//20150920201844_514.avi";
 //		videoLocation = "C:\\Users\\Administrator\\Desktop\\法拉利微信项目\\iamge\\Engine_eng_def-800.mp4";
 //		String imageLocation = "f:\\迅雷下载\\test.jpg";
@@ -30,12 +29,14 @@ public class VideoUtils {
 //		// imageLocation);
 //		System.out.println(getVideoTime(ffmpegPath, videoLocation));
 //		Thread.sleep(10000);
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("input_path","F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\upload\\video\\LPTV.mp4");
-		map.put("logo_path","F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\assets\\custom\\images\\success.png");
-		map.put("output_path","F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\upload\\video\\watermark.mp4");
-		addLogo(map);
-	}
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		map.put("input_path","F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\upload\\video\\LPTV.mp4");
+//		map.put("logo_path","F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\assets\\custom\\images\\success.png");
+//		map.put("output_path","F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\upload\\video\\watermark.mp4");
+//		addLogo(map);
+//		String video_path = "F:\\IdeaProject\\PetHospitalMS\\target\\PetHospitalMS\\upload\\video\\bike.flv";
+//		processMP4(video_path);
+//	}
 
 	/**
 	 * 获得视频的size(kb)
@@ -149,7 +150,7 @@ public class VideoUtils {
 	 * @param map
 	 * @return
 	 */
-	public static boolean addLogo(Map<String,Object> map){
+	public static boolean addLogo(JSONObject map)	{
 		boolean result = false;
 		List<String> cmd = new ArrayList<String>();
 		cmd.add(ffmpegPath);
@@ -241,6 +242,36 @@ public class VideoUtils {
 			return false;
 		}
 	}
+
+	//转换为MP4格式
+	public static boolean processMP4(String videoPath) {
+		List<String> command = new ArrayList<String>();
+		String outputPath = getVideoPath(videoPath) + getVideoName(videoPath)+".mp4";
+		command.add(ffmpegPath);
+		command.add("-y");
+		command.add("-i");
+		command.add(videoPath);
+		command.add("-ab");
+		command.add("96");
+		command.add("-acodec");
+		command.add("libmp3lame");
+		command.add("-ar");
+		command.add("22050");
+		command.add("-qscale");
+		command.add("6");
+		command.add(outputPath);
+		try {
+			Process pMP4 = new ProcessBuilder(command).start();
+			new PrintStream(pMP4.getErrorStream()).start();
+			new PrintStream(pMP4.getInputStream()).start();
+			pMP4.waitFor();
+			return true;
+		} catch (Exception e) {
+			logger.error("",e);
+			return false;
+		}
+	}
+
 	//获取视频名称
 	public static String getVideoName(String inputPath){
 		String name = inputPath.substring(inputPath.lastIndexOf("/") + 1, inputPath.lastIndexOf("."));
@@ -255,8 +286,7 @@ public class VideoUtils {
 
 	//获取视频类型
 	public static String getVideoType(String inputPath){
-		String type = inputPath.substring(inputPath.lastIndexOf(".") + 1, inputPath.length())
-				.toLowerCase();
+		String type = inputPath.substring(inputPath.lastIndexOf(".") + 1);
 		return type;
 	}
 

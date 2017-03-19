@@ -113,7 +113,7 @@ public class UploadFileServlet extends HttpServlet {
 
                         String pic_name = fileName.substring(0,fileName.lastIndexOf('.'));
                         String pic_type = fileName.substring(fileName.lastIndexOf('.')+1,fileName.length());
-                        //生成270*170 和 470*270的缩略图
+                        //生成270*170 和 470*370的缩略图
                         String img_s = uploadPath + File.separator + pic_name + "_s." + pic_type;
                         String img_b = uploadPath + File.separator + pic_name + "_b." + pic_type;
 

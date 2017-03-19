@@ -147,8 +147,8 @@ jQuery(function() {
 
         accept: {
             title: 'Image',
-            extensions: 'mp4,flv,wmv,mov',
-            mimeTypes: 'video/*'
+            extensions: 'mp4,flv,wmv,mov,3gp,asf,asx',
+            mimeTypes: 'video/*,application/x-mplayer2'
         },
 
         // swf文件路径
@@ -528,7 +528,7 @@ jQuery(function() {
                     if(oneline.transfering==0){
                         row="<article class='white-panel' id='" + oneline.video_id + "' data-index='" + i + "'><img src='" +
                         oneline.cover_img + "' class='thumb'><div id='v_path" + oneline.video_id + "' style='display: none' >" + oneline.video_path +
-                        "</div><div><div class='checkbox checkbox-danger'><input type='checkbox' id='_" + oneline.video_id + "' class='styled'><label for='_" + oneline.video_id + "'></label></div></div></article>"
+                        "</div><div><div class='checkbox checkbox-danger'><input type='checkbox' id='_" + oneline.video_id + "' class='styled'><label for='_" + oneline.video_id + "'>"+oneline.video_name+"</label></div></div></article>"
                     }else{
                         row="<article class='white-panel' id='" + oneline.video_id + "' data-index='" + i + "'><div class='con_img' onclick='transfer_warning()'><img src='"+oneline.cover_img+"' class='thumb'><span class='ms'>正在进行操作...</span></div><div id='v_path" + i + "' style='display: none' >" + oneline.video_path +
                         "</div></article>"
@@ -551,6 +551,12 @@ function showModal() {
     var index = $(this).parent('article').attr('id');
     var src = $('#v_path' + index).text();
     var pic = $(this).attr('src');
+
+    type = src.substr(src.lastIndexOf(".")+1);
+    if(type != 'mp4'){
+        x0p("提示","暂不支持"+type+"格式！请先转换视频格式为MP4。","error");
+        return;
+    }
 
 
     $('#myModal').modal('show');
