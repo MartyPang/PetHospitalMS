@@ -90,7 +90,7 @@ public class VideoDao extends BaseDao {
             conn = DbControl.getConnection();
             String cover_img = param.get("cover_img").toString();
             String video_path = param.get("video_path").toString();
-            String video_name = VideoUtils.getVideoName(video_path);
+            String video_name = video_path.substring(video_path.lastIndexOf("/")+1);
             sql = "insert into ph_video(cover_img,capture_img,video_name,video_path,upload_time,status) values(?,?,?,?,?,?)";
 
             result = (getQueryRunner().update(conn,sql,cover_img,"",video_name,video_path, DateUtils.getCurrentDateTime(),1))>0?true:false;

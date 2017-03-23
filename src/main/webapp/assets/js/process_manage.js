@@ -105,7 +105,7 @@ function fillPicList(img_filter) {
             for (i = 0; i < jsonArray.length; i += 3) {
                 pig_row = '<div class = "row">';
                 for (j = 0; j < 3&&i+j<jsonArray.length; j++) {
-                    pig_row += '<div class="col-xs-4"><img style="width:100px;height: 100px" class="img-square" src="' + jsonArray[i + j].img_s + '"/><div class="closeLayer"  onClick="alert(1)"><img src="./assets/images/close.jpeg" style="width:15px;height: 15px"/></div></div>';
+                    pig_row += '<div class="col-xs-4"><img style="width:100px;height: 100px" class="img-square" src="' + jsonArray[i + j].img_s + '"/><div class="closeLayer"  onClick="alert(1)"><img src="./assets/images/close.png" style="width:20px;height: 20px"/></div></div>';
                 }
                 pig_row += "</div>";
                 $("#p_pic_list").append(pig_row);

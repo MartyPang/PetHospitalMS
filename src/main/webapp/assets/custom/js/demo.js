@@ -58,6 +58,7 @@ jQuery(function() {
 
     var fileMd5;
     var filename;
+    var md5Value;
     //监听分块上传过程中的三个时间点
     WebUploader.Uploader.register({
         "before-send-file": "beforeSendFile",
@@ -113,21 +114,29 @@ jQuery(function() {
             return deferred.promise();
         },
         //时间点3：所有分块上传成功后调用此函数
-        afterSendFile: function() {
+        afterSendFile: function(file) {
             //如果分块上传成功，则通知后台合并分块
-            $.ajax({
-                type: "POST",
-                url: "/Video?action=mergeChunks",
-                data: {
-                    fileMd5: fileMd5,
-                    filename: filename,
-                },
-                success: function(response) {
-                    //alert("上传成功");
-                    //var path = "uploads/"+fileMd5+".mp4";
-                    //$("#item1").attr("src",path);
-                }
-            });
+            console.log(file.name);
+            (new WebUploader.Uploader()).md5File(file, 0, 10 * 1024 * 1024)
+                .progress(function(percentage) {
+                })
+                .then(function(val) {
+                    console.log(val);
+                    md5Value = val;
+                    $.ajax({
+                        type: "POST",
+                        url: "/Video?action=mergeChunks",
+                        data: {
+                            fileMd5: md5Value,
+                            filename: file.name,
+                        },
+                        success: function(response) {
+                            //alert("上传成功");
+                            //var path = "uploads/"+fileMd5+".mp4";
+                            //$("#item1").attr("src",path);
+                        }
+                    });
+                });
         }
     });
 

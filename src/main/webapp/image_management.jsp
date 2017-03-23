@@ -16,21 +16,24 @@
 
   	<link href="./assets/css/styles.css" rel="stylesheet">
   	<link href="./assets/x0popup/css/x0popup.min.css" rel="stylesheet">
+  	<!-- checkbox -->
+  	<link href="./assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  	<link href="./assets/pinterest/css/awesome-bootstrap-checkbox.css" rel="stylesheet">
+
+  	<link href="./assets/pinterest/css/pinterest.css" rel="stylesheet">
 
   	<script src="./assets/js/jquery-1.11.1.min.js"></script>
   	<script src="./assets/js/bootstrap.min.js"></script>
   	<script src="./assets/x0popup/js/x0popup.min.js"></script>
+  		<script src="./assets/pinterest/js/pinterest_grid.js"></script>
+	<script src="./assets/pinterest/js/photo-gallery.js"></script>
 
   	<!--fileinput-->
   	<link href="./assets/file-input/css/fileinput.css" rel="stylesheet">
   	<script src="./assets/file-input/js/fileinput.js"></script>
   	<script src="./assets/file-input/js/locales/zh.js"></script>
 
-  	<!-- checkbox -->
-  	<link href="./assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  	<link href="./assets/pinterest/css/awesome-bootstrap-checkbox.css" rel="stylesheet">
 
-  	<link href="./assets/pinterest/css/pinterest.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="./assets/js/html5shiv.js"></script>
@@ -73,112 +76,110 @@
 							</ul>
 						</div>
 					</div>
-				</div>
-				<div class="panel-body"> 
-					<section id="gallery-wrapper">
-					</section>   
+					<div class="panel-body"> 
+						<section id="gallery-wrapper">
+						</section>   
+					</div>
 				</div>
 			</div>
-		</div>
-	</div><!--/.row-->
-</div>	<!--/.main-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-body">
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+		</div><!--/.row-->
+	</div>	<!--/.main-->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
-<!--图片上传的modal-->
-<div class="modal fade modal_upload" id="image_upload" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title">Upload</h4>
-			</div>
-			<div class="modal-body">
-				<input id="input_image" name="uploadFile" type="file" multiple>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	<!--图片上传的modal-->
+	<div class="modal fade modal_upload" id="image_upload" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title">Upload</h4>
+				</div>
+				<div class="modal-body">
+					<input id="input_image" name="uploadFile" type="file" multiple>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<script src="./assets/pinterest/js/pinterest_grid.js"></script>
-<script src="./assets/pinterest/js/photo-gallery.js"></script>
-<script src="./assets/js/sidebar.js"></script>
-<script type="text/javascript">
-	$(function(){
-		$("#gallery-wrapper").pinterest_grid({
-			no_columns: 4,
-			padding_x: 10,
-			padding_y: 10,
-			margin_bottom: 50,
-			single_column_breakpoint: 700
-		});
 
-	});
-</script>
-<script type="text/javascript">
-	!function ($) {
-		$(document).on("click","#basic", function(){
-			$('#basic_em').toggleClass("glyphicon-minus");
-		});
-		$('#basic_em').addClass("glyphicon-plus");
-	}(window.jQuery);
-
-	!function ($) {
-		$(document).on("click","#role", function(){
-			$('#role_em').toggleClass("glyphicon-minus");
-		});
-		$('#role_em').addClass("glyphicon-plus");
-	}(window.jQuery);
-	$(window).on('resize', function () {
-		if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-	})
-	$(window).on('resize', function () {
-		if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-	})
-
-	function batchDelete() {
-		var flag=0;
-		var checked = $("input[type='checkbox']:checked");
-		if(checked.length == 0){
-			x0p('提示', '未选择图片！');
-			return;
-		}
-		var filter="";
-		checked.each(function(i){
-			image_id = $(this).attr('id').substr(1);
-			filter = filter + "," + image_id;
-		})
-		x0p('Confirmation', 'Are you sure?', 'warning',
-			function (button) {
-				if(button == 'cancel'){
-				}else{
-					$.post("/deleteImage.action",
-					{
-						filter:filter
-					},
-					function(data,status){
-						if(data=='true'){
-							location.reload();
-						}
-					});
-				}
+	<script src="./assets/js/sidebar.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#gallery-wrapper").pinterest_grid({
+				no_columns: 4,
+				padding_x: 10,
+				padding_y: 10,
+				margin_bottom: 50,
+				single_column_breakpoint: 700
 			});
-	}
 
-	function transferFormat(){
-		var checked = $("input[type='checkbox']:checked");
-		if(checked.length == 0){
-			x0p('提示', '未选择视频！');
-			return;
+		});
+	</script>
+	<script type="text/javascript">
+		!function ($) {
+			$(document).on("click","#basic", function(){
+				$('#basic_em').toggleClass("glyphicon-minus");
+			});
+			$('#basic_em').addClass("glyphicon-plus");
+		}(window.jQuery);
+
+		!function ($) {
+			$(document).on("click","#role", function(){
+				$('#role_em').toggleClass("glyphicon-minus");
+			});
+			$('#role_em').addClass("glyphicon-plus");
+		}(window.jQuery);
+		$(window).on('resize', function () {
+			if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
+		})
+		$(window).on('resize', function () {
+			if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
+		})
+
+		function batchDelete() {
+			var flag=0;
+			var checked = $("input[type='checkbox']:checked");
+			if(checked.length == 0){
+				x0p('提示', '未选择图片！');
+				return;
+			}
+			var filter="";
+			checked.each(function(i){
+				image_id = $(this).attr('id').substr(1);
+				filter = filter + "," + image_id;
+			})
+			x0p('Confirmation', 'Are you sure?', 'warning',
+				function (button) {
+					if(button == 'cancel'){
+					}else{
+						$.post("/deleteImage.action",
+						{
+							filter:filter
+						},
+						function(data,status){
+							if(data=='true'){
+								location.reload();
+							}
+						});
+					}
+				});
 		}
+
+		function transferFormat(){
+			var checked = $("input[type='checkbox']:checked");
+			if(checked.length == 0){
+				x0p('提示', '未选择视频！');
+				return;
+			}
   		//id_array = new Array();
   		var p_list = [];
   		checked.each(function(i){

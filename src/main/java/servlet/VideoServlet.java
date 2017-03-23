@@ -1,5 +1,6 @@
 package servlet;
 
+import org.apache.log4j.Logger;
 import service.VideoService;
 
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import java.util.*;
 @WebServlet(name = "VideoServlet", urlPatterns = "/Video")
 public class VideoServlet extends HttpServlet {
 
+    Logger logger = Logger.getLogger(VideoServlet.class);
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         super.doGet(request, response);
@@ -30,7 +32,7 @@ public class VideoServlet extends HttpServlet {
                 .getRealPath("");
         String rootPath = savePath;
         String folad = "upload";
-        savePath = savePath + "\\"+folad+"\\";
+        savePath = savePath + File.separator+folad+File.separator;
 
         String action = request.getParameter("action");
 
@@ -40,9 +42,9 @@ public class VideoServlet extends HttpServlet {
             String fileMd5 = request.getParameter("fileMd5");
             //获取文件名
             String filename = request.getParameter("filename");
-            System.out.println(filename);
+            logger.info("video name:"+filename);
             //读取目录里的所有文件
-            File f = new File(savePath+"/"+fileMd5);
+            File f = new File(savePath+File.separator+fileMd5);
             File[] fileArray = f.listFiles(new FileFilter(){
                 //排除目录只要文件
                 public boolean accept(File pathname) {
@@ -86,7 +88,7 @@ public class VideoServlet extends HttpServlet {
             if(tempFile.isDirectory() && tempFile.exists()){
                 tempFile.delete();
             }
-            System.out.println("合并成功");
+            logger.info("合并成功");
 
             //插入视频记录
             new VideoService().addVideo(rootPath,filename);

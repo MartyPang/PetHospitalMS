@@ -92,9 +92,10 @@ public class ImageDao extends BaseDao {
             String image_path = param.get("image_path").toString();
             String img_s = param.get("img_s").toString();
             String img_b = param.get("img_b").toString();
-            sql = "insert into ph_image(image_type,image_path,img_s,img_b,upload_time,status) values(?,?,?,?,?,?)";
+            String image_name = param.get("image_name").toString();
+            sql = "insert into ph_image(image_type,image_path,image_name,img_s,img_b,upload_time,status) values(?,?,?,?,?,?,?)";
 
-            result = (getQueryRunner().update(conn,sql,1,image_path,img_s,img_b,DateUtils.getCurrentDateTime(),1))>0?true:false;
+            result = (getQueryRunner().update(conn,sql,1,image_path,image_name,img_s,img_b,DateUtils.getCurrentDateTime(),1))>0?true:false;
             DbUtils.closeQuietly(conn);
         }catch(Exception e){
             logger.info("ImageDao中addImage捕获异常", e);

@@ -38,7 +38,7 @@ public class UploadVideo extends HttpServlet {
         String savePath = this.getServletConfig().getServletContext()
                 .getRealPath("");
         String folad = "upload";
-        savePath = savePath + "\\"+folad+"\\";
+        savePath = savePath + File.separator+folad+File.separator;
 
         String fileMd5 = null;
         String chunk = null;
@@ -56,11 +56,11 @@ public class UploadVideo extends HttpServlet {
                         chunk = item.getString("utf-8");
                     }
                 }else{
-                    File file = new File(savePath+"/"+fileMd5);
+                    File file = new File(savePath+File.separator+fileMd5);
                     if(!file.exists()){
                         file.mkdir();
                     }
-                    File chunkFile = new File(savePath+"/"+fileMd5+"/"+chunk);
+                    File chunkFile = new File(savePath+File.separator+fileMd5+File.separator+chunk);
                     FileUtils.copyInputStreamToFile(item.getInputStream(), chunkFile);
 
                 }

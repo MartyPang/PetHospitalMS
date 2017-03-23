@@ -13,9 +13,9 @@
     <script src="./assets/js/html5shiv.js"></script>
     <script src="./assets/js/respond.min.js"></script>
     <![endif]-->
-	<script src="./assets/js/jquery-1.11.1.min.js"></script>
-	<script src="./assets/js/bootstrap.min.js"></script>
-	<script src="./assets/x0popup/js/x0popup.min.js"></script>
+    <script src="./assets/js/jquery-1.11.1.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/x0popup/js/x0popup.min.js"></script>
 
     <script type="text/javascript">
     	$(document).ready(function() {
@@ -45,8 +45,8 @@
 </head>
 
 <body>
-    <%@include file="./navbar.jsp"%>
-    <%@include file="./sidebar.jsp"%>
+	<%@include file="./navbar.jsp"%>
+	<%@include file="./sidebar.jsp"%>
 
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
@@ -170,7 +170,7 @@
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-    <script src="./assets/js/sidebar.js"></script>
+<script src="./assets/js/sidebar.js"></script>
 <script>
 	!function ($) {
 		$(document).on("click","#basic", function(){

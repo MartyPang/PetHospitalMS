@@ -127,6 +127,7 @@ public class UploadFileServlet extends HttpServlet {
                         //将图片信息保存到数据库
                         Map<String, Object> dataMap = new HashMap<String,Object>();
                         dataMap.put("image_path",filePath);
+                        dataMap.put("image_name",pic_name);
                         dataMap.put("img_s",img_s);
                         dataMap.put("img_b",img_b);
                         new ImageDao().addImage(dataMap);
