@@ -52,8 +52,8 @@ public class CaseAction extends BaseAction{
         int beginIndex = getBeginIndex();
         int pageSize = getPageSize();
 
-        Map<String, Object> dataMap = caseService.getCaseList();
-        String resultJsonString = changeListToJsonStringWithJtable(dataMap);
+        Map<String, Object> dataMap = caseService.getCaseList(beginIndex,pageSize);
+        String resultJsonString = changeListToJsonString(dataMap);
         Struts2Utils.renderJson(resultJsonString);
     }
 

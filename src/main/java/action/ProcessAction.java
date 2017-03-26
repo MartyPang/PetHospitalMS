@@ -6,6 +6,7 @@ import service.ProcessService;
 import util.JsonUtils;
 import util.Struts2Utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,11 +34,13 @@ public class ProcessAction extends BaseAction{
     //流程视频
     private String p_video;
 
-    public String preProcessManage(){
+    public String preProcessManage() throws UnsupportedEncodingException {
+        //getRequest().setCharacterEncoding("UTF-8");
         String dpm_id = getParam("dpm_id");
-        String dpm_name = getParam("dpm_name");
-        if(StringUtils.nonEmptyString(dpm_id) && StringUtils.nonEmptyString(dpm_name)){
+        if(StringUtils.nonEmptyString(dpm_id)){
             setSessionAttribute("dpm_id",dpm_id);
+            //getResponse().setCharacterEncoding("UTF-8");
+            String dpm_name = processService.getDpmNameById(dpm_id);
             setSessionAttribute("dpm_name",dpm_name);
             return SUCCESS;
         }

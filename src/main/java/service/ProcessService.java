@@ -1,5 +1,6 @@
 package service;
 
+import dao.DepartmentDao;
 import dao.ProcessDao;
 
 import java.util.Map;
@@ -54,5 +55,11 @@ public class ProcessService {
         // TODO Auto-generated method stub
         ProcessDao ProcessDao = new ProcessDao();
         return ProcessDao.addProcess(processMap);
+    }
+
+    public String getDpmNameById(String dpm_id) {
+        DepartmentDao dpmDao = new DepartmentDao();
+        return dpmDao.getDepartmentInfo(Integer.parseInt(dpm_id)).get("dpm_name").toString();
+
     }
 }

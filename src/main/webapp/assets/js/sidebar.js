@@ -12,8 +12,10 @@
                 var jsonArray = data.Records;
                 for (var i = 0; i < jsonArray.length; ++i) {
                     dpm_name = jsonArray[i].dpm_name;
+                    //console.log(dpm_name);
+                    //dpm_name = encodeURIComponent(dpm_name);
                     dpm_id = jsonArray[i].dpm_id;
-                    $("#sub-item-basic").append("<li><a href='preProcessManage.action?dpm_id="+dpm_id+"&dpm_name="+dpm_name+"'><span class='glyphicon glyphicon-share-alt'></span> " + dpm_name + "</a></li>");
+                    $("#sub-item-basic").append("<li><a href='preProcessManage.action?dpm_id="+dpm_id+"'><span class='glyphicon glyphicon-share-alt'></span> " + dpm_name + "</a></li>");
                 }
             }
         });

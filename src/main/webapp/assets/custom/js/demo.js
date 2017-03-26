@@ -535,7 +535,7 @@ jQuery(function() {
                     var oneline = jsonArray[i];
                     row="";
                     if(oneline.transfering==0){
-                        row="<article class='white-panel' id='" + oneline.video_id + "' data-index='" + i + "'><img src='" +
+                        row="<article class='white-panel' id='" + oneline.video_id + "' data-index='" + i + "'><div class='play_btn' style='height:80%;'></div><img src='" +
                         oneline.cover_img + "' class='thumb'><div id='v_path" + oneline.video_id + "' style='display: none' >" + oneline.video_path +
                         "</div><div><div class='checkbox checkbox-danger'><input type='checkbox' id='_" + oneline.video_id + "' class='styled'><label for='_" + oneline.video_id + "'>"+oneline.video_name+"</label></div></div></article>"
                     }else{
@@ -547,7 +547,7 @@ jQuery(function() {
 
                 $('article').each(function(i) {
                     $(this).attr('data-index', i);
-                    var img = $(this).find('img');
+                    var img = $(this).find('.play_btn');
                     img.on('click', showModal);
                 });
             }

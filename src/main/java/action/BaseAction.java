@@ -25,7 +25,7 @@ public class BaseAction extends ActionSupport {
     private HttpServletRequest request= ServletActionContext.getRequest();
     private  HttpServletResponse response=ServletActionContext.getResponse();
     private int beginIndex;
-    private int pageSize;
+    private int pageSize = 10;
 
     public BaseAction(){
 
@@ -128,11 +128,33 @@ public class BaseAction extends ActionSupport {
             resArray = new JSONArray(res);
             jsonObject.put("Result", "OK");
             jsonObject.put("Records", resArray);
-            jsonObject.put("TotalRecordCount", totalCount);
+            jsonObject.put("totalCount", totalCount);
         } catch (Exception e) {
             logger.error("", e);
         }
         return jsonObject.toString();
     }
+    // 将数据列表转换成table所需的Json字符串
+    public String changeListToJsonString(Map<String, Object> dataMap) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            @SuppressWarnings("unchecked")
+            List<Map<String, Object>> newsList = (List<Map<String, Object>>) dataMap
+                    .get("dataList");
+            //long totalCount = (Long) dataMap.get("totalCount");
+            int totalPages = Integer.parseInt(dataMap.get("totalPages").toString());
+            // 将List转为Json字符串
+            String res = JsonUtils.listO2Json(newsList);
+            JSONArray resArray;
+            resArray = new JSONArray(res);
+            jsonObject.put("Result", "OK");
+            jsonObject.put("Records", resArray);
+            jsonObject.put("totalPages", totalPages);
+        } catch (Exception e) {
+            logger.error("", e);
+        }
+        return jsonObject.toString();
+    }
+
 
 }

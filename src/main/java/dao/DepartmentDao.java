@@ -166,5 +166,4 @@ public class DepartmentDao extends BaseDao {
         }
         return dataMap;
     }
-
 }

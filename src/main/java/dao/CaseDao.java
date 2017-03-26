@@ -26,7 +26,7 @@ public class CaseDao extends BaseDao {
      * 获取一页病例
      * @return
      */
-    public Map<String, Object> getCaseList(){
+    public Map<String, Object> getCaseList(int beginIndex,int pageSize){
         Map<String, Object> dataMap = new HashMap<String, Object>();
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         Long totalCount = 0L;
@@ -38,15 +38,18 @@ public class CaseDao extends BaseDao {
             sql = "select count(*) from ph_case where status=1";
             totalCount = getQueryRunner().query(conn,sql,new ScalarHandler<Long>());
             //获取一页病例
-            sql = "select * from ph_case where status<>0 order by casetype_id";
-            list = getQueryRunner().query(conn,sql,new MapListHandler(new BasicRowProcessorFix()));
+            sql = "select * from ph_case where status<>0 order by casetype_id limit ?,?";
+            list = getQueryRunner().query(conn,sql,new MapListHandler(new BasicRowProcessorFix()),beginIndex,pageSize);
             DbUtils.closeQuietly(conn);
         }catch(Exception e){
             logger.error("",e);
         }finally{
             DbUtils.closeQuietly(conn);
         }
-        dataMap.put("totalCount",totalCount);
+        int totalPages;
+        int numRecord = Integer.parseInt(totalCount.toString());
+        totalPages = (numRecord-1)/pageSize+1;
+        dataMap.put("totalPages",totalPages);
         dataMap.put("dataList",list);
         return dataMap;
     }

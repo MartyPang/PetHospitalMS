@@ -11,8 +11,8 @@ import java.util.Map;
 public class CaseService {
     private CaseDao caseDao = new CaseDao();
 
-    public Map<String,Object> getCaseList() {
-        return caseDao.getCaseList();
+    public Map<String,Object> getCaseList(int beginIndex,int pageSize) {
+        return caseDao.getCaseList(beginIndex,pageSize);
     }
 
     public boolean addCase(Map<String, Object> caseMap) {
