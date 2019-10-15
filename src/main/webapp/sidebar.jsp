@@ -14,7 +14,7 @@
             </a>
             <ul class="children " id="sub-item-0">
                 <li>
-                    <a class="" href="/preUserManage.action">
+                    <a class="" href="user_management.jsp">
                         <span class="glyphicon glyphicon-share-alt"></span> 管理员用户管理
                     </a>
                 </li>

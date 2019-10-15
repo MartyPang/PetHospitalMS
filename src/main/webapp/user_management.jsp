@@ -18,17 +18,20 @@
      <script src="./assets/js/bootstrap.min.js"></script>
      <script type="text/javascript">
         $(document).ready(function() {
-            $.post("/getUserList.action",
-                {},
+            $.post("/user/getUserList.do",
+                {
+                    page : 1,
+                    pageSize : 10
+                },
                 function(data,status){
                     var result = data.Result;
                     if(result=='OK'){
                         var jsonArray = data.Records;
                         for(var i=0;i<jsonArray.length;++i){
                             var oneline = jsonArray[i];
-                            $("#user_table").append("<tr><td id='user_"+oneline.id+"'>"+oneline.name+
+                            $("#user_table").append("<tr><td id='user_"+oneline.id+"'>"+oneline.userName+
                                 "</td><td>"+
-                                oneline.create_time+
+                                oneline.createTime+
                                 "</td><td><button class='btn btn-primary' onclick='modify("+oneline.id+ ")'>修改</button></td> <td><button class='btn btn-success' onclick='deleteUser("+oneline.id+")'>删除</button></td> </tr>");
                         }
                     }
@@ -193,9 +196,9 @@ function addUser()
         x0p('提示', '密码至少6位');
         return;
     }
-    $.post("/addUser.action",
+    $.post("/user/addUser.do",
     {
-        username : username,
+        userName : username,
         password : password,
     },
     function(data,status){
@@ -217,17 +220,17 @@ function change(id)
     var flag = 0;
     if($("#password_modi").val() == "" || $("#password_modi").val() == null)
     {
-        flag = 1;
+        x0p('提示', '密码至少6位');
+        return;
     }
     if($("#password_modi").val().length>0&&$("#password_modi").val().length<6){
         x0p('提示', '密码至少6位');
         return;
     }
-    $.post("/updateUser.action",
+    $.post("/updateUser.do",
     {
-        password : $("#password_modi").val(),
-        flag : flag,
-        id : id
+        id : id,
+        password : $("#password_modi").val()
     },
     function(data,status)
     {
@@ -242,7 +245,7 @@ function deleteUser(id){
        function (button) {
            if(button == 'cancel'){
            }else{
-               $.post("/deleteUser.action",
+               $.post("/user/deleteUser.action",
                {
                    id : id
                },

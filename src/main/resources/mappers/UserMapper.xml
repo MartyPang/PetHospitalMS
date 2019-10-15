@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ecnu.dase.psf.dao.UserDao">
+    <resultMap type="User" id="UserResult">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="lastAccessTime" column="last_access_time" jdbcType="TIMESTAMP"/>
+        <result property="enable" column="enable" jdbcType="INTEGER"/>
+        <result property="authority" column="authority" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="login" parameterType="User" resultMap="UserResult">
+        select * from ph_admin where user_name=#{userName,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR} limit 1
+    </select>
+
+    <select id="getUserList" parameterType="Map" resultMap="UserResult">
+        select * from ph_admin
+        <where>
+            <if test="userName!=null and userName!='' ">
+                and userName like #{userName}
+            </if>
+        </where>
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <select id="getTotalUser" parameterType="Map" resultType="Long">
+        select count(*) from ssm_user
+        <where>
+            <if test="userName!=null and userName!='' ">
+                and user_name like #{userName}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addUser" parameterType="User">
+        insert into ph_admin(user_name,password,create_time,last_access_time,enable,authority)
+        values(#{userName,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{createTime,jdbcType=TIMESTAMP},1,1)
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update ph_admin
+        <set>
+            <if test="userName != null and userName != '' ">
+                user_name=#{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != '' ">
+                password=#{password,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time=#{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                last_access_time=#{lastAccessTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="Integer">
+        delete from ph_admin
+        where id=#{id}
+    </delete>
+</mapper>
