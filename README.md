@@ -1,5 +1,5 @@
 # PetHospitalMS
-A course project --- Pet Hospital Management System
+A course project, Pet Hospital Management System
 
 # Intro
 Pet hospitals have gradually emerged in China in recent years. The lack of qualified pet doctors is a shortcoming in the pet medical industry. However, the construction of physical pet doctor teaching and training institutions in various places is not realistic due to excessive dispersion and regional economic relevance. Therefore, the application of the Internet-based pet medical program has spawned the large-scale development of informatization construction and related teaching and training of pet hospitals.
