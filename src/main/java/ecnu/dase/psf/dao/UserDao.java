@@ -20,6 +20,6 @@ public interface UserDao {
      */
     List<User> getUserList(Map<String, Object> params);
     int addUser(User user);
-    int deleteUser(User user);
+    int deleteUser(Integer id);
     int updateUser(User user);
 }

@@ -245,7 +245,7 @@ function deleteUser(id){
        function (button) {
            if(button == 'cancel'){
            }else{
-               $.post("/user/deleteUser.action",
+               $.post("/user/deleteUser.do",
                {
                    id : id
                },

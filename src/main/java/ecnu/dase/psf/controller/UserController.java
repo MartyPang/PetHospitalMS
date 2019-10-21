@@ -85,4 +85,15 @@ public class UserController extends BasicController{
         }
         return null;
     }
+
+    @RequestMapping("deleteUser")
+    public String deleteUser(Integer id, HttpServletResponse response) {
+        int affected = userService.deleteUser(id);
+        if(affected == 1) {
+            RenderUtil.renderText(response, "true");
+        } else {
+            RenderUtil.renderText(response, "false");
+        }
+        return null;
+    }
 }

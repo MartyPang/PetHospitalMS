@@ -23,6 +23,7 @@
             <if test="userName!=null and userName!='' ">
                 and userName like #{userName}
             </if>
+            and enable=1
         </where>
         <if test="start!=null and size!=null">
             limit #{start},#{size}
@@ -62,8 +63,7 @@
         where id=#{id}
     </update>
 
-    <delete id="deleteUser" parameterType="Integer">
-        delete from ph_admin
-        where id=#{id}
-    </delete>
+    <update id="deleteUser" parameterType="Integer">
+        update ph_admin set enable=0 where id=#{id}
+    </update>
 </mapper>
